@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Display</title>
+</head>
+<body>
+  <h1>User Details</h1>
+  <p>User ID: <%= userDetails.userid %></p>
+  <p>First Name: <%= userDetails.fname %></p>
+  <p>Last Name: <%= userDetails.lname %></p>
+  <p>Education Hours: <%= userDetails.educationHr %></p>
+  <p>Health Hours: <%= userDetails.healthHr %></p>
+  <p>Animal Hours: <%= userDetails.animalHr %></p>
+  <p>Cyber Hours: <%= userDetails.cyberHr %></p>
+  <p>CL Hours: <%= userDetails.clHr %></p>
+  <p>University Hours: <%= userDetails.universityHr %></p>
+  <p>Total Hours: <%= userDetails.totalHour %></p>
+
+  <h2>Events Attended</h2>
+  <% if (userDetails.eventsAttended.length > 0) { %>
+    <ul>
+      <% userDetails.eventsAttended.forEach(function(event) { %>
+        <li>
+          Event ID: <%= event.eventId %><br>
+          Event Name: <%= event.eventName %><br>
+          Event hour: <%= event.hour %><br>
+          Event category: <%= event.category %>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No events attended.</p>
+  <% } %>
+</body>
+</html>

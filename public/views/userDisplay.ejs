@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>members</h1>
+    <table border="1px">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Education Hours</th>
+            <th>Health Hours</th>
+            <th>Animal Hours</th>
+            <th>Cyber Hours</th>
+            <th>College Hours</th>
+            <th>University Hours</th>
+            <th>Total Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+          <tr>
+            <td><%= user.userid %></td>
+            <td><%= user.fname %></td>
+            <td><%= user.lname %></td>
+            <td><%= user.educationHr %></td>
+            <td><%= user.healthHr %></td>
+            <td><%= user.animalHr %></td>
+            <td><%= user.cyberHr %></td>
+            <td><%= user.clHr %></td>
+            <td><%= user.universityHr %></td>
+            <td><%= user.TotalHr %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      
+</body>
+</html>

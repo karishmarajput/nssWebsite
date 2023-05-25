@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .partId{
+        border: 1px solid black;
+        margin: .15rem;
+        padding: .15rem;
+      }
+    </style>
+</head>
+<body>
+    <h1>Add Event</h1>
+  
+  
+    <label for="eventName">Event Name:</label>
+    <input type="text" id="eventName" name="eventName" required><br><br>
+    
+    <label for="hours">Hours:</label>
+    <input type="number" id="hours" name="hours" required><br><br>
+
+    <label for="participant">Participants:</label>
+    <div id="participants-container">
+    <select id="participant" name="participant" required>
+      <option value="">Select the participant</option>
+      <% users.forEach(user => { %>
+        <option value="<%= user.userid %>"><%= user.userid %>:  <%= user.fname %> <%= user.lname %></option>
+      <% }); %>
+    </select>
+    <div id="selectedParticipants"></div>
+    <button type="button" class="add-participant-btn" onclick="addParticipant()">+</button>
+  </div>
+    <br><br>
+    
+    
+
+    
+    <label for="category">Category:</label>
+    <select id="category" required>
+      <option value="education">Education</option>
+      <option value="healthcare">Healthcare</option>
+      <option value="animal">Animal</option>
+      <option value="cyber">Cyber</option>
+      <option value="college">College</option>
+      <option value="university">University</option>
+    </select>
+    
+    <button type="submit" onclick="submitEvent()">Add Event</button>
+ 
+</body>
+<script>
+  let parti = [];
+  function addParticipant(){
+    let selected = participant.value
+    console.log(selected)
+    if(selected == ''){
+      alert('select the participant first');
+    }
+    parti.push(selected)
+    selectedDiv = document.getElementById('selectedParticipants');
+    const newPart = document.createElement('span');
+    newPart.classList.add('partId');
+    const newDiv = document.createElement('span');
+    newDiv.setAttribute('id', 'userText');
+    newDiv.classList.add('spanUserId');
+    newDiv.textContent = selected;
+    newPart.appendChild(newDiv);
+    selectedDiv.appendChild(newPart);
+  }
+
+
+  function submitEvent(){
+
+    eventName = document.getElementById('eventName').value;
+    hours = document.getElementById('hours').value;
+    category = document.getElementById('category').value;
+    let data = {
+      eventName,
+      hours,
+      parti,
+      category
+    };
+    console.log(data)
+    fetch('/admin/addevent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Response:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+  }
+</script>
+</html>
