@@ -36,6 +36,8 @@
     
     <label for="venue">venue:</label>
     <input type="text" id="venue" name="venue" required><br><br>
+    <label for="content">content:</label>
+    <textarea id="content" name="content" required></textarea><br><br>
     
     <label for="eventLeader">Event Leader:</label>
     <select id="eventLeader" name="eventLeader" required>
@@ -107,7 +109,7 @@
         <option value="<%= user.vec %>"><%= user.vec %>:  <%= user.name %></option>
       <% }); %>
     </select><br><br>
-    
+    <input type="file" accept="image/*" id="fileImage">
     <button type="submit" onclick="submitEvent()">Add Event</button>
 </body>
 <script>
@@ -175,40 +177,43 @@
     eventName = document.getElementById('eventName').value;
     eventDate = document.getElementById('eventDate').value;
     venue = document.getElementById('venue').value;
+    content = document.getElementById('content').value;
     eventLead = document.getElementById('eventLeader').value;
     organisersHr = document.getElementById('organisersHr').value;
     hours = document.getElementById('hours').value;
     category = document.getElementById('category').value;
     numberOfBenificiar = document.getElementById('numberOfBenificiar').value;
     reportBy = document.getElementById('reportWrittenBy').value;
+    imageFile = document.getElementById('fileImage').files[0];
 
-    let data = {
-      eventName,
-      eventDate,
-      venue,
-      eventLead,
-      organisersHr,
-      organiser,
-      hours,
-      parti,
-      category,
-      numberOfBenificiar,
-      reportBy,
-    };
+      var formData = new FormData();
+      formData.append('eventName', eventName);
+      formData.append('eventDate', eventDate);
+      formData.append('venue', venue);
+      formData.append('content', content);
+      formData.append('eventLead', eventLead);
+      formData.append('organisersHr', organisersHr);
+      formData.append('hours', hours);
+      formData.append('category', category);
+      formData.append('numberOfBenificiar', numberOfBenificiar);
+      formData.append('reportBy', reportBy);
+      formData.append('eventImage', imageFile);
+      formData.append('parti',parti)
+      formData.append('organiser',organiser)
 
     fetch('/admin/addevent', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
+      body: formData
     })
       .then(response => response.json())
       .then(data => {
         console.log('Response:', data);
+        alert(data.message)
+
       })
       .catch(error => {
         console.error('Error:', error);
+        alert(error)
       });
 
   }

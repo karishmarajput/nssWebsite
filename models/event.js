@@ -12,6 +12,10 @@ const eventSchema = new mongoose.Schema({
   venue: {
     type: String,
     required: true
+  }, 
+  content: {
+    type: String,
+    required: true
   },
   eventLeader: {
     type: mongoose.Schema.Types.ObjectId,
@@ -61,7 +65,10 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-
+  imagePath: {
+    type: String,
+    required: true,
+  }
 });
 
 const Event = mongoose.model('Event', eventSchema);

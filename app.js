@@ -10,9 +10,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = express();              
 const port = 5000;    
+const multer = require('multer');
               
 const cors = require('cors')
-const fileUpload = require("express-fileupload");
+
 var favicon = require('serve-favicon');
 var path = require('path')
 const secretKey = 'notmebutyou';
@@ -20,19 +21,27 @@ connectDB();
 // app.use(favicon(path.join(__dirname, 'public', 'images/verifyDB.png')))
 app.set('view engine', 'ejs');
 
-app.use(fileUpload());
+
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors())
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname ));
 app.set("views", path.join(__dirname, "/public/views"));
 
 //middleware
 app.use(express.json());
 app.use(cookieParser());
 
-app.get('/', (req, res) => {        
-    res.status(200).sendFile(path.join(__dirname,'public','pages/index.html'))                                                         
+app.get('/', async(req, res) => {        
+  try {
+    const eventList = await Event.find({}, 'eventName eventDate venue content eventLeader totalPart category imagePath');
+
+    // Render the event form with the user list
+    res.render('index', { posts: eventList });
+  } catch (error) {
+    console.error('Error fetching user list:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }                                                        
 });
 
 //Admin
@@ -131,12 +140,22 @@ const authenticateAdmin = async(req, res, next) => {
       }
     // res.status(200).sendFile(path.join(__dirname,'public','pages/eventForm.html'))
   });
+  
+  const storage = multer.diskStorage({
+    destination: './public/files',
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now());
+    }
+  });
 
-  app.post('/admin/addevent', async (req, res) => {
+  const upload = multer({ storage: storage });
+
+  app.post('/admin/addevent',upload.single('eventImage'), async (req, res) => {
     console.log(req.body)
-    const {  eventName,
+    let {  eventName,
       eventDate,
       venue,
+      content,
       eventLead,
       organisersHr,
       organiser,
@@ -145,6 +164,8 @@ const authenticateAdmin = async(req, res, next) => {
       category,
       numberOfBenificiar,
       reportBy } = req.body;
+      const imagePath = req.file.path;
+
     await User.findOne({ vec: eventLead })
       .then(user => {
         eventLeader = user;
@@ -155,7 +176,9 @@ const authenticateAdmin = async(req, res, next) => {
     })
     totalPart = parti.length+ organiser.length;
     let participants = [],organisers = [],malePart = 0, femalePart = 0
-
+console.log(typeof( parti))
+    parti = parti.split(",");
+    organiser = organiser.split(",")
     for(let i =0; i < parti.length;i++){
       await User.findOne({ vec: parti[i] })
       .then(user => {
@@ -232,6 +255,7 @@ const authenticateAdmin = async(req, res, next) => {
         eventName,
         eventDate,
         venue,
+        content,
         eventLeader,
         organisersHr,
         organisers,
@@ -243,7 +267,7 @@ const authenticateAdmin = async(req, res, next) => {
         numberOfBenificiar,
         reportWrittenBy,
         category,
-
+        imagePath
       });
 
       await event.save();

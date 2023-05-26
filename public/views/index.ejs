@@ -1,0 +1,22 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Nss first page
+    <a href="/admin">Admin Login</a>
+    <h1>All Posts</h1>
+    <div id="postsContainer">
+      <% posts.forEach(function(post) { %>
+        <div class="post">
+          <img src="<%= post.imagePath %>" alt="<%= post.eventName %>">
+          <h2><%= post.eventName %></h2>
+          <p><%= post.content %></p>
+        </div>
+      <% }); %>
+    </div>
+</body>
+</html>
