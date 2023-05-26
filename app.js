@@ -17,7 +17,6 @@ var favicon = require('serve-favicon');
 var path = require('path')
 const secretKey = 'notmebutyou';
 connectDB();
-
 // app.use(favicon(path.join(__dirname, 'public', 'images/verifyDB.png')))
 app.set('view engine', 'ejs');
 
@@ -122,7 +121,7 @@ const authenticateAdmin = async(req, res, next) => {
   app.get('/admin/addevent', authenticateAdmin, async(req, res) => {
     try {
         // Fetch the user list from the database
-        const userList = await User.find({}, 'userid fname lname');
+        const userList = await User.find({}, 'vec name');
     
         // Render the event form with the user list
         res.render('eventForm', { users: userList });
@@ -132,30 +131,93 @@ const authenticateAdmin = async(req, res, next) => {
       }
     // res.status(200).sendFile(path.join(__dirname,'public','pages/eventForm.html'))
   });
-  app.post('/admin/addevent',async (req, res) => {
-    const { eventName, hours, parti, category } = req.body;
-    numberOfPart = parti.length;
-    let participants = []
-    for(let i =0; i < numberOfPart;i++){
-      await User.findOne({ userid: parti[i] })
+
+  app.post('/admin/addevent', async (req, res) => {
+    console.log(req.body)
+    const {  eventName,
+      eventDate,
+      venue,
+      eventLead,
+      organisersHr,
+      organiser,
+      hours,
+      parti,
+      category,
+      numberOfBenificiar,
+      reportBy } = req.body;
+    await User.findOne({ vec: eventLead })
+      .then(user => {
+        eventLeader = user;
+    })
+    await User.findOne({ vec: reportBy })
+      .then(user => {
+        reportWrittenBy = user;
+    })
+    totalPart = parti.length+ organiser.length;
+    let participants = [],organisers = [],malePart = 0, femalePart = 0
+
+    for(let i =0; i < parti.length;i++){
+      await User.findOne({ vec: parti[i] })
       .then(user => {
         if (user) {
           participants.push(user);
-          if(category == 'animal'){
-            user.animalHr = parseInt(user.animalHr)+ parseInt(hours);
-          }else if(category == 'health'){
-            user.healthHr = parseInt(user.healthHr)+ parseInt(hours);;
-          }else if(category == 'cyber'){
-            user.cyberHr = parseInt(user.cyberHr)+ parseInt(hours);;
-          }else if(category == 'education'){
-            user.educationHr = parseInt(user.educationHr)+ parseInt(hours);;
+          if(user.gender == 'M'){
+            malePart += 1 
+          }else{
+            femalePart +=1
+          }
+          if(category == 'fitIndia'){
+            user.fitIndiaHr = parseInt(user.fitIndiaHr)+ parseInt(hours);
+          }else if(category == 'educationForAll'){
+            user.educationForAllHr = parseInt(user.educationForAllHr)+ parseInt(hours);
+          }else if(category == 'animalWellfare'){
+            user.animalWellfareHr = parseInt(user.animalWellfareHr)+ parseInt(hours);
+          }else if(category == 'diasterManagement'){
+            user.diasterManagementHr = parseInt(user.diasterManagementHr)+ parseInt(hours);
+          }else if(category == 'greenInitiative'){
+            user.greenInitiativeHr = parseInt(user.greenInitiativeHr)+ parseInt(hours);
           }else if(category == 'college'){
             user.clHr = parseInt(user.clHr)+ parseInt(hours);;
           }else{
             user.universityHr = parseInt(user.universityHr)+ parseInt(hours);;
           }
           user.TotalHr = parseInt(user.TotalHr)+ parseInt(hours);; 
-          console.log(user)
+          return user.save();
+        } else {
+          console.log('User not found');
+        }
+      })
+
+      .catch(error => {
+        console.error('Error finding user:', error);
+      });
+    }
+    for(let i =0; i < organiser.length;i++){
+      await User.findOne({ vec: organiser[i] })
+      .then(user => {
+        if (user) {
+          organisers.push(user);
+          if(user.gender == 'M'){
+            malePart += 1 
+          }else{
+            femalePart +=1
+          }
+          if(category == 'fitIndia'){
+            user.fitIndiaHr = parseInt(user.fitIndiaHr)+ parseInt(organisersHr);
+          }else if(category == 'educationForAll'){
+            user.educationForAllHr = parseInt(user.educationForAllHr)+ parseInt(organisersHr);
+          }else if(category == 'animalWellfare'){
+            user.animalWellfareHr = parseInt(user.animalWellfareHr)+ parseInt(organisersHr);
+          }else if(category == 'diasterManagement'){
+            user.diasterManagementHr = parseInt(user.diasterManagementHr)+ parseInt(organisersHr);
+          }else if(category == 'greenInitiative'){
+            user.greenInitiativeHr = parseInt(user.greenInitiativeHr)+ parseInt(organisersHr);
+          }else if(category == 'college'){
+            user.clHr = parseInt(user.clHr)+ parseInt(organisersHr);;
+          }else{
+            user.universityHr = parseInt(user.universityHr)+ parseInt(organisersHr);;
+          }
+          user.TotalHr = parseInt(user.TotalHr)+ parseInt(organisersHr);
           return user.save();
         } else {
           console.log('User not found');
@@ -168,19 +230,42 @@ const authenticateAdmin = async(req, res, next) => {
     try {
       const event = new Event({
         eventName,
+        eventDate,
+        venue,
+        eventLeader,
+        organisersHr,
+        organisers,
         hours,
         participants,
-        numberOfPart,
+        totalPart,
+        malePart,
+        femalePart,
+        numberOfBenificiar,
+        reportWrittenBy,
         category,
+
       });
-     console.log(event)
+
       await event.save();
-      for(let i =0; i < numberOfPart;i++){
-        await User.findOne({ userid: parti[i] })
+      for(let i =0; i < parti.length;i++){
+        await User.findOne({ vec: parti[i] })
         .then(user => {
           if (user) {
             user.eventsAttended.push(event)
-            console.log(user)
+            return user.save();
+          } else {
+            console.log('User not found');
+          }
+        })
+        .catch(error => {
+          console.error('Error finding user:', error);
+        });
+      }
+      for(let i =0; i < organiser.length;i++){
+        await User.findOne({ vec: organiser[i] })
+        .then(user => {
+          if (user) {
+            user.eventsOrganised.push(event)
             return user.save();
           } else {
             console.log('User not found');
@@ -217,16 +302,26 @@ app.get('/admin/adduser',authenticateAdmin,(req,res)=>{
 })
 app.post('/admin/adduser',authenticateAdmin,async(req,res)=>{
     try {
-        const { userid,fname, lname} = req.body;
-        const existingUser = await User.findOne({ userid });
-        console.log(existingUser)
+        const { vec,name,branch,sem,div,contactNo,nameOfClg,dob,bloodGroup,gender,address,yearInNss,campAttended,password} = req.body;
+        const existingUser = await User.findOne({ vec });
         if (existingUser) {
           return res.status(409).json({ error: 'User already exists' });
         }
         const newUser = new User({
-            userid,
-             fname,
-             lname,
+          vec,
+          name,
+          branch,
+          div,
+          sem,
+          contactNo,
+          nameOfClg,
+          dob,
+          bloodGroup,
+          gender,
+          address,
+          yearInNss,
+          campAttended,
+          password
         });
         await newUser.save();
         res.status(201).json({ message: 'User created successfully' });

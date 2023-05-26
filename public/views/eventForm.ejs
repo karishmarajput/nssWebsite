@@ -10,57 +10,156 @@
         margin: .15rem;
         padding: .15rem;
       }
+      table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
     </style>
 </head>
 <body>
     <h1>Add Event</h1>
-  
-  
     <label for="eventName">Event Name:</label>
     <input type="text" id="eventName" name="eventName" required><br><br>
     
-    <label for="hours">Hours:</label>
-    <input type="number" id="hours" name="hours" required><br><br>
-
-    <label for="participant">Participants:</label>
-    <div id="participants-container">
-    <select id="participant" name="participant" required>
-      <option value="">Select the participant</option>
+    <label for="eventDate">Event Date:</label>
+    <input type="date" id="eventDate" name="eventDate" required><br><br>
+    
+    <label for="venue">venue:</label>
+    <input type="text" id="venue" name="venue" required><br><br>
+    
+    <label for="eventLeader">Event Leader:</label>
+    <select id="eventLeader" name="eventLeader" required>
+      <option value="">Select the Event Leader</option>
       <% users.forEach(user => { %>
-        <option value="<%= user.userid %>"><%= user.userid %>:  <%= user.fname %> <%= user.lname %></option>
+        <option value="<%= user.vec %>"><%= user.vec %>:  <%= user.name %></option>
       <% }); %>
-    </select>
-    <div id="selectedParticipants"></div>
-    <button type="button" class="add-participant-btn" onclick="addParticipant()">+</button>
-  </div>
-    <br><br>
-    
-    
+    </select><br><br>
+    <label for="organisersHr">organisersHr:</label>
+    <input type="number" id="organisersHr" name="organisersHr" required><br><br>
 
+    <label for="organisers">Organisers:</label>
+    <div id="organisers-container">
+    <select id="organisers" name="organisers" required>
+      <option value="">Select the organisers</option>
+      <% users.forEach(user => { %>
+        <option value="<%= user.vec %>"><%= user.vec %>:  <%= user.name %></option>
+      <% }); %>
+    </select><br><br>
+    <div id="selectedOrganiser"></div>
+    <button type="button" class="add-participant-btn" onclick="addOrganiser()">+</button>
+    <br><br>
+    <label for="hours">hours for Participants:</label>
+    <input type="number" id="hours" name="hours" required><br><br>
     
+    
+    
+    <h2>Participants</h2>
+    <input type="text" id="searchInput" placeholder="Search by VEC Number"><br><br>
+    <table id="participantTable">
+      <thead>
+        <tr>
+          <th>Selected</th>
+          <th>vec</th>
+          <th>Name</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(function(user) { %>
+          <tr class="participant-row" data-userid="<%= user.vec %>">
+            <td>
+              <input type="checkbox" class="participant-checkbox" data-userid="<%= user.vec %>">
+            </td>
+            <td><%= user.vec %></td>
+            <td><%= user.name %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <br><br>
     <label for="category">Category:</label>
     <select id="category" required>
-      <option value="education">Education</option>
-      <option value="healthcare">Healthcare</option>
-      <option value="animal">Animal</option>
-      <option value="cyber">Cyber</option>
+      <option value="fitIndia">Fit India</option>
+      <option value="educationForAll">education For All</option>
+      <option value="animalWellfare">animal Wellfare Hr</option>
+      <option value="diasterManagement">diasterManagement</option>
+      <option value="greenInitiative">greenInitiative</option>
       <option value="college">College</option>
       <option value="university">University</option>
     </select>
+    <label for="numberOfBenificiar">number Of Benificiar:</label>
+    <input type="number" id="numberOfBenificiar" name="numberOfBenificiar" required><br><br>
+
+    <label for="reportWrittenBy">report Written By:</label>
+    <select id="reportWrittenBy" name="reportWrittenBy" required>
+      <option value="">Select the reportWrittenBy</option>
+      <% users.forEach(user => { %>
+        <option value="<%= user.vec %>"><%= user.vec %>:  <%= user.name %></option>
+      <% }); %>
+    </select><br><br>
     
     <button type="submit" onclick="submitEvent()">Add Event</button>
- 
 </body>
 <script>
+
   let parti = [];
-  function addParticipant(){
-    let selected = participant.value
-    console.log(selected)
+  let organiser= [];
+
+  const searchInput = document.getElementById('searchInput');
+  const participantTable = document.getElementById('participantTable');
+
+  searchInput.addEventListener('input', function() {
+    const searchText = searchInput.value.trim().toLowerCase();
+    const rows = participantTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+    Array.from(rows).forEach(row => {
+      const userid = row.cells[1].textContent.toLowerCase();
+
+      if (userid.includes(searchText)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+
+
+
+
+  const participantCheckboxes = document.querySelectorAll('.participant-checkbox');
+    participantCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        const userid = checkbox.getAttribute('data-userid');
+        const isChecked = checkbox.checked;
+        if(isChecked){
+          parti.push(userid)
+        }else{
+          parti = parti.filter(item => item !== userid);
+        }
+        console.log(parti)
+      });
+    });
+
+
+  function addOrganiser(){
+    
+    organisers = document.getElementById('organisers')
+    let selected = organisers.value
     if(selected == ''){
-      alert('select the participant first');
+      alert('select the organiser first');
     }
-    parti.push(selected)
-    selectedDiv = document.getElementById('selectedParticipants');
+    organiser.push(selected)
+    selectedDiv = document.getElementById('selectedOrganiser');
     const newPart = document.createElement('span');
     newPart.classList.add('partId');
     const newDiv = document.createElement('span');
@@ -71,19 +170,32 @@
     selectedDiv.appendChild(newPart);
   }
 
-
   function submitEvent(){
-
+  
     eventName = document.getElementById('eventName').value;
+    eventDate = document.getElementById('eventDate').value;
+    venue = document.getElementById('venue').value;
+    eventLead = document.getElementById('eventLeader').value;
+    organisersHr = document.getElementById('organisersHr').value;
     hours = document.getElementById('hours').value;
     category = document.getElementById('category').value;
+    numberOfBenificiar = document.getElementById('numberOfBenificiar').value;
+    reportBy = document.getElementById('reportWrittenBy').value;
+
     let data = {
       eventName,
+      eventDate,
+      venue,
+      eventLead,
+      organisersHr,
+      organiser,
       hours,
       parti,
-      category
+      category,
+      numberOfBenificiar,
+      reportBy,
     };
-    console.log(data)
+
     fetch('/admin/addevent', {
       method: 'POST',
       headers: {
@@ -100,5 +212,6 @@
       });
 
   }
+
 </script>
 </html>
