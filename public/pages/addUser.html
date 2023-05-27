@@ -14,31 +14,71 @@
             <label for="name" style="margin-top: 10px;">name : &nbsp;</label>
             <input type="text" name="name" id="" style="margin-top: 10px;"/><br>
             <label for="branch" style="margin-top: 10px;">branch : &nbsp;</label>
-            <input type="text" name="branch" id="" style="margin-top: 10px;"/><br>
+            <select name="branch">
+                <option value="computer">Computer</option>
+                <option value="mechanical">Mechanical</option>
+                <option value="electrical">Electrical</option>
+                <option value="extc">EXTC</option>
+                <option value="it">IT</option>
+              </select>
+              
             <label for="div" style="margin-top: 10px;">div: &nbsp;</label>
-            <input type="text" name="div" id="" style="margin-top: 10px;"/><br>
+            <select name="div">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="NA">NA</option>
+              </select>              
             <label for="sem" style="margin-top: 10px;">sem : &nbsp;</label>
-            <input type="text" name="sem" id="" style="margin-top: 10px;"/><br>
+            <select name="sem">
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+              </select>
+              
             <label for="contactNo" style="margin-top: 10px;">Contact No : &nbsp;</label>
             <input type="number" name="contactNo" id="" style="margin-top: 10px;"/><br>
             <label for="nameOfClg" style="margin-top: 10px;">nameOfClg : &nbsp;</label>
             <input type="text" name="nameOfClg" id="" style="margin-top: 10px;"/><br>
-            <label for="dob" style="margin-top: 10px;">dob: &nbsp;</label>
+            <label for="dob" style="margin-top: 10px;">DOB: &nbsp;</label>
             <input type="date" name="dob" id="" style="margin-top: 10px;"/><br>
             <label for="bloodGroup" style="margin-top: 10px;">bloodGroup : &nbsp;</label>
-            <input type="text" name="bloodGroup" id="" style="margin-top: 10px;"/><br>
+            <select name="bloodGroup">
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>              
             <label for="gender" style="margin-top: 10px;">gender : &nbsp;</label>
-            <input type="text" name="gender" id="" style="margin-top: 10px;"/><br>
-            <label for="address" style="margin-top: 10px;">address : &nbsp;</label>
+            <select name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>              
+            <label for="address" style="margin-top: 10px;">Address : &nbsp;</label>
             <textarea name="address" rows="4" cols="50" style="margin-top: 10px;"></textarea><br>
             <label for="yearInNss" style="margin-top: 10px;">yearInNss: &nbsp;</label>
-            <input type="number" name="yearInNss" id="" style="margin-top: 10px;"/><br>
+            <select name="yearInNss">
+                <option value="1">1st year</option>
+                <option value="2">2nd year</option>
+            </select>
             <label for="campAttended" style="margin-top: 10px;">campAttended : &nbsp;</label>
-            <input type="text" name="campAttended" placeholder="if attended mention year else Nill"id="" style="margin-top: 10px;"/><br>
+            <select name="campAttended">
+                <option value="2022">Yes in 2022</option>
+                <option value="2023">Yes in 2023</option>
+                <option value="NILL">NILL</option>
+            </select>
             <label for="password" style="margin-top: 10px;">Password : &nbsp;</label>
             <input type="password" name="password" id="" style="margin-top: 10px;"/><br>
 
-            <input type="submit" class="btn btn-warning navButton" value="Login" style="margin-top:1.5rem"/>
+            <input type="submit" class="btn btn-warning navButton" value="Create New User" style="margin-top:1.5rem"/>
         </form>
     </div>
 </body>

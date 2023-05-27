@@ -7,38 +7,71 @@
 </head>
 <body>
     <h1>members</h1>
-    <table border="1px">
+    <input type="text" id="searchInput" placeholder="Search by VEC Number"><br><br>
+
+    <table border="1px" class="userTable" id="userTable">
         <thead>
           <tr>
-            <th>User ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Education Hours</th>
-            <th>Health Hours</th>
-            <th>Animal Hours</th>
-            <th>Cyber Hours</th>
-            <th>College Hours</th>
-            <th>University Hours</th>
+            <th>Vec</th>
+            <th>Name</th>
+            <th>Branch</th>
+            <th>Sem </th>
+            <th>fit India Hr</th>
+            <th>education For All  Hours</th>
+            <th>animal Wellfare Hours</th>
+            <th>diasterManagementHr</th>
+            <th>greenInitiativeHr</th>
+            <th>clHr</th>
+            <th>university Hrs</th>
             <th>Total Hours</th>
+            <th>Detail</th>
           </tr>
         </thead>
         <tbody>
             <% users.forEach(user => { %>
           <tr>
-            <td><%= user.userid %></td>
-            <td><%= user.fname %></td>
-            <td><%= user.lname %></td>
-            <td><%= user.educationHr %></td>
-            <td><%= user.healthHr %></td>
-            <td><%= user.animalHr %></td>
-            <td><%= user.cyberHr %></td>
+            <td><%= user.vec %></td>
+            <td><%= user.name %></td>
+            <td><%= user.branch %></td>
+            <td><%= user.sem %></td>
+            <td><%= user.fitIndiaHr %></td>
+            <td><%= user.educationForAllHr %></td>
+            <td><%= user.animalWellfareHr %></td>
+            <td><%= user.diasterManagementHr %></td>
+            <td><%= user.greenInitiativeHr %></td>
             <td><%= user.clHr %></td>
             <td><%= user.universityHr %></td>
             <td><%= user.TotalHr %></td>
+            <td><button onclick="showDetails('<%= user.vec %>')">Show Details</button></td>
           </tr>
           <% }); %>
         </tbody>
       </table>
       
 </body>
+<script>
+
+    const searchInput = document.getElementById('searchInput');
+    const userTable= document.getElementById('userTable')
+    searchInput.addEventListener('input', function() {
+    const searchText = searchInput.value.trim().toLowerCase();
+    const rows = userTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+    Array.from(rows).forEach(row => {
+      const userid = row.cells[0].textContent.toLowerCase();
+
+      if (userid.includes(searchText)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+
+  function showDetails(userId){
+    console.log(userId);
+    window.location = window.location + "/"+ userId
+  }
+
+</script>
 </html>

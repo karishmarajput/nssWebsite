@@ -306,20 +306,13 @@ console.log(typeof( parti))
   });
   app.get('/admin/userDisplay',authenticateAdmin,async(req,res) => {
     try {
-      // Fetch the user list from the database
-      const userList = await User.find({}, 'userid fname lname educationHr healthHr animalHr cyberHr clHr universityHr TotalHr');
-  
-      // Render the event form with the user list
+      const userList = await User.find();
       res.render('userDisplay', { users: userList });
     } catch (error) {
       console.error('Error fetching user list:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   })
-  
-
-
-//users
 
 app.get('/admin/adduser',authenticateAdmin,(req,res)=>{
     res.status(200).sendFile(path.join(__dirname,'public','pages/addUser.html'))  
@@ -354,29 +347,49 @@ app.post('/admin/adduser',authenticateAdmin,async(req,res)=>{
         res.status(500).json({ error: 'Internal server error' });
       }
 })
-app.get('/admin/userDisplay/:userid', authenticateAdmin,(req, res) => {
-  const userid = req.params.userid;
-  User.findOne({ userid })
+app.get('/admin/userDisplay/:vec', authenticateAdmin,(req, res) => {
+  const vec = req.params.vec;
+  User.findOne({ vec })
     .populate('eventsAttended')
+    .populate('eventsOrganised')
     .exec()
     .then(user => {
       if (user) {
         const userDetails = {
-          userid: user.userid,
-          fname: user.fname,
-          lname: user.lname,
-          educationHr: user.educationHr,
-          healthHr: user.healthHr,
-          animalHr: user.animalHr,
-          cyberHr: user.cyberHr,
+          vec: user.vec,
+          name: user.name,
+          branch: user.branch,
+          div: user.div,
+          sem: user.sem,
+          contactNo: user.contactNo,
+          nameOfClg: user.nameOfClg,
+          dob: user.dob,
+          bloodGroup: user.bloodGroup,
+          gender: user.gender,
+          address: user.address,
+          yearInNss: user.yearInNss,
+          campAttended: user.dob,
+          fitIndiaHr: user.fitIndiaHr,
+          educationForAllHr: user.educationForAllHr,
+          animalWellfareHr: user.animalWellfareHr,
+          diasterManagementHr: user.diasterManagementHr,
+          greenInitiativeHr: user.greenInitiativeHr,
           clHr: user.clHr,
           universityHr: user.universityHr,
-          totalHour: user.TotalHr,
+          TotalHr: user.TotalHr,
           eventsAttended: user.eventsAttended.map(event => {
             return {
               eventId: event._id,
               eventName: event.eventName,
               hour: event.hours,
+              category: event.category
+            };
+          }),
+          eventsOrganised: user.eventsOrganised.map(event => {
+            return {
+              eventId: event._id,
+              eventName: event.eventName,
+              organisersHr: event.organisersHr,
               category: event.category
             };
           })
@@ -394,6 +407,25 @@ app.get('/admin/userDisplay/:userid', authenticateAdmin,(req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     });
 });
+ 
+app.get('/admin/eventDisplay',authenticateAdmin, async(req,res)=>{
+  try {
+    // const eventList = 
+    await Event.find().populate('eventLeader', 'name').populate('reportWrittenBy','name')
+    .exec()
+    .then((event) => {
+      // Render the displayEvent.ejs template with the populated event
+      res.render('eventDisplay', { events: event});
+    });
+   
+  } catch (error) {
+    console.error('Error fetching user list:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+
+
 app.get('/userLogin',(req,res)=>{
     res.status(200).sendFile(path.join(__dirname,'public','pages/userLogin.html'))
 })

@@ -5,31 +5,368 @@
 </head>
 <body>
   <h1>User Details</h1>
-  <p>User ID: <%= userDetails.userid %></p>
-  <p>First Name: <%= userDetails.fname %></p>
-  <p>Last Name: <%= userDetails.lname %></p>
-  <p>Education Hours: <%= userDetails.educationHr %></p>
-  <p>Health Hours: <%= userDetails.healthHr %></p>
-  <p>Animal Hours: <%= userDetails.animalHr %></p>
-  <p>Cyber Hours: <%= userDetails.cyberHr %></p>
-  <p>CL Hours: <%= userDetails.clHr %></p>
-  <p>University Hours: <%= userDetails.universityHr %></p>
-  <p>Total Hours: <%= userDetails.totalHour %></p>
+  <p>Vec: <%= userDetails.vec %></p>
+  <p>Name: <%= userDetails.name %></p>
+  <p>Branch: <%= userDetails.branch %></p>
+  <p>DIV: <%= userDetails.div %></p>
+  <p>SEM: <%= userDetails.sem %></p>
+  <p>Contact No: <%= userDetails.contactNo %></p>
+  <p>Name Of College: <%= userDetails.nameOfClg %></p>
+  <p>DOB: <%= userDetails.dob.toLocaleDateString("en-GB") %></p>
+  <p>bloodGroup: <%= userDetails.bloodGroup %></p>
+  <p>gender: <%= userDetails.gender %></p>
+  <p>address: <%= userDetails.address %></p>
+  <p>yearInNss: <%= userDetails.yearInNss%></p>
+  <p>campAttended: <%= userDetails.campAttended.getFullYear() %></p>
+  <p>fitIndiaHr: <%= userDetails.fitIndiaHr %></p>
+  <p>educationForAllHr: <%= userDetails.educationForAllHr %></p>
+  <p>animalWellfareHr: <%= userDetails.animalWellfareHr %></p>
+  <p>diasterManagementHr: <%= userDetails.diasterManagementHr %></p>
+  <p>greenInitiativeHr: <%= userDetails.greenInitiativeHr %></p>
+  <p>clHr: <%= userDetails.clHr %></p>
+  <p>universityHr: <%= userDetails.universityHr %></p>
+  <p>Total Hours: <%= userDetails.TotalHr %></p>
 
   <h2>Events Attended</h2>
   <% if (userDetails.eventsAttended.length > 0) { %>
-    <ul>
-      <% userDetails.eventsAttended.forEach(function(event) { %>
-        <li>
-          Event ID: <%= event.eventId %><br>
-          Event Name: <%= event.eventName %><br>
-          Event hour: <%= event.hour %><br>
-          Event category: <%= event.category %>
-        </li>
-      <% }); %>
-    </ul>
+    
+      <h4>Fit India</h4>
+      <table border="1px">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% userDetails.eventsAttended.forEach(function(event) { %>
+            <% if (event.category == "fitIndia") { %>
+              <tr>
+                <td><%= event.eventName %></td>
+                <td><%= event.hour %></td>
+              </tr>
+            <% } %>
+          <% }); %>
+        </tbody>
+        <tr>
+          <th>Total</th>
+          <th><%= userDetails.fitIndiaHr%></th>
+        </tr>
+      </table>
+      <h4>educationForAll</h4>
+      <table border="1px">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% userDetails.eventsAttended.forEach(function(event) { %>
+            <% if (event.category == "educationForAll") { %>
+              <tr>
+                <td><%= event.eventName %></td>
+                <td><%= event.hour %></td>
+              </tr>
+            <% } %>
+          <% }); %>
+        </tbody>
+        <tr>
+          <th>Total</th>
+          <th><%= userDetails.educationForAllHr%></th>
+        </tr>
+      </table>
+      <h4>animalWellfare</h4>
+      <table border="1px">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% userDetails.eventsAttended.forEach(function(event) { %>
+            <% if (event.category == "animalWellfare") { %>
+              <tr>
+                <td><%= event.eventName %></td>
+                <td><%= event.hour %></td>
+              </tr>
+            <% } %>
+          <% }); %>
+        </tbody>
+        <tr>
+          <th>Total</th>
+          <th><%= userDetails.animalWellfareHr%></th>
+        </tr>
+      </table>
+      <h4>diasterManagement</h4>
+      <table border="1px">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% userDetails.eventsAttended.forEach(function(event) { %>
+            <% if (event.category == "diasterManagement") { %>
+              <tr>
+                <td><%= event.eventName %></td>
+                <td><%= event.hour %></td>
+              </tr>
+            <% } %>
+          <% }); %>
+        </tbody>
+        <tr>
+          <th>Total</th>
+          <th><%= userDetails.diasterManagementHr%></th>
+        </tr>
+      </table>
+      <h4>greenInitiative</h4>
+      <table border="1px">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% userDetails.eventsAttended.forEach(function(event) { %>
+            <% if (event.category == "greenInitiative") { %>
+              <tr>
+                <td><%= event.eventName %></td>
+                <td><%= event.hour %></td>
+              </tr>
+            <% } %>
+          <% }); %>
+        </tbody>
+        <tr>
+          <th>Total</th>
+          <th><%= userDetails.greenInitiativeHr%></th>
+        </tr>
+      </table>
+      <h4>clHr</h4>
+      <table border="1px">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% userDetails.eventsAttended.forEach(function(event) { %>
+            <% if (event.category == "college") { %>
+              <tr>
+                <td><%= event.eventName %></td>
+                <td><%= event.hour %></td>
+              </tr>
+            <% } %>
+          <% }); %>
+        </tbody>
+        <tr>
+          <th>Total</th>
+          <th><%= userDetails.clHr%></th>
+        </tr>
+      </table>
+      <h4>university</h4>
+      <table border="1px">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% userDetails.eventsAttended.forEach(function(event) { %>
+            <% if (event.category == "university") { %>
+              <tr>
+                <td><%= event.eventName %></td>
+                <td><%= event.hour %></td>
+              </tr>
+            <% } %>
+          <% }); %>
+        </tbody>
+        <tr>
+          <th>Total</th>
+          <th><%= userDetails.universityHr%></th>
+        </tr>
+      </table>
   <% } else { %>
     <p>No events attended.</p>
+  <% } %>
+
+  <h2>Events Organised</h2>
+  <% if (userDetails.eventsOrganised.length > 0) { %>
+    <h4>Fit India</h4>
+    <table border="1px">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% fitIndiaHr = 0 %>
+        <% userDetails.eventsOrganised.forEach(function(event) { %>
+          <% if (event.category == "fitIndia") { fitIndiaHr += event.organisersHr %>
+            <tr>
+              <td><%= event.eventName %></td>
+              <td><%= event.organisersHr %></td>
+            </tr>
+          <% } %>
+        <% }); %>
+      </tbody>
+      <tr>
+        <th>Total</th>
+        <th><%= fitIndiaHr%></th>
+      </tr>
+    </table>
+    <h4>educationForAll</h4>
+    <table border="1px">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% educationForAllHr = 0 %>
+        <% userDetails.eventsOrganised.forEach(function(event) { %>
+          <% if (event.category == "educationForAll") { educationForAllHr +=  organisersHr %>
+            <tr>
+              <td><%= event.eventName %></td>
+              <td><%= event.organisersHr %></td>
+            </tr>
+          <% } %>
+        <% }); %>
+      </tbody>
+      <tr>
+        <th>Total</th>
+        <th><%= educationForAllHr%></th>
+      </tr>
+    </table>
+    <h4>animalWellfare</h4>
+    <table border="1px">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% animalWellfareHr = 0 %>
+        <% userDetails.eventsOrganised.forEach(function(event) { %>
+          <% if (event.category == "animalWellfare") { animalWellfareHr += organisersHr %>
+            <tr>
+              <td><%= event.eventName %></td>
+              <td><%= event.organisersHr %></td>
+            </tr>
+          <% } %>
+        <% }); %>
+      </tbody>
+      <tr>
+        <th>Total</th>
+        <th><%= animalWellfareHr%></th>
+      </tr>
+    </table>
+    <h4>diasterManagement</h4>
+    <table border="1px">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% diasterManagementHr = 0 %>
+        <% userDetails.eventsOrganised.forEach(function(event) { %>
+          <% if (event.category == "diasterManagement") { diasterManagementHr+= event.organisersHr %>
+            <tr>
+              <td><%= event.eventName %></td>
+              <td><%= event.organisersHr %></td>
+            </tr>
+          <% } %>
+        <% }); %>
+      </tbody>
+      <tr>
+        <th>Total</th>
+        <th><%= diasterManagementHr%></th>
+      </tr>
+    </table>
+    <h4>greenInitiative</h4>
+    <table border="1px">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% greenInitiativeHr = 0 %>
+        <% userDetails.eventsOrganised.forEach(function(event) { %>
+          <% if (event.category == "greenInitiative") { greenInitiativeHr += event.organisersHr%>
+            <tr>
+              <td><%= event.eventName %></td>
+              <td><%= event.organisersHr %></td>
+            </tr>
+          <% } %>
+        <% }); %>
+      </tbody>
+      <tr>
+        <th>Total</th>
+        <th><%= greenInitiativeHr%></th>
+      </tr>
+    </table>
+    <h4>clHr</h4>
+    <table border="1px">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% clHr = 0 %>
+        <% userDetails.eventsOrganised.forEach(function(event) { %>
+          <% if (event.category == "college") { clHr += event.organisersHr %>
+            <tr>
+              <td><%= event.eventName %></td>
+              <td><%= event.organisersHr %></td>
+            </tr>
+          <% } %>
+        <% }); %>
+      </tbody>
+      <tr>
+        <th>Total</th>
+        <th><%= clHr%></th>
+      </tr>
+    </table>
+    <h4>university</h4>
+    <table border="1px">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% uniHr = 0 %>
+        <% userDetails.eventsOrganised.forEach(function(event) { %>
+          <% if (event.category == "university") { uniHr += event.organisersHr %>
+            <tr>
+              <td><%= event.eventName %></td>
+              <td><%= event.organisersHr %></td>
+            </tr>
+          <% } %>
+        <% }); %>
+      </tbody>
+      <tr>
+        <th>Total</th>
+        <th><%= uniHr %></th>
+      </tr>
+    </table>
+  <% } else { %>
+    <p>No events organised.</p>
   <% } %>
 </body>
 </html>
