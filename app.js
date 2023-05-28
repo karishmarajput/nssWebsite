@@ -130,16 +130,12 @@ const authenticateAdmin = async(req, res, next) => {
   
   app.get('/admin/addevent', authenticateAdmin, async(req, res) => {
     try {
-        // Fetch the user list from the database
         const userList = await User.find({}, 'vec name');
-    
-        // Render the event form with the user list
         res.render('eventForm', { users: userList });
       } catch (error) {
         console.error('Error fetching user list:', error);
         res.status(500).json({ error: 'Internal server error' });
       }
-    // res.status(200).sendFile(path.join(__dirname,'public','pages/eventForm.html'))
   });
   
   const storage = multer.diskStorage({
@@ -177,7 +173,6 @@ const authenticateAdmin = async(req, res, next) => {
     })
     totalPart = parti.length+ organiser.length;
     let participants = [],organisers = [],malePart = 0, femalePart = 0
-console.log(typeof( parti))
     parti = parti.split(",");
     organiser = organiser.split(",")
     for(let i =0; i < parti.length;i++){
@@ -189,23 +184,7 @@ console.log(typeof( parti))
             malePart += 1 
           }else{
             femalePart +=1
-          }
-          if(category == 'fitIndia'){
-            user.fitIndiaHr = parseInt(user.fitIndiaHr)+ parseInt(hours);
-          }else if(category == 'educationForAll'){
-            user.educationForAllHr = parseInt(user.educationForAllHr)+ parseInt(hours);
-          }else if(category == 'animalWellfare'){
-            user.animalWellfareHr = parseInt(user.animalWellfareHr)+ parseInt(hours);
-          }else if(category == 'diasterManagement'){
-            user.diasterManagementHr = parseInt(user.diasterManagementHr)+ parseInt(hours);
-          }else if(category == 'greenInitiative'){
-            user.greenInitiativeHr = parseInt(user.greenInitiativeHr)+ parseInt(hours);
-          }else if(category == 'college'){
-            user.clHr = parseInt(user.clHr)+ parseInt(hours);;
-          }else{
-            user.universityHr = parseInt(user.universityHr)+ parseInt(hours);;
-          }
-          user.TotalHr = parseInt(user.TotalHr)+ parseInt(hours);; 
+          } 
           return user.save();
         } else {
           console.log('User not found');
@@ -226,22 +205,6 @@ console.log(typeof( parti))
           }else{
             femalePart +=1
           }
-          if(category == 'fitIndia'){
-            user.fitIndiaHr = parseInt(user.fitIndiaHr)+ parseInt(organisersHr);
-          }else if(category == 'educationForAll'){
-            user.educationForAllHr = parseInt(user.educationForAllHr)+ parseInt(organisersHr);
-          }else if(category == 'animalWellfare'){
-            user.animalWellfareHr = parseInt(user.animalWellfareHr)+ parseInt(organisersHr);
-          }else if(category == 'diasterManagement'){
-            user.diasterManagementHr = parseInt(user.diasterManagementHr)+ parseInt(organisersHr);
-          }else if(category == 'greenInitiative'){
-            user.greenInitiativeHr = parseInt(user.greenInitiativeHr)+ parseInt(organisersHr);
-          }else if(category == 'college'){
-            user.clHr = parseInt(user.clHr)+ parseInt(organisersHr);;
-          }else{
-            user.universityHr = parseInt(user.universityHr)+ parseInt(organisersHr);;
-          }
-          user.TotalHr = parseInt(user.TotalHr)+ parseInt(organisersHr);
           return user.save();
         } else {
           console.log('User not found');
@@ -306,13 +269,16 @@ console.log(typeof( parti))
     }
   });
   app.get('/admin/userDisplay',authenticateAdmin,async(req,res) => {
-    try {
-      const userList = await User.find();
-      res.render('userDisplay', { users: userList });
-    } catch (error) {
-      console.error('Error fetching user list:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
+    try{
+      const users = await User.find()    
+      .populate('eventsAttended', 'hours category')
+      .populate('eventsOrganised','organisersHr category');
+      res.render('userDisplay', { users });
+    } 
+      catch(error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+      };
   })
 
 app.get('/admin/adduser',authenticateAdmin,(req,res)=>{
@@ -369,15 +335,7 @@ app.get('/admin/userDisplay/:vec', authenticateAdmin,(req, res) => {
           gender: user.gender,
           address: user.address,
           yearInNss: user.yearInNss,
-          campAttended: user.dob,
-          fitIndiaHr: user.fitIndiaHr,
-          educationForAllHr: user.educationForAllHr,
-          animalWellfareHr: user.animalWellfareHr,
-          diasterManagementHr: user.diasterManagementHr,
-          greenInitiativeHr: user.greenInitiativeHr,
-          clHr: user.clHr,
-          universityHr: user.universityHr,
-          TotalHr: user.TotalHr,
+          campAttended: user.campAttended,
           eventsAttended: user.eventsAttended.map(event => {
             return {
               eventId: event._id,

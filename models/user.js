@@ -54,46 +54,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  fitIndiaHr: {
-    type: Number,
-    required: true,
-    default:0
-  },
-  educationForAllHr: {
-    type: Number,
-    required: true,
-    default:0
-  },
-  animalWellfareHr: {
-    type: Number,
-    required: true,
-    default:0
-  },
-  diasterManagementHr: {
-    type: Number,
-    required: true,
-    default:0
-  },
-  greenInitiativeHr: {
-    type: Number,
-    required: true,
-    default:0
-  },
-  clHr: {
-    type: Number,
-    required: true,
-    default:0
-  },
-  universityHr: {
-    type: Number,
-    required: true,
-    default:0
-  },
-  TotalHr: {
-    type: Number,
-    required: true,
-    default:0
-  },
   password: {
     type: String,
     required: true

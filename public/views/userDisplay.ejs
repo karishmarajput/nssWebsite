@@ -33,20 +33,63 @@
             <td><%= user.vec %></td>
             <td><%= user.name %></td>
             <td><%= user.branch %></td>
-            <td><%= user.sem %></td>
-            <td><%= user.fitIndiaHr %></td>
-            <td><%= user.educationForAllHr %></td>
-            <td><%= user.animalWellfareHr %></td>
-            <td><%= user.diasterManagementHr %></td>
-            <td><%= user.greenInitiativeHr %></td>
-            <td><%= user.clHr %></td>
-            <td><%= user.universityHr %></td>
-            <td><%= user.TotalHr %></td>
+            <td><%= user.sem %></td> 
+            <td><%= getTotalHours(user, 'fitIndia') %></td>
+            <td><%= getTotalHours(user, 'educationForAll') %></td>
+            <td><%= getTotalHours(user, 'animalWellfare') %></td>
+            <td><%= getTotalHours(user, 'diasterManagement') %></td>
+            <td><%= getTotalHours(user, 'greenInitiative') %></td>
+            <td><%= getTotalHours(user, 'college') %></td>
+            <td><%= getTotalHours(user, 'university') %></td>
+            <td><%= totalHours(user) %></td>
             <td><button onclick="showDetails('<%= user.vec %>')">Show Details</button></td>
           </tr>
           <% }); %>
         </tbody>
       </table>
+    
+      <% 
+      function totalHours(user){
+        let totalHours = 0;
+        user.eventsAttended.forEach(event => {
+          
+            const hours = parseFloat(event.hours);
+            if (!isNaN(hours)) { 
+              totalHours += hours;
+            }
+          
+        });
+        user.eventsOrganised.forEach(event => {
+          
+            const hours = parseFloat(event.organisersHr); 
+            if (!isNaN(hours)) { 
+              totalHours += hours;
+            }
+          
+        });
+        return totalHours;
+      }
+      
+      function getTotalHours(user, category) {
+        let totalHours = 0;
+        user.eventsAttended.forEach(event => {
+          if (event.category === category) {
+            const hours = parseFloat(event.hours);
+            if (!isNaN(hours)) { 
+              totalHours += hours;
+            }
+          }
+        });
+        user.eventsOrganised.forEach(event => {
+          if (event.category === category) {
+            const hours = parseFloat(event.organisersHr); 
+            if (!isNaN(hours)) { 
+              totalHours += hours;
+            }
+          }
+        });
+        return totalHours;
+      } %>
       
 </body>
 <script>
