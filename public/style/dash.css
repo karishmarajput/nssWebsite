@@ -4,11 +4,11 @@
     margin-top: 50px;
   }
   
-  .row {
+.row {
     display: flex;
-  }
+}
   
-  .btn-block {
+.btn-block {
     width: 100%;
   }
   
