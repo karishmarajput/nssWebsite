@@ -27,6 +27,7 @@ app.use(express.urlencoded())
 app.use(cors())
 app.use(express.static(__dirname ));
 app.set("views", path.join(__dirname, "/public/views"));
+app.use(express.static('public'));
 
 //middleware
 app.use(express.json());
