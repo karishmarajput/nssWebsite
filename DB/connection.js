@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const URI ='mongodb://localhost:27017/nssDb';
+const URI ='mongodb+srv://admin:admin@cluster0.bt6ndth.mongodb.net/';
 
 const connectDB = async() =>{
    await mongoose.connect(URI,{ useNewUrlParser: true, useUnifiedTopology: true });
