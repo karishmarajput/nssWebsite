@@ -17,15 +17,7 @@
   <p>gender: <%= userDetails.gender %></p>
   <p>address: <%= userDetails.address %></p>
   <p>yearInNss: <%= userDetails.yearInNss%></p>
-  <p>campAttended: <%= userDetails.campAttended.getFullYear() %></p>
-  <p>fitIndiaHr: <%= userDetails.fitIndiaHr %></p>
-  <p>educationForAllHr: <%= userDetails.educationForAllHr %></p>
-  <p>animalWellfareHr: <%= userDetails.animalWellfareHr %></p>
-  <p>diasterManagementHr: <%= userDetails.diasterManagementHr %></p>
-  <p>greenInitiativeHr: <%= userDetails.greenInitiativeHr %></p>
-  <p>clHr: <%= userDetails.clHr %></p>
-  <p>universityHr: <%= userDetails.universityHr %></p>
-  <p>Total Hours: <%= userDetails.TotalHr %></p>
+  <p>campAttended: <%= userDetails.campAttended %></p>
 
   <h2>Events Attended</h2>
   <% if (userDetails.eventsAttended.length > 0) { %>
@@ -39,8 +31,9 @@
           </tr>
         </thead>
         <tbody>
-          <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "fitIndia") { %>
+          <% fitIndiaHr = 0 %>
+          <% userDetails.eventsAttended.forEach(function(event) {%>
+            <% if (event.category == "fitIndia") { fitIndiaHr+=event.hour %>
               <tr>
                 <td><%= event.eventName %></td>
                 <td><%= event.hour %></td>
@@ -50,7 +43,7 @@
         </tbody>
         <tr>
           <th>Total</th>
-          <th><%= userDetails.fitIndiaHr%></th>
+          <th><%= fitIndiaHr%></th>
         </tr>
       </table>
       <h4>educationForAll</h4>
@@ -62,8 +55,9 @@
           </tr>
         </thead>
         <tbody>
-          <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "educationForAll") { %>
+          <% educationForAllHr = 0 %>
+          <% userDetails.eventsAttended.forEach(function(event) {  %>
+            <% if (event.category == "educationForAll") { educationForAllHr+= event.hour %>
               <tr>
                 <td><%= event.eventName %></td>
                 <td><%= event.hour %></td>
@@ -73,7 +67,7 @@
         </tbody>
         <tr>
           <th>Total</th>
-          <th><%= userDetails.educationForAllHr%></th>
+          <th><%= educationForAllHr%></th>
         </tr>
       </table>
       <h4>animalWellfare</h4>
@@ -85,8 +79,9 @@
           </tr>
         </thead>
         <tbody>
+          <% animalWellfareHr = 0 %>
           <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "animalWellfare") { %>
+            <% if (event.category == "animalWellfare") { animalWellfareHr += event.hour %>
               <tr>
                 <td><%= event.eventName %></td>
                 <td><%= event.hour %></td>
@@ -96,7 +91,7 @@
         </tbody>
         <tr>
           <th>Total</th>
-          <th><%= userDetails.animalWellfareHr%></th>
+          <th><%= animalWellfareHr%></th>
         </tr>
       </table>
       <h4>diasterManagement</h4>
@@ -108,8 +103,9 @@
           </tr>
         </thead>
         <tbody>
+          <% diasterManagementHr = 0 %>
           <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "diasterManagement") { %>
+            <% if (event.category == "diasterManagement") { diasterManagementHr+= event.hour %>
               <tr>
                 <td><%= event.eventName %></td>
                 <td><%= event.hour %></td>
@@ -131,8 +127,9 @@
           </tr>
         </thead>
         <tbody>
+          <% greenInitiativeHr = 0 %>
           <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "greenInitiative") { %>
+            <% if (event.category == "greenInitiative") { greenInitiativeHr += event.hour%>
               <tr>
                 <td><%= event.eventName %></td>
                 <td><%= event.hour %></td>
@@ -142,7 +139,7 @@
         </tbody>
         <tr>
           <th>Total</th>
-          <th><%= userDetails.greenInitiativeHr%></th>
+          <th><%= greenInitiativeHr%></th>
         </tr>
       </table>
       <h4>clHr</h4>
@@ -154,8 +151,9 @@
           </tr>
         </thead>
         <tbody>
+          <% clHr = 0 %>
           <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "college") { %>
+            <% if (event.category == "college") { clHr += event.hour %>
               <tr>
                 <td><%= event.eventName %></td>
                 <td><%= event.hour %></td>
@@ -165,7 +163,7 @@
         </tbody>
         <tr>
           <th>Total</th>
-          <th><%= userDetails.clHr%></th>
+          <th><%= clHr%></th>
         </tr>
       </table>
       <h4>university</h4>
@@ -177,8 +175,9 @@
           </tr>
         </thead>
         <tbody>
+          <% universityHr = 0%>
           <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "university") { %>
+            <% if (event.category == "university") { universityHr += event.hour %>
               <tr>
                 <td><%= event.eventName %></td>
                 <td><%= event.hour %></td>
@@ -188,7 +187,7 @@
         </tbody>
         <tr>
           <th>Total</th>
-          <th><%= userDetails.universityHr%></th>
+          <th><%= universityHr%></th>
         </tr>
       </table>
   <% } else { %>
@@ -232,7 +231,7 @@
       <tbody>
         <% educationForAllHr = 0 %>
         <% userDetails.eventsOrganised.forEach(function(event) { %>
-          <% if (event.category == "educationForAll") { educationForAllHr +=  organisersHr %>
+          <% if (event.category == "educationForAll") { educationForAllHr +=  event.organisersHr %>
             <tr>
               <td><%= event.eventName %></td>
               <td><%= event.organisersHr %></td>
@@ -256,7 +255,7 @@
       <tbody>
         <% animalWellfareHr = 0 %>
         <% userDetails.eventsOrganised.forEach(function(event) { %>
-          <% if (event.category == "animalWellfare") { animalWellfareHr += organisersHr %>
+          <% if (event.category == "animalWellfare") { animalWellfareHr += event.organisersHr %>
             <tr>
               <td><%= event.eventName %></td>
               <td><%= event.organisersHr %></td>

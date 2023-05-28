@@ -171,7 +171,7 @@ const authenticateAdmin = async(req, res, next) => {
       .then(user => {
         reportWrittenBy = user;
     })
-    totalPart = parti.length+ organiser.length;
+    totalPart = parseInt(parti.length)+ parseInt(organiser.length);
     let participants = [],organisers = [],malePart = 0, femalePart = 0
     parti = parti.split(",");
     organiser = organiser.split(",")
@@ -369,11 +369,10 @@ app.get('/admin/userDisplay/:vec', authenticateAdmin,(req, res) => {
  
 app.get('/admin/eventDisplay',authenticateAdmin, async(req,res)=>{
   try {
-    // const eventList = 
+    
     await Event.find().populate('eventLeader', 'name').populate('reportWrittenBy','name')
     .exec()
     .then((event) => {
-      // Render the displayEvent.ejs template with the populated event
       res.render('eventDisplay', { events: event});
     });
    
@@ -381,6 +380,21 @@ app.get('/admin/eventDisplay',authenticateAdmin, async(req,res)=>{
     console.error('Error fetching user list:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+})
+
+app.get('/admin/eventDisplay/:eventId',authenticateAdmin,async(req,res)=>{
+  const eventId = req.params.eventId;
+  try{
+    const event = await Event.findOne({_id: eventId})    
+    .populate('organisers', 'vec name')
+    .populate('participants','vec name');
+    console.log(event)
+    res.render('eventDetails', { event });
+  } 
+    catch(error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    };
 })
 
 
