@@ -1,0 +1,14 @@
+.container {
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 50px;
+  }
+  
+  .row {
+    display: flex;
+  }
+  
+  .btn-block {
+    width: 100%;
+  }
+  

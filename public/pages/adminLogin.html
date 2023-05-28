@@ -3,16 +3,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="style/styles.css">
 </head>
 <body>
     <h1>Admin Login</h1>
-    <form action="/admin" method="POST" style="margin-top: 15px;">
-        <label for="username" style="margin-top: 10px;">Username: &nbsp;</label>
-        <input type="text" name="username" id="" style="margin-top: 10px;"/><br>
-        <label for="password" style="margin-top: 10px;">Password : &nbsp;</label>
-        <input type="password" name="password" id="" style="margin-top: 10px;"/><br>
-        <input type="submit" class="btn btn-warning navButton" value="Login" style="margin-top:1.5rem"/>
+    <form action="/admin" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required><br>
+        <input type="submit" class="btn btn-warning navButton" value="Login">
     </form>
 </body>
 </html>
