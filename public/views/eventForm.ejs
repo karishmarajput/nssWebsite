@@ -1,118 +1,135 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/style/event.css"> 
-    <style>
-      .partId{
-        border: 1px solid black;
-        margin: .15rem;
-        padding: .15rem;
-      }
-      table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-
-    tr:hover {
-      background-color: #f5f5f5;
-    }
-    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Event</title>
+  <link rel="stylesheet" href="/style/event.css">
 </head>
-<body>
-    <h1>Add Event</h1>
-    <label for="eventName">Event Name:</label>
-    <input type="text" id="eventName" name="eventName" required><br><br>
-    
-    <label for="eventDate">Event Date:</label>
-    <input type="date" id="eventDate" name="eventDate" required><br><br>
-    
-    <label for="venue">venue:</label>
-    <input type="text" id="venue" name="venue" required><br><br>
-    <label for="content">content:</label>
-    <textarea id="content" name="content" required></textarea><br><br>
-    
-    <label for="eventLeader">Event Leader:</label>
-    <select id="eventLeader" name="eventLeader" required>
-      <option value="">Select the Event Leader</option>
-      <% users.forEach(user => { %>
-        <option value="<%= user.vec %>"><%= user.vec %>:  <%= user.name %></option>
-      <% }); %>
-    </select><br><br>
-    <label for="organisersHr">organisersHr:</label>
-    <input type="number" id="organisersHr" name="organisersHr" required><br><br>
 
-    <label for="organisers">Organisers:</label>
-    <div id="organisers-container">
-    <select id="organisers" name="organisers" required>
-      <option value="">Select the organisers</option>
-      <% users.forEach(user => { %>
-        <option value="<%= user.vec %>"><%= user.vec %>:  <%= user.name %></option>
-      <% }); %>
-    </select><br><br>
-    <div id="selectedOrganiser"></div>
-    <button type="button" class="add-participant-btn" onclick="addOrganiser()">+</button>
-    <br><br>
-    <label for="hours">hours for Participants:</label>
-    <input type="number" id="hours" name="hours" required><br><br>
-    
-    
-    
+<body>
+  <div class="container">
+    <h1>Add Event</h1>
+
+    <div class="form-group">
+      <label for="eventName">Event Name:</label>
+      <input type="text" id="eventName" name="eventName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="eventDate">Event Date:</label>
+      <input type="date" id="eventDate" name="eventDate" required>
+    </div>
+
+    <div class="form-group">
+      <label for="venue">Venue:</label>
+      <input type="text" id="venue" name="venue" required>
+    </div>
+
+    <div class="form-group">
+      <label for="content">Content:</label>
+      <textarea id="content" name="content" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="eventLeader">Event Leader:</label>
+      <select id="eventLeader" name="eventLeader" required>
+        <option value="">Select the Event Leader</option>
+        <% users.forEach(user => { %>
+        <option value="<%= user.vec %>"><%= user.vec %>: <%= user.name %></option>
+        <% }); %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="organisersHr">Organisers Hr:</label>
+      <input type="number" id="organisersHr" name="organisersHr" required>
+    </div>
+
+    <div class="form-group">
+      <label for="organisers">Organisers:</label>
+      <div id="organisers-container">
+        <select id="organisers" name="organisers" required>
+          <option value="">Select the organisers</option>
+          <% users.forEach(user => { %>
+          <option value="<%= user.vec %>"><%= user.vec %>: <%= user.name %></option>
+          <% }); %>
+        </select>
+        <div id="selectedOrganiser"></div>
+        <button type="button" class="add-participant-btn" onclick="addOrganiser()">+</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="hours">Hours for Participants:</label>
+      <input type="number" id="hours" name="hours" required>
+    </div>
+
     <h2>Participants</h2>
-    <input type="text" id="searchInput" placeholder="Search by VEC Number"><br><br>
+
+    <div class="form-group">
+      <input type="text" id="searchInput" placeholder="Search by VEC Number">
+    </div>
+
     <table id="participantTable">
       <thead>
         <tr>
           <th>Selected</th>
-          <th>vec</th>
+          <th>VEC</th>
           <th>Name</th>
-
         </tr>
       </thead>
       <tbody>
         <% users.forEach(function(user) { %>
-          <tr class="participant-row" data-userid="<%= user.vec %>">
-            <td>
-              <input type="checkbox" class="participant-checkbox" data-userid="<%= user.vec %>">
-            </td>
-            <td><%= user.vec %></td>
-            <td><%= user.name %></td>
-          </tr>
+        <tr class="participant-row" data-userid="<%= user.vec %>">
+          <td>
+            <input type="checkbox" class="participant-checkbox" data-userid="<%= user.vec %>">
+          </td>
+          <td><%= user.vec %></td>
+          <td><%= user.name %></td>
+        </tr>
         <% }); %>
       </tbody>
     </table>
-    <br><br>
-    <label for="category">Category:</label>
-    <select id="category" required>
-      <option value="fitIndia">Fit India</option>
-      <option value="educationForAll">education For All</option>
-      <option value="animalWellfare">animal Wellfare Hr</option>
-      <option value="diasterManagement">diasterManagement</option>
-      <option value="greenInitiative">greenInitiative</option>
-      <option value="college">College</option>
-      <option value="university">University</option>
-    </select>
-    <label for="numberOfBenificiar">number Of Benificiar:</label>
-    <input type="number" id="numberOfBenificiar" name="numberOfBenificiar" required><br><br>
 
-    <label for="reportWrittenBy">report Written By:</label>
-    <select id="reportWrittenBy" name="reportWrittenBy" required>
-      <option value="">Select the reportWrittenBy</option>
-      <% users.forEach(user => { %>
-        <option value="<%= user.vec %>"><%= user.vec %>:  <%= user.name %></option>
-      <% }); %>
-    </select><br><br>
-    <input type="file" accept="image/*" id="fileImage">
+    <div class="form-group">
+      <label for="category">Category:</label>
+      <select id="category" required>
+        <option value="fitIndia">Fit India</option>
+        <option value="educationForAll">Education For All</option>
+        <option value="animalWellfare">Animal Welfare</option>
+        <option value="disasterManagement">Disaster Management</option>
+        <option value="greenInitiative">Green Initiative</option>
+        <option value="college">College</option>
+        <option value="university">University</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="numberOfBenificiar">Number of Beneficiaries:</label>
+      <input type="number" id="numberOfBenificiar" name="numberOfBenificiar" required>
+    </div>
+
+    <div class="form-group">
+      <label for="reportWrittenBy">Report Written By:</label>
+      <select id="reportWrittenBy" name="reportWrittenBy" required>
+        <option value="">Select the Report Written By</option>
+        <% users.forEach(user => { %>
+        <option value="<%= user.vec %>"><%= user.vec %>: <%= user.name %></option>
+        <% }); %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <input type="file" accept="image/*" id="fileImage">
+    </div>
+
     <button type="submit" onclick="submitEvent()">Add Event</button>
-</body>
+  </div>
+
+
 <script>
 
   let parti = [];
