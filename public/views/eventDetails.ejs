@@ -1,18 +1,84 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Event Details</title>
+    <link rel="stylesheet" href="/style/eventDetails.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            $("#header").load("/components/header.html");
+        });
+    </script>
 </head>
+
 <body>
-    <h3> <%= event.eventName %></h3>
-    <img src="/<%= event.imagePath %>" alt="<%= event.eventName %>" width="200" height="200">
-    <p>
-        Venue: <%= event.venue %> <br>
-        Date: <%= event.eventDate %> <br>
-        Content: <%= event.venue %> <br>
-        
-    </p>
+    <div id="header"></div>
+    <div class="event-container">
+        <div class="event-name">
+            <h3 class="event-title"><%= event.eventName %></h3>
+        </div>
+        <div class="event-image">
+            <img src="/<%= event.imagePath %>" alt="<%= event.eventName %>">
+        </div>
+        <div class="event-details">
+            <p>
+                <span class="detail-label">Venue:</span> <%= event.venue %><br>
+                <span class="detail-label">Date:</span> <%= event.eventDate %><br>
+                <span class="detail-label">Category:</span> <%= event.category %><br>
+                <span class="detail-label">Content:</span> <%= event.content %><br>
+                <span class="detail-label">Event Leader:</span> <%= event.eventLeader %><br>
+                <span class="detail-label">Total Participants:</span> <%= event.totalPart %><br>
+                <span class="detail-label">No. of Beneficiaries:</span> <%= event.numberOfBeneficiaries %><br>
+                <span class="detail-label">Report by:</span> <%= event.reportWrittenBy %><br>
+            </p>
+        </div>
+        <div class="organisers-section">
+            <span class="detail-label">Organiser Hours:</span> <%= event.organisersHr %><br>
+            <div class="organisers-list">
+                <h4 class="section-title">Organisers:</h4>
+                <table class="organisers-table">
+                    <thead>
+                        <tr>
+                            <th>VEC</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% event.organisers.forEach(function(organiser) { %>
+                            <tr>
+                                <td><%= organiser.vec %></td>
+                                <td><%= organiser.name %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="participants-section">
+            <span class="detail-label">Participation Hours:</span> <%= event.hours %><br>
+            <div class="participants-list">
+                <h4 class="section-title">Participants:</h4>
+                <table class="participants-table">
+                    <thead>
+                        <tr>
+                            <th>VEC</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% event.participants.forEach(function(participant) { %>
+                            <tr>
+                                <td><%= participant.vec %></td>
+                                <td><%= participant.name %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -8,9 +8,17 @@
   <title>Document</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="style/dash.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            $("#header").load("/components/header.html");
+        });
+    </script>
 </head>
 
 <body>
+  <div id="header"></div>
+
   <div class="container">
     <div class="row mt-4">
       <div class="col">

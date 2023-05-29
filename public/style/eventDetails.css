@@ -1,0 +1,30 @@
+.event-container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.event-title {
+    margin: 0;
+}
+.event-image img {
+    max-width: 100%;
+    height: auto;
+}
+.detail-label {
+    font-weight: bold;
+}
+.section-title {
+    margin-top: 0;
+}
+.organisers-table,
+.participants-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.organisers-table th,
+.organisers-table td,
+.participants-table th,
+.participants-table td {
+    padding: 5px;
+    border: 1px solid #ccc;
+}
