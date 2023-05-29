@@ -2,8 +2,16 @@
 <html>
 <head>
   <title>User Display</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(function() {
+      $("#header").load("/components/header.html");
+    });
+  </script>
+  <link rel="stylesheet" href="/style/userDetails.css">
 </head>
 <body>
+  <div id="header"></div>
   <h1>User Details</h1>
   <p>Vec: <%= userDetails.vec %></p>
   <p>Name: <%= userDetails.name %></p>

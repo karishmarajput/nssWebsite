@@ -4,9 +4,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function() {
+          $("#header").load("/components/header.html");
+      });
+    </script>
 </head>
 <body>
-    <h1>members</h1>
+  <div id="header"></div>
+  
+    <h1>Volunteers</h1>
     <input type="text" id="searchInput" placeholder="Search by VEC Number"><br><br>
 
     <table border="1px" class="userTable" id="userTable">
