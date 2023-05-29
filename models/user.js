@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
   },
   campAttended: {
     type: String,
-    required: true
+    default: "Nill"
   },
   password: {
     type: String,

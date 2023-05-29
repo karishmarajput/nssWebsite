@@ -294,7 +294,6 @@ app.post("/admin/adduser", authenticateAdmin, async (req, res) => {
       gender,
       address,
       yearInNss,
-      campAttended,
       password,
     } = req.body;
     const existingUser = await User.findOne({ vec });
@@ -314,7 +313,6 @@ app.post("/admin/adduser", authenticateAdmin, async (req, res) => {
       gender,
       address,
       yearInNss,
-      campAttended,
       password,
     });
     await newUser.save();

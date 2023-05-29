@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const URI = "karle change";
+const URI = "mongodb://localhost:27017/nssDb";
 
 const connectDB = async () => {
   await mongoose.connect(URI, {
