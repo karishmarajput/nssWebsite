@@ -569,6 +569,7 @@ app.post('/admin/campDetails',async(req,res)=>{
     console.log(err)
     res.status(500).json({ error: 'Internal server error' });
   }
+  res.status(200).json({message:'Camp Deatils successfully added'})
 })
 app.get('/userLogin',(req,res)=>{
     res.status(200).sendFile(path.join(__dirname,'public','pages/userLogin.html'))
