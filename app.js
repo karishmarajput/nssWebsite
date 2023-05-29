@@ -479,6 +479,97 @@ app.post('/admin/campDetails',async(req,res)=>{
     res.status(500).json({ error: 'Internal server error' });
   }
 })
+
+app.get('/admin/eventDisplay/:eventId',authenticateAdmin,async(req,res)=>{
+  const eventId = req.params.eventId;
+  try{
+    const event = await Event.findOne({_id: eventId})    
+    .populate('organisers', 'vec name')
+    .populate('participants','vec name');
+    console.log(event)
+    res.render('eventDetails', { event });
+  } 
+    catch(error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    };
+})
+
+app.get('/admin/campDetails',authenticateAdmin,async(req,res)=>{
+  try {
+    const userList = await User.find({}, 'vec name');
+    res.render('campForm', { users: userList });
+  } catch (error) {
+    console.error('Error fetching user list:', error);
+    res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+app.post('/admin/campDetails',async(req,res)=>{
+  console.log(req.body)
+  let {
+    campYear,
+    fromDate,
+    toDate,
+    campSite,
+    address,
+    preCampActivities,
+    activityDaywise,
+    parti
+  } = req.body;
+  console.log(parti)
+  let participants = []
+  const existingCamp = await Admin.findOne({campYear: campYear});
+  if (existingCamp) {
+    return res.status(409).json({ error: `Camp Details for ${campYear} already exists` });
+  }
+  attendedBy = []
+  for(let i =0; i < parti.length;i++){
+    await User.findOne({ vec: parti[i] })
+    .then(user => {
+      if (user) {
+        attendedBy.push(user);
+        return user.save();
+      } else {
+        console.log('User not found');
+      }
+    })
+    .catch(error => {
+      console.error('Error finding user:', error);
+    });
+  }
+  try {
+    const camp = new Camp({
+      campYear,
+      fromDate,
+      toDate,
+      campSite,
+      address,
+      preCampActivities,
+      activityDaywise,
+      attendedBy
+    })
+    await camp.save();
+    for (let i = 0; i < parti.length; i++) {
+      try {
+        const user = await User.findOne({ vec: parti[i] });
+        
+        if (user) {
+          user.campAttended = campYear;
+          await user.save();
+        } else {
+          console.log('User not found');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+  }catch (err) {
+    console.log(err)
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
 app.get('/userLogin',(req,res)=>{
     res.status(200).sendFile(path.join(__dirname,'public','pages/userLogin.html'))
 })
