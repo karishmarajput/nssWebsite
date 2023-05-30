@@ -28,6 +28,28 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
 
+const authenticateAdmin = async (req, res, next) => {
+  const authToken = req.cookies.authToken;
+  if (!authToken) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  try {
+    const decoded = jwt.verify(authToken, secretKey);
+    const admin = await Admin.findOne({ username: decoded.username });
+
+    if (!admin) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    req.admin = admin;
+    next();
+  } catch (err) {
+    res.status(401).json({ error: "Unauthorized" });
+  }
+};
+
+
+
 app.get("/", async (req, res) => {
   try {
     const eventList = await Event.find({}, 'eventName eventDate venue content eventLeader totalPart category imagePath');
@@ -39,12 +61,17 @@ app.get("/", async (req, res) => {
 });
 
 app.get('/admin',(req,res)=>{
-    res.status(200).sendFile(path.join(__dirname,'public','pages/adminLogin.html'))
+  const authToken = req.cookies.authToken;
+  if (authToken) {
+    res.sendFile(path.join(__dirname, 'public','pages/adminDashboard.html'));
+  } else {
+    res.sendFile(path.join(__dirname, 'public','pages/adminLogin.html'));
+  }
 })
 app.get('/admin/addAdmin',(req,res)=>{
   res.status(200).sendFile(path.join(__dirname,'public','pages/addAdmin.html'))
 })
-app.post('/admin/addAdmin', async (req, res) => {
+app.post('/admin/addAdmin',authenticateAdmin, async (req, res) => {
     const { username, password } = req.body;
   
     try {
@@ -92,32 +119,6 @@ app.post("/admin", async (req, res) => {
   }
 });
 
-// Authorization middleware
-const authenticateAdmin = async (req, res, next) => {
-  const authToken = req.cookies.authToken;
-  if (!authToken) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  try {
-    // Verify and decode the auth token
-    const decoded = jwt.verify(authToken, secretKey);
-
-    // Check if the decoded username is a valid admin
-    const admin = await Admin.findOne({ username: decoded.username });
-
-    if (!admin) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    // Add the admin object to the request for further use
-    req.admin = admin;
-
-    next();
-  } catch (err) {
-    res.status(401).json({ error: "Unauthorized" });
-  }
-};
 
 app.get("/admin/addevent", authenticateAdmin, async (req, res) => {
   try {
