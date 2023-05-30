@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camp Details</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function() {
+          $("#header").load("/components/header.html");
+      });
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+    <div>
+      <h2>Camp Details</h2>
+    <label for="eventNameSearch">Search by Camp Year:</label>
+    <input type="text" id="eventNameSearch" oninput="searchEventByName()">
+    <table border="1px">
+        <thead>
+            <tr>
+                <th>Camp Year</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Camp Site</th>
+                <th>Number of participants</th>
+            </tr>
+        </thead>
+    <tbody>
+        <% camp.sort((a, b) => b.campYear - a.campYear).forEach((camp) => { %>
+          <tr class="event">
+            <td><%= camp.campYear %></td>
+            <td><%= camp.fromDate.toLocaleDateString("en-GB") %></td>
+            <td><%= camp.toDate.toLocaleDateString("en-GB") %></td>
+            <td><%= camp.campSite%></td>
+            <td><%= camp.attendedBy.length %></td>
+            <td><button onclick="showDetails('<%= camp._id %>')">Details</button></td>
+          </tr>
+      <% }); %>
+    </tbody>
+</table>
+
+    </div>
+    
+</body>
+<script>
+  function searchEventByName() {
+    const eventNameSearch = document.getElementById('eventNameSearch').value.toLowerCase();
+    const rows = document.querySelectorAll('tbody tr');
+
+    rows.forEach((row) => {
+      const eventName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+
+      if (eventName.includes(eventNameSearch)) {
+        row.style.display = 'table-row';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  function showDetails(id){
+    window.location=window.location+ "/"+id
+  }
+  </script> 
+  
+</html>

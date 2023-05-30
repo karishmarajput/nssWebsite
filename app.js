@@ -14,6 +14,7 @@ const cors = require("cors");
 
 var favicon = require("serve-favicon");
 var path = require("path");
+const Camp = require("./models/camp");
 const secretKey = "notmebutyou";
 connectDB();
 app.use(favicon(path.join(__dirname, 'public', '/images/nss_logo.png')))
@@ -410,8 +411,6 @@ app.post('/admin/campDetails',authenticateAdmin,async(req,res)=>{
     activityDaywise,
     parti
   } = req.body;
-  console.log(parti)
-  let participants = []
   const existingCamp = await Admin.findOne({campYear: campYear});
   if (existingCamp) {
     return res.status(409).json({ error: `Camp Details for ${campYear} already exists` });
@@ -463,6 +462,40 @@ app.post('/admin/campDetails',authenticateAdmin,async(req,res)=>{
     res.status(500).json({ error: 'Internal server error' });
   }
   res.status(200).json({message:'Camp Deatils successfully added'})
+})
+app.get('/admin/showCampDetails',authenticateAdmin,async(req,res)=>{
+  try {
+    await Camp.find().populate("attendedBy", "vec name").exec()
+      .then((camp) => {
+        res.render("campDisplay", { camp });
+      });
+  } catch (error) {
+    console.error("Error fetching user list:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
+app.get('/admin/showCampDetails/:campId',authenticateAdmin,async(req,res)=>{
+  const campId = req.params.campId;
+  try{
+    const camp = await Camp.findOne({_id: campId}).populate('attendedBy', 'vec name');
+    res.render('campDetails', { camp });
+  } 
+    catch(error) {
+      res.status(500).json({ error: 'Internal server error' });
+    };
+})
+app.delete('/admin/campDisplay/deleteCamp',authenticateAdmin,async(req,res)=>{
+  try {
+    const { campId } = req.body;
+    const deletedCamp = await Camp.findByIdAndDelete(campId);
+    if (!deletedCamp) {
+      return res.status(404).json({ error: 'Camp Details not found' });
+    }
+    return res.status(200).json({ message: 'Camp Details deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 })
 app.delete('/admin/eventDisplay/deleteEvent',authenticateAdmin,async(req,res)=>{
   try {

@@ -26,7 +26,7 @@
         <div class="event-details">
             <p>
                 <span class="detail-label">Venue:</span> <%= event.venue %><br>
-                <span class="detail-label">Date:</span> <%= event.eventDate %><br>
+                <span class="detail-label">Date:</span> <%= event.eventDate.toLocaleDateString("en-GB")  %><br>
                 <span class="detail-label">Category:</span> <%= event.category %><br>
                 <span class="detail-label">Content:</span> <%= event.content %><br>
                 <span class="detail-label">Event Leader:</span> <%= event.eventLeader %><br>
