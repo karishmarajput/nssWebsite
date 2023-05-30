@@ -63,6 +63,9 @@ app.get("/", async (req, res) => {
 app.get('/admin',(req,res)=>{
   res.sendFile(path.join(__dirname, 'public','pages/adminLogin.html'));
 })
+app.get('/adminDashboard',authenticateAdmin,(req,res)=>{
+  res.status(200).sendFile(path.join(__dirname, "public", "pages/adminDashboard.html"));
+})
 app.get('/admin/addAdmin',(req,res)=>{
   res.status(200).sendFile(path.join(__dirname,'public','pages/addAdmin.html'))
 })
