@@ -527,8 +527,18 @@ app.post('/admin/eventDisplay/updateEvent', async(req, res) => {
 });
 app.get('/admin/users',authenticateAdmin, async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate("eventsAttended", "hours")
+    .populate("eventsOrganised", "organisersHr");
     res.json(users);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+app.get('/admin/events',authenticateAdmin, async (req, res) => {
+  try {
+    const event = await Event.find()
+    res.json(event);
   } catch (error) {
     console.error('Error fetching user data:', error);
     res.status(500).json({ error: 'Internal server error' });
