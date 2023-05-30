@@ -67,7 +67,7 @@
 </div>
 <h3>Events</h3>
 <div style="display: flex;justify-content: space-around;flex-wrap: wrap;">
-  <canvas id="eventPieChart"></canvas>
+  <canvas id="eventBarGraph"></canvas>
   <canvas id="pieChartCategory"></canvas>
 </div>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -249,30 +249,25 @@ fetch('/admin/users')
 fetch('/admin/events')
   .then(response => response.json())
   .then(events => {
-    const eventCountsByMonth = {};
-    events.forEach((event) => {
+    const months = {};
+    events.forEach(event => {
       const eventDate = new Date(event.eventDate);
-      const month = eventDate.getMonth();
-      eventCountsByMonth[month] = (eventCountsByMonth[month] || 0) + 1;
+      const month = eventDate.toLocaleString('en-US', { month: 'short' });
+      months[month] = (months[month] || 0) + 1;
     });
-    const monthLabels = [
-      'January', 'February', 'March', 'April', 'May', 'June', 
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    let labels = Object.keys(eventCountsByMonth).map((month) => monthLabels[month]);
-    let counts = Object.values(eventCountsByMonth);
-    let ctx = document.getElementById('eventPieChart').getContext('2d');
+    let labels = Object.keys(months);
+    let data = Object.values(months);
+    let ctx = document.getElementById('eventBarGraph').getContext('2d');
     new Chart(ctx, {
-      type: 'pie',
+      type: 'bar',
       data: {
         labels: labels,
         datasets: [{
           label: 'Event Count',
-          data: counts,
-          backgroundColor: [
-            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40',
-            '#FFCC99', '#99CCFF', '#66CCCC', '#FF6699', '#FF99FF', '#66CC66'
-          ],
+          data: data,
+          backgroundColor: '#36A2EB',
+          borderColor: '#36A2EB',
+          borderWidth: 1
         }]
       },
       options: {
@@ -285,19 +280,21 @@ fetch('/admin/events')
         responsive: false,
         width: 300,
         height: 300,
-      },
+        scales: {
+          y: {
+            beginAtZero: true,
+            stepSize: 1
+          }
+        }
+      }
     });
     const categories = {};
     events.forEach(event => {
       const category = event.category;
       categories[category] = (categories[category] || 0) + 1;
     });
-
-    // Convert category data to Chart.js format
     labels = Object.keys(categories);
     data = Object.values(categories);
-
-    // Create the pie chart using Chart.js
     ctx = document.getElementById('pieChartCategory').getContext('2d');
     new Chart(ctx, {
       type: 'pie',
