@@ -21,7 +21,7 @@
             <h3 class="event-title"><%= event.eventName %></h3>
         </div>
         <div class="event-image">
-            <img src="/<%= event.imagePath %>" alt="<%= event.eventName %>">
+            <img src="/<%= event.imagePath %>" alt="<%= event.eventName %>" width="350" height="350">
         </div>
         <div class="event-details">
             <p>
@@ -31,12 +31,12 @@
                 <span class="detail-label">Content:</span> <%= event.content %><br>
                 <span class="detail-label">Event Leader:</span> <%= event.eventLeader %><br>
                 <span class="detail-label">Total Participants:</span> <%= event.totalPart %><br>
-                <span class="detail-label">No. of Beneficiaries:</span> <%= event.numberOfBeneficiaries %><br>
+                <span class="detail-label">No. of Beneficiaries:</span> <%= event.numberOfBenificiar %><br>
                 <span class="detail-label">Report by:</span> <%= event.reportWrittenBy %><br>
             </p>
         </div>
         <div class="organisers-section">
-            <span class="detail-label">Organiser Hours:</span> <%= event.organisersHr %><br>
+            <span class="detail-label">Organiser Hours:</span><%= event.organisersHr %><br>
             <div class="organisers-list">
                 <h4 class="section-title">Organisers:</h4>
                 <table class="organisers-table">
@@ -79,6 +79,100 @@
                 </table>
             </div>
         </div>
+        <br><br>
+        <div>
+            <button class="btn btn-danger" onclick="deleteEvent(`<%= event._id%>`)">Delete Event</button>
+            <button id="openModalButton" class="btn btn-warning">Edit Event</button>
+        </div>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Enter Organisers Hour and Hours</h3>
+    <form id="modalForm"><br><br><br>
+        <h5><%= event.eventName %></h5>
+        <input id="eventId"type="text" value="<%= event._id%>" style="display: none;">
+      <label for="organisersHour">Organisers Hour:</label>
+      <input type="number" id="organisersHour" required><br><br><br>
+      <label for="hours">Hours:</label>
+      <input type="number" id="hours" required><br><br>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+
     </div>
 </body>
+<script>
+    function deleteEvent(eventId){
+        console.log(eventId)
+    fetch('/admin/eventDisplay/deleteEvent', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ eventId }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Response:', data);
+        alert(data.message)
+        window.location.href = '/admin/eventDisplay';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert(error)
+      });
+    }
+
+const modal = document.getElementById('myModal');
+const openModalButton = document.getElementById('openModalButton');
+const closeButton = document.getElementsByClassName('close')[0];
+openModalButton.addEventListener('click', function() {
+  modal.style.display = 'block';
+});
+closeButton.addEventListener('click', function() {
+  modal.style.display = 'none';
+});
+window.addEventListener('click', function(event) {
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+});
+const form = document.getElementById('modalForm');
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault(); 
+  const eventId = document.getElementById('eventId').value;
+  const organisersHr = document.getElementById('organisersHour').value;
+  const hours = document.getElementById('hours').value;
+  const requestBody = {
+    eventId: eventId,
+    organisersHr: organisersHr,
+    hours: hours
+  };
+console.log(requestBody)
+  fetch('/admin/eventDisplay/updateEvent', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestBody)
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      modal.style.display = 'none';
+      location.reload();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});
+
+
+
+
+</script>
 </html>

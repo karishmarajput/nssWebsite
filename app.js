@@ -16,7 +16,7 @@ var favicon = require("serve-favicon");
 var path = require("path");
 const secretKey = "notmebutyou";
 connectDB();
-// app.use(favicon(path.join(__dirname, 'public', 'images/verifyDB.png')))
+app.use(favicon(path.join(__dirname, 'public', '/images/nss_logo.png')))
 app.set("view engine", "ejs");
 
 app.use(express.json());
@@ -61,12 +61,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get('/admin',(req,res)=>{
-  const authToken = req.cookies.authToken;
-  if (authToken) {
-    res.sendFile(path.join(__dirname, 'public','pages/adminDashboard.html'));
-  } else {
-    res.sendFile(path.join(__dirname, 'public','pages/adminLogin.html'));
-  }
+  res.sendFile(path.join(__dirname, 'public','pages/adminLogin.html'));
 })
 app.get('/admin/addAdmin',(req,res)=>{
   res.status(200).sendFile(path.join(__dirname,'public','pages/addAdmin.html'))
@@ -88,11 +83,8 @@ app.post('/admin/addAdmin',authenticateAdmin, async (req, res) => {
 });
 app.post("/admin", async (req, res) => {
   const { username, password } = req.body;
-
   try {
-    // Check if the admin exists in the database
     const admin = await Admin.findOne({ username });
-
     if (!admin) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
@@ -101,19 +93,11 @@ app.post("/admin", async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-
-    // Generate and sign the JWT token
-
     const authToken = jwt.sign({ username: admin.username }, secretKey, {
       expiresIn: "1h",
     });
-
-    // Set the auth token as a cookie
     res.cookie("authToken", authToken, { httpOnly: true });
-
-    res
-      .status(200)
-      .sendFile(path.join(__dirname, "public", "pages/adminDashboard.html"));
+    res.status(200).sendFile(path.join(__dirname, "public", "pages/adminDashboard.html"));
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -376,10 +360,7 @@ app.get("/admin/userDisplay/:vec", authenticateAdmin, (req, res) => {
 
 app.get("/admin/eventDisplay", authenticateAdmin, async (req, res) => {
   try {
-    await Event.find()
-      .populate("eventLeader", "name")
-      .populate("reportWrittenBy", "name")
-      .exec()
+    await Event.find().populate("eventLeader", "name").populate("reportWrittenBy", "name").exec()
       .then((event) => {
         res.render("eventDisplay", { events: event });
       });
@@ -389,107 +370,14 @@ app.get("/admin/eventDisplay", authenticateAdmin, async (req, res) => {
   }
 });
 
-app.get("/admin/eventDisplay/:eventId", authenticateAdmin, async (req, res) => {
-  const eventId = req.params.eventId;
-  try {
-    const event = await Event.findOne({ _id: eventId })
-      .populate("organisers", "vec name")
-      .populate("participants", "vec name");
-    console.log(event);
-    res.render("eventDetails", { event });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-app.get('/admin/campDetails',authenticateAdmin,async(req,res)=>{
-  try {
-    const userList = await User.find({}, 'vec name');
-    res.render('campForm', { users: userList });
-  } catch (error) {
-    console.error('Error fetching user list:', error);
-    res.status(500).json({ error: 'Internal server error' });
-    }
-})
-
-app.post('/admin/campDetails',async(req,res)=>{
-  console.log(req.body)
-  let {
-    campYear,
-    fromDate,
-    toDate,
-    campSite,
-    address,
-    preCampActivities,
-    activityDaywise,
-    parti
-  } = req.body;
-  console.log(parti)
-  let participants = []
-  const existingCamp = await Admin.findOne({campYear: campYear});
-  if (existingCamp) {
-    return res.status(409).json({ error: `Camp Details for ${campYear} already exists` });
-  }
-  attendedBy = []
-  for(let i =0; i < parti.length;i++){
-    await User.findOne({ vec: parti[i] })
-    .then(user => {
-      if (user) {
-        attendedBy.push(user);
-        return user.save();
-      } else {
-        console.log('User not found');
-      }
-    })
-    .catch(error => {
-      console.error('Error finding user:', error);
-    });
-  }
-  try {
-    const camp = new Camp({
-      campYear,
-      fromDate,
-      toDate,
-      campSite,
-      address,
-      preCampActivities,
-      activityDaywise,
-      attendedBy
-    })
-    await camp.save();
-    for (let i = 0; i < parti.length; i++) {
-      try {
-        const user = await User.findOne({ vec: parti[i] });
-        
-        if (user) {
-          user.campAttended = campYear;
-          await user.save();
-        } else {
-          console.log('User not found');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    
-  }catch (err) {
-    console.log(err)
-    res.status(500).json({ error: 'Internal server error' });
-  }
-})
 
 app.get('/admin/eventDisplay/:eventId',authenticateAdmin,async(req,res)=>{
   const eventId = req.params.eventId;
   try{
-    const event = await Event.findOne({_id: eventId})    
-    .populate('organisers', 'vec name')
-    .populate('participants','vec name');
-    console.log(event)
+    const event = await Event.findOne({_id: eventId}).populate('organisers', 'vec name').populate('participants','vec name');
     res.render('eventDetails', { event });
   } 
     catch(error) {
-      console.error(error);
       res.status(500).json({ error: 'Internal server error' });
     };
 })
@@ -504,7 +392,7 @@ app.get('/admin/campDetails',authenticateAdmin,async(req,res)=>{
     }
 })
 
-app.post('/admin/campDetails',async(req,res)=>{
+app.post('/admin/campDetails',authenticateAdmin,async(req,res)=>{
   console.log(req.body)
   let {
     campYear,
@@ -570,9 +458,38 @@ app.post('/admin/campDetails',async(req,res)=>{
   }
   res.status(200).json({message:'Camp Deatils successfully added'})
 })
+app.delete('/admin/eventDisplay/deleteEvent',authenticateAdmin,async(req,res)=>{
+  try {
+    const { eventId } = req.body;
+    const deletedEvent = await Event.findByIdAndDelete(eventId);
+    if (!deletedEvent) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    return res.status(200).json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+app.post('/admin/eventDisplay/updateEvent', async(req, res) => {
+  const { eventId, organisersHr, hours} = req.body;
+  try {
+    const updatedEvent = await Event.findByIdAndUpdate(
+      eventId,
+      { organisersHr, hours},
+      { new: true }
+    );
+    res.json(updatedEvent);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error updating event' });
+  }
+});
 app.get('/userLogin',(req,res)=>{
     res.status(200).sendFile(path.join(__dirname,'public','pages/userLogin.html'))
 })
+
 app.listen(port, () => {       
     console.log(`Now listening on port ${port}`); 
 });
