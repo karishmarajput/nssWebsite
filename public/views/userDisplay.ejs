@@ -16,7 +16,12 @@
   
     <h1>Volunteers</h1>
     <input type="text" id="searchInput" placeholder="Search by VEC Number"><br><br>
-
+    <label for="categoryFilter">Batch:</label>
+        <select id="categoryFilter" onchange="applyCategoryFilter()">
+        <option value="">All Volunteers</option>
+        <option value="2022-2024">2022-2024</option>
+        <option value="2023-2025">2023-2025</option>
+        </select><br><br>
     <table border="1px" class="userTable" id="userTable">
         <thead>
           <tr>
@@ -24,6 +29,7 @@
             <th>Name</th>
             <th>Branch</th>
             <th>Sem </th>
+            <th>Batch</th>
             <th>fit India Hr</th>
             <th>education For All  Hours</th>
             <th>animal Wellfare Hours</th>
@@ -42,6 +48,7 @@
             <td><%= user.name %></td>
             <td><%= user.branch %></td>
             <td><%= user.sem %></td> 
+            <td><%= user.batch %></td>
             <td><%= getTotalHours(user, 'fitIndia') %></td>
             <td><%= getTotalHours(user, 'educationForAll') %></td>
             <td><%= getTotalHours(user, 'animalWellfare') %></td>
@@ -123,6 +130,17 @@
     console.log(userId);
     window.location = window.location + "/"+ userId
   }
-
+  function applyCategoryFilter() {
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const rows = document.querySelectorAll('tbody tr');
+    rows.forEach((row) => {
+      const category = row.querySelector('td:nth-child(5)').textContent;
+      if (categoryFilter && category !== categoryFilter) {
+        row.style.display = 'none';
+      } else {
+        row.style.display = 'table-row';
+      }
+    });
+  }
 </script>
 </html>

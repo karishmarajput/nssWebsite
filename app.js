@@ -279,6 +279,7 @@ app.post("/admin/adduser", authenticateAdmin, async (req, res) => {
       gender,
       address,
       yearInNss,
+      batch,
       password,
     } = req.body;
     const existingUser = await User.findOne({ vec });
@@ -298,6 +299,7 @@ app.post("/admin/adduser", authenticateAdmin, async (req, res) => {
       gender,
       address,
       yearInNss,
+      batch,
       password,
     });
     await newUser.save();
@@ -328,6 +330,7 @@ app.get("/admin/userDisplay/:vec", authenticateAdmin, (req, res) => {
           gender: user.gender,
           address: user.address,
           yearInNss: user.yearInNss,
+          batch:user.batch,
           campAttended: user.campAttended,
           eventsAttended: user.eventsAttended.map((event) => {
             return {
