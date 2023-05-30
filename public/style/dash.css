@@ -10,5 +10,15 @@
   
 .btn-block {
     width: 100%;
-  }
+}
+.showNumbers{
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+}
+.showNumber{
+  width: 22rem;
+  height: 7rem;
+  background-color: blue;
+}
   

@@ -18,49 +18,15 @@
 
 <body>
   <div id="header"></div>
-
-  <div class="container">
-    <div class="row mt-4">
-      <div class="col">
-        <a href="/admin/addevent" class="btn btn-primary btn-block">Add new Event</a>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col">
-        <a href="/admin/userDisplay" class="btn btn-primary btn-block">Display all Users</a>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col">
-        <a href="/admin/adduser" class="btn btn-primary btn-block">Add new User</a>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col">
-        <a href="/admin/addAdmin" class="btn btn-primary btn-block">Add new Admin</a>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col">
-        <a href="/admin/eventDisplay" class="btn btn-primary btn-block">Display all events</a>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col">
-        <a href="/admin/campDetails" class="btn btn-primary btn-block">Add camp Record</a>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col">
-        <a href="/admin/showCampDetails" class="btn btn-primary btn-block">Show camp Record</a>
-      </div>
-    </div>
-  </div>
+<div class="showNumbers">
+  <div id="numberOfVolunteer" class="showNumber"></div>
+  <div id="numberOfEvents" class="showNumber"></div>
+  <div id="numberOfBenificiar" class="showNumber"></div>
+</div>
   <h3>Users</h3>
 <div style="display: flex;justify-content: space-around;flex-wrap: wrap;">
   <canvas id="pieChart"></canvas>
   <canvas id="branchPieChart"></canvas>
-  <canvas id="batchBarChart"></canvas>
   <canvas id="userHoursPieChart"></canvas>
   <canvas id="yearInNssChart"></canvas>
 
@@ -76,6 +42,7 @@
 fetch('/admin/users')
   .then(response => response.json())
   .then(users => {
+    document.getElementById('numberOfVolunteer').innerHTML = `${users.length} Volunteer`
     const maleCount = users.filter(user => user.gender === 'male').length;
     const femaleCount = users.filter(user => user.gender === 'female').length;
     const pieChartCanvas = document.getElementById('pieChart').getContext('2d');
@@ -129,41 +96,7 @@ fetch('/admin/users')
         height: 300,
       },
     });
-    const batchCounts = users.reduce((counts, user) => {
-      counts[user.batch] = (counts[user.batch] || 0) + 1;
-      return counts;
-    }, {});
-    const batchLabels = Object.keys(batchCounts);
-    const batchData = Object.values(batchCounts);
-    const barChartCanvas = document.getElementById('batchBarChart').getContext('2d');
-    const batchBarChart = new Chart(barChartCanvas, {
-      type: 'bar',
-      data: {
-        labels: batchLabels,
-        datasets: [{
-          label: 'Number of Users',
-          data: batchData,
-          backgroundColor: '#4BC0C0',
-        }],
-      },
-      options: {
-        plugins: {
-            title: {
-                display: true,
-                text: 'Batchwise no of volunteer'
-            }
-        },
-        responsive: false,
-        width: 300,
-        height: 300,
-        scales: {
-          y: {
-            beginAtZero: true,
-            precision: 0,
-          },
-        },
-      },
-    });
+    
     const userHours = users.map(user => {
       const attendedHours = user.eventsAttended.reduce((total, event) => total + event.hours, 0);
       const organisedHours = user.eventsOrganised.reduce((total, event) => total + event.organisersHr, 0);
@@ -249,12 +182,16 @@ fetch('/admin/users')
 fetch('/admin/events')
   .then(response => response.json())
   .then(events => {
+    document.getElementById('numberOfEvents').innerHTML = `${events.length} Events`
     const months = {};
+    let beneficiaries = 0
     events.forEach(event => {
       const eventDate = new Date(event.eventDate);
+      beneficiaries += event.numberOfBenificiar || 0;
       const month = eventDate.toLocaleString('en-US', { month: 'short' });
       months[month] = (months[month] || 0) + 1;
     });
+    document.getElementById('numberOfBenificiar').innerHTML= `${beneficiaries} Benificiars`
     let labels = Object.keys(months);
     let data = Object.values(months);
     let ctx = document.getElementById('eventBarGraph').getContext('2d');
