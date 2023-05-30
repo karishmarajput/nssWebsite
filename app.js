@@ -525,6 +525,16 @@ app.post('/admin/eventDisplay/updateEvent', async(req, res) => {
     res.status(500).json({ error: 'Error updating event' });
   }
 });
+app.get('/admin/users',authenticateAdmin, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/userLogin',(req,res)=>{
     res.status(200).sendFile(path.join(__dirname,'public','pages/userLogin.html'))
 })

@@ -56,10 +56,105 @@
       </div>
     </div>
   </div>
-<div>
-  hello
+  <h3>Users</h3>
+<div style="display: flex;justify-content: space-around;">
+  <canvas id="pieChart"></canvas>
+  <canvas id="branchPieChart"></canvas>
+  <canvas id="batchBarChart"></canvas>
+
+
 </div>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+<script>
+// import Chart from 'chart.mjs';
+fetch('/admin/users')
+  .then(response => response.json())
+  .then(users => {
+    const maleCount = users.filter(user => user.gender === 'male').length;
+    const femaleCount = users.filter(user => user.gender === 'female').length;
+    const pieChartCanvas = document.getElementById('pieChart').getContext('2d');
+    const pieChart = new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: {
+        labels: ['Male', 'Female'],
+        datasets: [{
+          data: [maleCount, femaleCount],
+          backgroundColor: ['#FF6384', '#36A2EB'],
+        }],
+      },
+      options: {
+        responsive: false,
+        width: 300,
+        height: 300,
+      },
+    });
+
+    const branchCounts = users.reduce((counts, users) => {
+      counts[users.branch] = (counts[users.branch] || 0) + 1;
+      return counts;
+    }, {});
+
+    // Extract branch labels and counts
+    const branchLabels = Object.keys(branchCounts);
+    const branchData = Object.values(branchCounts);
+
+    // Create the pie chart
+    const pieChartBranch = document.getElementById('branchPieChart').getContext('2d');
+    const branchPieChart = new Chart(pieChartBranch, {
+      type: 'pie',
+      data: {
+        labels: branchLabels,
+        datasets: [{
+          data: branchData,
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#E7E9ED'],
+        }],
+      },
+      options: {
+        responsive: false,
+        width: 300,
+        height: 300,
+      },
+    });
+    const batchCounts = users.reduce((counts, user) => {
+      counts[user.batch] = (counts[user.batch] || 0) + 1;
+      return counts;
+    }, {});
+
+    // Extract batch labels and counts
+    const batchLabels = Object.keys(batchCounts);
+    const batchData = Object.values(batchCounts);
+
+    // Create the bar chart
+    const barChartCanvas = document.getElementById('batchBarChart').getContext('2d');
+    const batchBarChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: {
+        labels: batchLabels,
+        datasets: [{
+          label: 'Number of Users',
+          data: batchData,
+          backgroundColor: '#4BC0C0',
+        }],
+      },
+      options: {
+        responsive: false,
+        width: 300,
+        height: 300,
+        scales: {
+          y: {
+            beginAtZero: true,
+            precision: 0,
+          },
+        },
+      },
+    });
+  })
+  .catch(error => {
+    console.error('Error fetching user data:', error);
+  });
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </html>
