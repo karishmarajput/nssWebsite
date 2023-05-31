@@ -381,7 +381,7 @@ app.get("/admin/eventDisplay", authenticateAdmin, async (req, res) => {
 app.get('/admin/eventDisplay/:eventId',authenticateAdmin,async(req,res)=>{
   const eventId = req.params.eventId;
   try{
-    const event = await Event.findOne({_id: eventId}).populate('organisers', 'vec name').populate('participants','vec name');
+    const event = await Event.findOne({_id: eventId}).populate('eventLeader','name').populate('reportWrittenBy','name').populate('organisers', 'vec name').populate('participants','vec name');
     res.render('eventDetails', { event });
   } 
     catch(error) {

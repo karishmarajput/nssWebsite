@@ -29,10 +29,10 @@
                 <span class="detail-label">Date:</span> <%= event.eventDate.toLocaleDateString("en-GB")  %><br>
                 <span class="detail-label">Category:</span> <%= event.category %><br>
                 <span class="detail-label">Content:</span> <%= event.content %><br>
-                <span class="detail-label">Event Leader:</span> <%= event.eventLeader %><br>
+                <span class="detail-label">Event Leader:</span> <%= event.eventLeader.name %><br>
                 <span class="detail-label">Total Participants:</span> <%= event.totalPart %><br>
                 <span class="detail-label">No. of Beneficiaries:</span> <%= event.numberOfBenificiar %><br>
-                <span class="detail-label">Report by:</span> <%= event.reportWrittenBy %><br>
+                <span class="detail-label">Report by:</span> <%= event.reportWrittenBy.name %><br>
             </p>
         </div>
         <div class="organisers-section">
