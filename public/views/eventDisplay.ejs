@@ -4,106 +4,115 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/style/eventDisplay.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $(function() {
-          $("#header").load("/components/header.html");
-      });
+        $(function() {
+            $("#header").load("/components/header.html");
+            $("#footer").load("/components/footer.html");
+        });
     </script>
 </head>
 <body>
     <div id="header"></div>
-    <div>
-      <h2>Events</h2>
-    <label for="eventNameSearch">Search by Event Name:</label>
-    <input type="text" id="eventNameSearch" oninput="searchEventByName()">
+    <div class="container">
+        <h2>Events</h2>
+        <div class="search-container">
+            <label for="eventNameSearch">Search by Event Name:</label>
+            <input type="text" id="eventNameSearch" oninput="searchEventByName()">
+        </div>
 
-    <label for="categoryFilter">Filter by Category:</label>
-        <select id="categoryFilter" onchange="applyCategoryFilter()">
-        <option value="">All Categories</option>
-        <option value="fitIndia">Fit India</option>
-        <option value="educationForAll">Education for All</option>
-        <option value="college">College</option>
-        <option value="university">University</option>
-        <option value="animalWellfare">Animal Welfare</option>
-        <option value="diasterManagement">Disaster Management</option>
-        <option value="greenInitiative">Green Initiative</option>
-        </select><br><br>
-    <table border="1px">
-        <thead>
-            <tr>
-                <th rowspan="2">Name</th>
-                <th rowspan="2">Date</th>
-                <th rowspan="2">Venue</th>
-                <th rowspan="2">Leader</th>
-                <th rowspan="2">Organiser Hours</th>
-                <th rowspan="2">Hours</th>
-                <th colspan="3">Participants</th>
-                <th rowspan="2">Report Written By</th>
-                <th rowspan="2">Category</th>
-                <th rowspan="2">Details</th>
-            </tr>
-            <tr>
+        <div class="filter-container">
+            <label for="categoryFilter">Filter by Category:</label>
+            <select id="categoryFilter" onchange="applyCategoryFilter()">
+                <option value="">All Categories</option>
+                <option value="fitIndia">Fit India</option>
+                <option value="educationForAll">Education for All</option>
+                <option value="college">College</option>
+                <option value="university">University</option>
+                <option value="animalWellfare">Animal Welfare</option>
+                <option value="diasterManagement">Disaster Management</option>
+                <option value="greenInitiative">Green Initiative</option>
+            </select>
+        </div>
 
-                <th >Male</th>
-                <th >Female</th>
-                <th >Total</th>
-                
-            </tr>
-        </thead>
-    <tbody>
-        <% events.sort((a, b) => b.eventDate - a.eventDate).forEach((event) => { %>
-          <tr class="event">
-            <td><%= event.eventName %></td>
-            <td><%= event.eventDate.toLocaleDateString("en-GB") %></td>
-            <td><%= event.venue %></td>
-            <td><%= event.eventLeader.name %></td>
-            <td><%= event.organisersHr %></td>
-            <td><%= event.hours %></td>
-            <td><%= event.malePart %></td>
-            <td><%= event.femalePart %></td>
-            <td><%= event.totalPart %></td>
-            <td><%= event.reportWrittenBy.name %></td>
-            <td><%= event.category %></td>
-            <td><button onclick="showDetails('<%= event._id %>')">Details</button></td>
-          </tr>
-      <% }); %>
-    </tbody>
-</table>
-
+        <div class="table-container">
+            <table class="event-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Name</th>
+                        <th rowspan="2">Date</th>
+                        <th rowspan="2">Venue</th>
+                        <th rowspan="2">Leader</th>
+                        <th rowspan="2">Organiser Hours</th>
+                        <th rowspan="2">Hours</th>
+                        <th colspan="3">Participants</th>
+                        <th rowspan="2">Report Written By</th>
+                        <th rowspan="2">Category</th>
+                        <th rowspan="2">Details</th>
+                    </tr>
+                    <tr>
+                        <th>Male</th>
+                        <th>Female</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% events.sort((a, b) => b.eventDate - a.eventDate).forEach((event) => { %>
+                        <tr class="event">
+                            <td><%= event.eventName %></td>
+                            <td><%= event.eventDate.toLocaleDateString("en-GB") %></td>
+                            <td><%= event.venue %></td>
+                            <td><%= event.eventLeader.name %></td>
+                            <td><%= event.organisersHr %></td>
+                            <td><%= event.hours %></td>
+                            <td><%= event.malePart %></td>
+                            <td><%= event.femalePart %></td>
+                            <td><%= event.totalPart %></td>
+                            <td><%= event.reportWrittenBy.name %></td>
+                            <td><%= event.category %></td>
+                            <td><button onclick="showDetails('<%= event._id %>')" class="btn btn-primary">Details</button></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
     </div>
-    
+
+    <div id="footer"></div>
+
+    <script>
+        function searchEventByName() {
+            const eventNameSearch = document.getElementById('eventNameSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.event-table tbody tr');
+
+            rows.forEach((row) => {
+                const eventName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+
+                if (eventName.includes(eventNameSearch)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function applyCategoryFilter() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const rows = document.querySelectorAll('.event-table tbody tr');
+            rows.forEach((row) => {
+                const category = row.querySelector('td:nth-child(11)').textContent;
+                if (categoryFilter && category !== categoryFilter) {
+                    row.style.display = 'none';
+                } else {
+                    row.style.display = 'table-row';
+                }
+            });
+        }
+
+        function showDetails(id) {
+            window.location = window.location + "/" + id;
+        }
+    </script>
 </body>
-<script>
-  function searchEventByName() {
-    const eventNameSearch = document.getElementById('eventNameSearch').value.toLowerCase();
-    const rows = document.querySelectorAll('tbody tr');
-
-    rows.forEach((row) => {
-      const eventName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-
-      if (eventName.includes(eventNameSearch)) {
-        row.style.display = 'table-row';
-      } else {
-        row.style.display = 'none';
-      }
-    });
-  }
-    function applyCategoryFilter() {
-    const categoryFilter = document.getElementById('categoryFilter').value;
-    const rows = document.querySelectorAll('tbody tr');
-    rows.forEach((row) => {
-      const category = row.querySelector('td:nth-child(11)').textContent;
-      if (categoryFilter && category !== categoryFilter) {
-        row.style.display = 'none';
-      } else {
-        row.style.display = 'table-row';
-      }
-    });
-  }
-  function showDetails(id){
-    window.location=window.location+ "/"+id
-  }
-  </script> 
-  
 </html>
