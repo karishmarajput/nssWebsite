@@ -1,146 +1,149 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Volunteer's List</title>
+    <link rel="stylesheet" href="/style/userDisplay.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(function() {
           $("#header").load("/components/header.html");
+          $("#footer").load("/components/footer.html");
       });
     </script>
 </head>
 <body>
-  <div id="header"></div>
+    <div id="header"></div>
+    <div class="container">
+        <h1 class="title">Volunteer's List</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control search-input" placeholder="Search by VEC Number">
+            <label for="categoryFilter">Batch:</label>
+            <select id="categoryFilter" class="form-select" onchange="applyCategoryFilter()">
+                <option value="">All Volunteers</option>
+                <option value="2022-2024">2022-2024</option>
+                <option value="2023-2025">2023-2025</option>
+            </select>
+        </div>
+        <table class="table user-table" id="userTable">
+            <thead>
+                <tr>
+                    <th>VEC</th>
+                    <th>Name</th>
+                    <th>Branch</th>
+                    <th>Sem</th>
+                    <th>Batch</th>
+                    <th>Fit India Hr</th>
+                    <th>Education For All Hours</th>
+                    <th>Animal Welfare Hours</th>
+                    <th>Disaster Management Hr</th>
+                    <th>Green Initiative Hr</th>
+                    <th>CL Hr</th>
+                    <th>University Hrs</th>
+                    <th>Total Hours</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.vec %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.branch %></td>
+                    <td><%= user.sem %></td> 
+                    <td><%= user.batch %></td>
+                    <td><%= getTotalHours(user, 'fitIndia') %></td>
+                    <td><%= getTotalHours(user, 'educationForAll') %></td>
+                    <td><%= getTotalHours(user, 'animalWellfare') %></td>
+                    <td><%= getTotalHours(user, 'diasterManagement') %></td>
+                    <td><%= getTotalHours(user, 'greenInitiative') %></td>
+                    <td><%= getTotalHours(user, 'college') %></td>
+                    <td><%= getTotalHours(user, 'university') %></td>
+                    <td><%= totalHours(user) %></td>
+                    <td><button onclick="showDetails('<%= user.vec %>')" class="btn btn-primary">Show Details</button></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <div id="footer"></div>
+
+    <% 
+    function totalHours(user){
+        let totalHours = 0;
+        user.eventsAttended.forEach(event => {
+            const hours = parseFloat(event.hours);
+            if (!isNaN(hours)) { 
+                totalHours += hours;
+            }
+        });
+        user.eventsOrganised.forEach(event => {
+            const hours = parseFloat(event.organisersHr); 
+            if (!isNaN(hours)) { 
+                totalHours += hours;
+            }
+        });
+        return totalHours;
+    }
   
-    <h1>Volunteers</h1>
-    <input type="text" id="searchInput" placeholder="Search by VEC Number"><br><br>
-    <label for="categoryFilter">Batch:</label>
-        <select id="categoryFilter" onchange="applyCategoryFilter()">
-        <option value="">All Volunteers</option>
-        <option value="2022-2024">2022-2024</option>
-        <option value="2023-2025">2023-2025</option>
-        </select><br><br>
-    <table border="1px" class="userTable" id="userTable">
-        <thead>
-          <tr>
-            <th>Vec</th>
-            <th>Name</th>
-            <th>Branch</th>
-            <th>Sem </th>
-            <th>Batch</th>
-            <th>fit India Hr</th>
-            <th>education For All  Hours</th>
-            <th>animal Wellfare Hours</th>
-            <th>diasterManagementHr</th>
-            <th>greenInitiativeHr</th>
-            <th>clHr</th>
-            <th>university Hrs</th>
-            <th>Total Hours</th>
-            <th>Detail</th>
-          </tr>
-        </thead>
-        <tbody>
-            <% users.forEach(user => { %>
-          <tr>
-            <td><%= user.vec %></td>
-            <td><%= user.name %></td>
-            <td><%= user.branch %></td>
-            <td><%= user.sem %></td> 
-            <td><%= user.batch %></td>
-            <td><%= getTotalHours(user, 'fitIndia') %></td>
-            <td><%= getTotalHours(user, 'educationForAll') %></td>
-            <td><%= getTotalHours(user, 'animalWellfare') %></td>
-            <td><%= getTotalHours(user, 'diasterManagement') %></td>
-            <td><%= getTotalHours(user, 'greenInitiative') %></td>
-            <td><%= getTotalHours(user, 'college') %></td>
-            <td><%= getTotalHours(user, 'university') %></td>
-            <td><%= totalHours(user) %></td>
-            <td><button onclick="showDetails('<%= user.vec %>')">Show Details</button></td>
-          </tr>
-          <% }); %>
-        </tbody>
-      </table>
-    
-      <% 
-      function totalHours(user){
+    function getTotalHours(user, category) {
         let totalHours = 0;
         user.eventsAttended.forEach(event => {
-          
-            const hours = parseFloat(event.hours);
-            if (!isNaN(hours)) { 
-              totalHours += hours;
+            if (event.category === category) {
+                const hours = parseFloat(event.hours);
+                if (!isNaN(hours)) { 
+                    totalHours += hours;
+                }
             }
-          
         });
         user.eventsOrganised.forEach(event => {
-          
-            const hours = parseFloat(event.organisersHr); 
-            if (!isNaN(hours)) { 
-              totalHours += hours;
+            if (event.category === category) {
+                const hours = parseFloat(event.organisersHr); 
+                if (!isNaN(hours)) { 
+                    totalHours += hours;
+                }
             }
-          
         });
         return totalHours;
-      }
+    } %>
       
-      function getTotalHours(user, category) {
-        let totalHours = 0;
-        user.eventsAttended.forEach(event => {
-          if (event.category === category) {
-            const hours = parseFloat(event.hours);
-            if (!isNaN(hours)) { 
-              totalHours += hours;
-            }
-          }
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const userTable= document.getElementById('userTable')
+        searchInput.addEventListener('input', function() {
+            const searchText = searchInput.value.trim().toLowerCase();
+            const rows = userTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+            Array.from(rows).forEach(row => {
+                const userid = row.cells[0].textContent.toLowerCase();
+
+                if (userid.includes(searchText)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         });
-        user.eventsOrganised.forEach(event => {
-          if (event.category === category) {
-            const hours = parseFloat(event.organisersHr); 
-            if (!isNaN(hours)) { 
-              totalHours += hours;
-            }
-          }
-        });
-        return totalHours;
-      } %>
-      
+
+        function showDetails(userId){
+            console.log(userId);
+            window.location = window.location + "/"+ userId
+        }
+
+        function applyCategoryFilter() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach((row) => {
+                const category = row.querySelector('td:nth-child(5)').textContent;
+                if (categoryFilter && category !== categoryFilter) {
+                    row.style.display = 'none';
+                } else {
+                    row.style.display = 'table-row';
+                }
+            });
+        }
+    </script>
 </body>
-<script>
-
-    const searchInput = document.getElementById('searchInput');
-    const userTable= document.getElementById('userTable')
-    searchInput.addEventListener('input', function() {
-    const searchText = searchInput.value.trim().toLowerCase();
-    const rows = userTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-
-    Array.from(rows).forEach(row => {
-      const userid = row.cells[0].textContent.toLowerCase();
-
-      if (userid.includes(searchText)) {
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
-      }
-    });
-  });
-
-  function showDetails(userId){
-    console.log(userId);
-    window.location = window.location + "/"+ userId
-  }
-  function applyCategoryFilter() {
-    const categoryFilter = document.getElementById('categoryFilter').value;
-    const rows = document.querySelectorAll('tbody tr');
-    rows.forEach((row) => {
-      const category = row.querySelector('td:nth-child(5)').textContent;
-      if (categoryFilter && category !== categoryFilter) {
-        row.style.display = 'none';
-      } else {
-        row.style.display = 'table-row';
-      }
-    });
-  }
-</script>
 </html>

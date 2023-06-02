@@ -10,5 +10,23 @@
   
 .btn-block {
     width: 100%;
-  }
+}
+.showNumbers{
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  
+}
+.showNumber{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 1rem;
+  width: 22rem;
+  height: 7rem;
+  background-color: blue;
+}
   
