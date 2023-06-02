@@ -38,7 +38,7 @@ const authenticateAdmin = async (req, res, next) => {
   try {
     const decoded = jwt.verify(authToken, secretKey);
     const admin = await Admin.findOne({ username: decoded.username });
-
+    console.log(admin)
     if (!admin) {
       return res.status(401).json({ error: "Unauthorized" });
     }
@@ -592,6 +592,15 @@ app.get("/userLogin", (req, res) => {
   res
     .status(200)
     .sendFile(path.join(__dirname, "public", "pages/userLogin.html"));
+});
+app.post('/logout', (req, res) => {
+  res.cookie('authToken', '', {
+    expires: new Date(0),
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  });
+  res.redirect('/');
 });
 
 app.listen(port, () => {

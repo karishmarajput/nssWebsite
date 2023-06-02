@@ -15,7 +15,11 @@
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
-
+<style>
+  .nav-link:hover{
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -67,9 +71,29 @@
             <li class="nav-item">
               <a href="/admin/showCampDetails" class="nav-link">Show Camp</a>
           </li>
+          <li class="nav-item">
+            <a onclick="handleLogout()" class="nav-link">LogOut</a>
+        </li>
             </ul>
           </div>
         </div>
       </nav>
 </body>
+<script>
+function handleLogout(){
+    fetch('/logout', {
+    method: 'POST',
+  })
+    .then(response => {
+      if (response.ok) {
+        window.location.href = '/';
+      } else {
+        console.log('Logout request failed.');
+      }
+    })
+    .catch(error => {
+      console.error('Error occurred while logging out:', error);
+    });
+}
+</script>
 </html>
