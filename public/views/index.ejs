@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NSS FCRIT</title>
     <link rel="icon" type="image/x-icon" href="../images/nss_logo.png" />
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/global.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -20,13 +24,13 @@
     ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(function() {
-            $("#footer").load("/components/footer.html");
-        });
+      $(function () {
+        $("#footer").load("/components/footer.html");
+      });
     </script>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
           <img
@@ -34,10 +38,12 @@
             alt="Logo"
             width="50"
             height="50"
-            class="d-inline-block align-text-top"
+            class="d-inline-block align-text-top brand-img"
           />
         </a>
-        <a class="navbar-brand" href="">National Service Scheme</a>
+        <a class="navbar-brand" style="color: white" href=""
+          >National Service Scheme</a
+        >
         <button
           class="navbar-toggler"
           type="button"
@@ -46,6 +52,7 @@
           aria-controls="navbarNavAltMarkup"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          style="background-color: white !important"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -152,51 +159,13 @@
       </div>
       <% }); %>
     </div>
-    <footer class="text-center" style="background-color: #3b3477">
+    <footer class="text-center">
       <div class="container p-4">
-        <section class="mb-4">
-          <a
-            class="btn btn-primary btn-floating m-1"
-            style="background-color: #3b5998"
-            href="#!"
-            role="button"
-            ><i class="fab fa-facebook-f"></i
-          ></a>
-          <a
-            class="btn btn-primary btn-floating m-1"
-            style="background-color: #55acee"
-            href="#!"
-            role="button"
-            ><i class="fab fa-twitter"></i
-          ></a>
-          <a
-            class="btn btn-primary btn-floating m-1"
-            style="background-color: #dd4b39"
-            href="#!"
-            role="button"
-            ><i class="fab fa-google"></i
-          ></a>
-          <a
-            class="btn btn-primary btn-floating m-1"
-            style="background-color: #ac2bac"
-            href="#!"
-            role="button"
-            ><i class="fab fa-instagram"></i
-          ></a>
-          <a
-            class="btn btn-primary btn-floating m-1"
-            style="background-color: #0082ca"
-            href="#!"
-            role="button"
-            ><i class="fab fa-linkedin-in"></i
-          ></a>
-          <a
-            class="btn btn-primary btn-floating m-1"
-            style="background-color: #333333"
-            href="#!"
-            role="button"
-            ><i class="fab fa-github"></i
-          ></a>
+        <section class="mb-4 footer-links">
+          <a href="#" class="fa fa-facebook"></a>
+          <a href="#" class="fa fa-twitter"></a>
+          <a href="#" class="fa fa-instagram"></a>
+          <a href="#" class="fa fa-linkedin"></a>
         </section>
         <section class="mb-4">
           <p style="color: white">
@@ -208,7 +177,7 @@
         </section>
       </div>
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        <p style="color: white">© 2020 Copyright</p>
+        <p style="color: white">© 2023 Copyright</p>
       </div>
     </footer>
   </body>

@@ -59,7 +59,7 @@ app.get("/", async (req, res) => {
     function newEvents() {
       NewListCount = 0;
       EventListCount = eventList.length - 1;
-      while (NewListCount <= 4 && EventListCount >= 0) {
+      while (NewListCount <= 6 && EventListCount >= 0) {
         latestEvents[NewListCount] = eventList[EventListCount];
         NewListCount++;
         EventListCount--;
@@ -400,14 +400,17 @@ app.get("/admin/eventDisplay", authenticateAdmin, async (req, res) => {
 
 app.get("/admin/eventDisplay/:eventId", authenticateAdmin, async (req, res) => {
   const eventId = req.params.eventId;
-  try{
-    const event = await Event.findOne({_id: eventId}).populate('eventLeader','name').populate('reportWrittenBy','name').populate('organisers', 'vec name').populate('participants','vec name');
-    res.render('eventDetails', { event });
-  } 
-    catch(error) {
-      res.status(500).json({ error: 'Internal server error' });
-    };
-})
+  try {
+    const event = await Event.findOne({ _id: eventId })
+      .populate("eventLeader", "name")
+      .populate("reportWrittenBy", "name")
+      .populate("organisers", "vec name")
+      .populate("participants", "vec name");
+    res.render("eventDetails", { event });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 app.get("/admin/campDetails", authenticateAdmin, async (req, res) => {
   try {
