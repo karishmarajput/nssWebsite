@@ -17,7 +17,7 @@ var path = require("path");
 const Camp = require("./models/camp");
 const secretKey = "notmebutyou";
 connectDB();
-app.use(favicon(path.join(__dirname, 'public', '/images/nss_logo.png')))
+app.use(favicon(path.join(__dirname, "public", "/images/nss_logo.png")));
 app.set("view engine", "ejs");
 
 app.use(express.json());
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static(__dirname));
 app.set("views", path.join(__dirname, "/public/views"));
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -49,41 +49,58 @@ const authenticateAdmin = async (req, res, next) => {
   }
 };
 
-
-
 app.get("/", async (req, res) => {
   try {
-    const eventList = await Event.find({}, 'eventName eventDate venue content eventLeader totalPart category imagePath');
-    res.render('index', { posts: eventList });
+    latestEvents = [];
+    const eventList = await Event.find(
+      {},
+      "eventName eventDate venue content eventLeader totalPart category imagePath"
+    );
+    function newEvents() {
+      NewListCount = 0;
+      EventListCount = eventList.length - 1;
+      while (NewListCount <= 4 && EventListCount >= 0) {
+        latestEvents[NewListCount] = eventList[EventListCount];
+        NewListCount++;
+        EventListCount--;
+      }
+    }
+    newEvents();
+    console.log(latestEvents);
+    res.render("index", { posts: latestEvents });
   } catch (error) {
     console.error("Error fetching user list:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-app.get('/admin',(req,res)=>{
-  res.sendFile(path.join(__dirname, 'public','pages/adminLogin.html'));
-})
-app.get('/adminDashboard',authenticateAdmin,(req,res)=>{
-  res.status(200).sendFile(path.join(__dirname, "public", "pages/adminDashboard.html"));
-})
-app.get('/admin/addAdmin',(req,res)=>{
-  res.status(200).sendFile(path.join(__dirname,'public','pages/addAdmin.html'))
-})
-app.post('/admin/addAdmin',authenticateAdmin, async (req, res) => {
-    const { username, password } = req.body;
-  
-    try {
-      const existingAdmin = await Admin.findOne({ username });
-      if (existingAdmin) {
-        return res.status(409).json({ error: 'Admin already exists' });
-      }
-      const admin = new Admin({ username, password });
-      await admin.save();
-      res.json({ message: 'Admin created successfully' });
-    } catch (err) {
-      res.status(500).json({ error: 'Internal server error' });
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "pages/adminLogin.html"));
+});
+app.get("/adminDashboard", authenticateAdmin, (req, res) => {
+  res
+    .status(200)
+    .sendFile(path.join(__dirname, "public", "pages/adminDashboard.html"));
+});
+app.get("/admin/addAdmin", (req, res) => {
+  res
+    .status(200)
+    .sendFile(path.join(__dirname, "public", "pages/addAdmin.html"));
+});
+app.post("/admin/addAdmin", authenticateAdmin, async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const existingAdmin = await Admin.findOne({ username });
+    if (existingAdmin) {
+      return res.status(409).json({ error: "Admin already exists" });
     }
+    const admin = new Admin({ username, password });
+    await admin.save();
+    res.json({ message: "Admin created successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 app.post("/admin", async (req, res) => {
   const { username, password } = req.body;
@@ -101,12 +118,13 @@ app.post("/admin", async (req, res) => {
       expiresIn: "1h",
     });
     res.cookie("authToken", authToken, { httpOnly: true });
-    res.status(200).sendFile(path.join(__dirname, "public", "pages/adminDashboard.html"));
+    res
+      .status(200)
+      .sendFile(path.join(__dirname, "public", "pages/adminDashboard.html"));
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 app.get("/admin/addevent", authenticateAdmin, async (req, res) => {
   try {
@@ -334,7 +352,7 @@ app.get("/admin/userDisplay/:vec", authenticateAdmin, (req, res) => {
           gender: user.gender,
           address: user.address,
           yearInNss: user.yearInNss,
-          batch:user.batch,
+          batch: user.batch,
           campAttended: user.campAttended,
           eventsAttended: user.eventsAttended.map((event) => {
             return {
@@ -356,18 +374,21 @@ app.get("/admin/userDisplay/:vec", authenticateAdmin, (req, res) => {
 
         res.render("userDetails", { userDetails });
       } else {
-        res.status(404).json({ error: 'User not found' });
+        res.status(404).json({ error: "User not found" });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: "Internal server error" });
     });
 });
 
 app.get("/admin/eventDisplay", authenticateAdmin, async (req, res) => {
   try {
-    await Event.find().populate("eventLeader", "name").populate("reportWrittenBy", "name").exec()
+    await Event.find()
+      .populate("eventLeader", "name")
+      .populate("reportWrittenBy", "name")
+      .exec()
       .then((event) => {
         res.render("eventDisplay", { events: event });
       });
@@ -377,30 +398,30 @@ app.get("/admin/eventDisplay", authenticateAdmin, async (req, res) => {
   }
 });
 
-
-app.get('/admin/eventDisplay/:eventId',authenticateAdmin,async(req,res)=>{
+app.get("/admin/eventDisplay/:eventId", authenticateAdmin, async (req, res) => {
   const eventId = req.params.eventId;
-  try{
-    const event = await Event.findOne({_id: eventId}).populate('organisers', 'vec name').populate('participants','vec name');
-    res.render('eventDetails', { event });
-  } 
-    catch(error) {
-      res.status(500).json({ error: 'Internal server error' });
-    };
-})
-
-app.get('/admin/campDetails',authenticateAdmin,async(req,res)=>{
   try {
-    const userList = await User.find({}, 'vec name');
-    res.render('campForm', { users: userList });
+    const event = await Event.findOne({ _id: eventId })
+      .populate("organisers", "vec name")
+      .populate("participants", "vec name");
+    res.render("eventDetails", { event });
   } catch (error) {
-    console.error('Error fetching user list:', error);
-    res.status(500).json({ error: 'Internal server error' });
-    }
-})
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-app.post('/admin/campDetails',authenticateAdmin,async(req,res)=>{
-  console.log(req.body)
+app.get("/admin/campDetails", authenticateAdmin, async (req, res) => {
+  try {
+    const userList = await User.find({}, "vec name");
+    res.render("campForm", { users: userList });
+  } catch (error) {
+    console.error("Error fetching user list:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/admin/campDetails", authenticateAdmin, async (req, res) => {
+  console.log(req.body);
   let {
     campYear,
     fromDate,
@@ -409,26 +430,28 @@ app.post('/admin/campDetails',authenticateAdmin,async(req,res)=>{
     address,
     preCampActivities,
     activityDaywise,
-    parti
+    parti,
   } = req.body;
-  const existingCamp = await Admin.findOne({campYear: campYear});
+  const existingCamp = await Admin.findOne({ campYear: campYear });
   if (existingCamp) {
-    return res.status(409).json({ error: `Camp Details for ${campYear} already exists` });
+    return res
+      .status(409)
+      .json({ error: `Camp Details for ${campYear} already exists` });
   }
-  attendedBy = []
-  for(let i =0; i < parti.length;i++){
+  attendedBy = [];
+  for (let i = 0; i < parti.length; i++) {
     await User.findOne({ vec: parti[i] })
-    .then(user => {
-      if (user) {
-        attendedBy.push(user);
-        return user.save();
-      } else {
-        console.log('User not found');
-      }
-    })
-    .catch(error => {
-      console.error('Error finding user:', error);
-    });
+      .then((user) => {
+        if (user) {
+          attendedBy.push(user);
+          return user.save();
+        } else {
+          console.log("User not found");
+        }
+      })
+      .catch((error) => {
+        console.error("Error finding user:", error);
+      });
   }
   try {
     const camp = new Camp({
@@ -439,33 +462,34 @@ app.post('/admin/campDetails',authenticateAdmin,async(req,res)=>{
       address,
       preCampActivities,
       activityDaywise,
-      attendedBy
-    })
+      attendedBy,
+    });
     await camp.save();
     for (let i = 0; i < parti.length; i++) {
       try {
         const user = await User.findOne({ vec: parti[i] });
-        
+
         if (user) {
           user.campAttended = campYear;
           await user.save();
         } else {
-          console.log('User not found');
+          console.log("User not found");
         }
       } catch (error) {
         console.error(error);
       }
     }
-    
-  }catch (err) {
-    console.log(err)
-    res.status(500).json({ error: 'Internal server error' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
   }
-  res.status(200).json({message:'Camp Deatils successfully added'})
-})
-app.get('/admin/showCampDetails',authenticateAdmin,async(req,res)=>{
+  res.status(200).json({ message: "Camp Deatils successfully added" });
+});
+app.get("/admin/showCampDetails", authenticateAdmin, async (req, res) => {
   try {
-    await Camp.find().populate("attendedBy", "vec name").exec()
+    await Camp.find()
+      .populate("attendedBy", "vec name")
+      .exec()
       .then((camp) => {
         res.render("campDisplay", { camp });
       });
@@ -473,82 +497,101 @@ app.get('/admin/showCampDetails',authenticateAdmin,async(req,res)=>{
     console.error("Error fetching user list:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-})
-app.get('/admin/showCampDetails/:campId',authenticateAdmin,async(req,res)=>{
-  const campId = req.params.campId;
-  try{
-    const camp = await Camp.findOne({_id: campId}).populate('attendedBy', 'vec name');
-    res.render('campDetails', { camp });
-  } 
-    catch(error) {
-      res.status(500).json({ error: 'Internal server error' });
-    };
-})
-app.delete('/admin/campDisplay/deleteCamp',authenticateAdmin,async(req,res)=>{
-  try {
-    const { campId } = req.body;
-    const deletedCamp = await Camp.findByIdAndDelete(campId);
-    if (!deletedCamp) {
-      return res.status(404).json({ error: 'Camp Details not found' });
+});
+app.get(
+  "/admin/showCampDetails/:campId",
+  authenticateAdmin,
+  async (req, res) => {
+    const campId = req.params.campId;
+    try {
+      const camp = await Camp.findOne({ _id: campId }).populate(
+        "attendedBy",
+        "vec name"
+      );
+      res.render("campDetails", { camp });
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
     }
-    return res.status(200).json({ message: 'Camp Details deleted successfully' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
   }
-})
-app.delete('/admin/eventDisplay/deleteEvent',authenticateAdmin,async(req,res)=>{
-  try {
-    const { eventId } = req.body;
-    const deletedEvent = await Event.findByIdAndDelete(eventId);
-    if (!deletedEvent) {
-      return res.status(404).json({ error: 'Event not found' });
+);
+app.delete(
+  "/admin/campDisplay/deleteCamp",
+  authenticateAdmin,
+  async (req, res) => {
+    try {
+      const { campId } = req.body;
+      const deletedCamp = await Camp.findByIdAndDelete(campId);
+      if (!deletedCamp) {
+        return res.status(404).json({ error: "Camp Details not found" });
+      }
+      return res
+        .status(200)
+        .json({ message: "Camp Details deleted successfully" });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
     }
-    return res.status(200).json({ message: 'Event deleted successfully' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
   }
-})
+);
+app.delete(
+  "/admin/eventDisplay/deleteEvent",
+  authenticateAdmin,
+  async (req, res) => {
+    try {
+      const { eventId } = req.body;
+      const deletedEvent = await Event.findByIdAndDelete(eventId);
+      if (!deletedEvent) {
+        return res.status(404).json({ error: "Event not found" });
+      }
+      return res.status(200).json({ message: "Event deleted successfully" });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
 
-app.post('/admin/eventDisplay/updateEvent', async(req, res) => {
-  const { eventId, organisersHr, hours} = req.body;
+app.post("/admin/eventDisplay/updateEvent", async (req, res) => {
+  const { eventId, organisersHr, hours } = req.body;
   try {
     const updatedEvent = await Event.findByIdAndUpdate(
       eventId,
-      { organisersHr, hours},
+      { organisersHr, hours },
       { new: true }
     );
     res.json(updatedEvent);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Error updating event' });
+    res.status(500).json({ error: "Error updating event" });
   }
 });
-app.get('/admin/users',authenticateAdmin, async (req, res) => {
+app.get("/admin/users", authenticateAdmin, async (req, res) => {
   try {
-    const users = await User.find().populate("eventsAttended", "hours")
-    .populate("eventsOrganised", "organisersHr");
+    const users = await User.find()
+      .populate("eventsAttended", "hours")
+      .populate("eventsOrganised", "organisersHr");
     res.json(users);
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching user data:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
-app.get('/admin/events',authenticateAdmin, async (req, res) => {
+app.get("/admin/events", authenticateAdmin, async (req, res) => {
   try {
-    const event = await Event.find()
+    const event = await Event.find();
     res.json(event);
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching user data:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-app.get('/userLogin',(req,res)=>{
-    res.status(200).sendFile(path.join(__dirname,'public','pages/userLogin.html'))
-})
+app.get("/userLogin", (req, res) => {
+  res
+    .status(200)
+    .sendFile(path.join(__dirname, "public", "pages/userLogin.html"));
+});
 
-app.listen(port, () => {       
-    console.log(`Now listening on port ${port}`); 
+app.listen(port, () => {
+  console.log(`Now listening on port ${port}`);
 });
