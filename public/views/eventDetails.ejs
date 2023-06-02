@@ -85,18 +85,32 @@
             <button id="openModalButton" class="btn btn-warning">Edit Event</button>
         </div>
 
-<div id="myModal" class="modal">
+<div id="myModal" class="modal modalModule">
   <div class="modal-content">
+    
+    <h6>Update Event</h6>
     <span class="close">&times;</span>
-    <h3>Enter Organisers Hour and Hours</h3>
-    <form id="modalForm"><br><br><br>
-        <h5><%= event.eventName %></h5>
-        <input id="eventId"type="text" value="<%= event._id%>" style="display: none;">
-      <label for="organisersHour">Organisers Hour:</label>
-      <input type="number" id="organisersHour" required><br><br><br>
-      <label for="hours">Hours:</label>
-      <input type="number" id="hours" required><br><br>
-      <button type="submit">Submit</button>
+    <form id="modalForm"><br>
+      <h6>Event: <%= event.eventName %></h6><br>
+      <input id="eventId"type="text" value="<%= event._id%>" style="display: none;">
+      <div class="mb-4 row">
+        <label for="organisersHour" class="col-sm-3 col-form-label">Organisers Hour</label>
+        <div class="col-sm-6">
+            <input type="number" id="organisersHour" required class="form-control">
+        </div>
+    </div>
+    <div class="mb-4 row">
+      <label for="hours" class="col-sm-3 col-form-label">Participants Hours</label>
+      <div class="col-sm-6">
+          <input type="number" id="hours" required class="form-control">
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+        <input type="submit" class="btn btn-warning" value="Update Event">
+    </div>
+</div>
+
     </form>
   </div>
 </div>
@@ -130,7 +144,10 @@ const modal = document.getElementById('myModal');
 const openModalButton = document.getElementById('openModalButton');
 const closeButton = document.getElementsByClassName('close')[0];
 openModalButton.addEventListener('click', function() {
-  modal.style.display = 'block';
+  modal.style.display = 'inline-block';
+  modal.style.top = "15%";
+  modal.style.left = '25%';
+  modal.style.width = '50%';
 });
 closeButton.addEventListener('click', function() {
   modal.style.display = 'none';
