@@ -15,7 +15,7 @@ const cors = require("cors");
 var favicon = require("serve-favicon");
 var path = require("path");
 const Camp = require("./models/camp");
-const secretKey = "notmebutyou";
+const secretKey =process.env.SECRET_CODE; 
 connectDB();
 app.use(favicon(path.join(__dirname, "public", "/images/nss_logo.png")));
 app.set("view engine", "ejs");
