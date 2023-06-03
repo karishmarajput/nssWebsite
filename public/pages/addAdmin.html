@@ -16,6 +16,7 @@
             min-height: 75%;
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
         .content {
@@ -37,21 +38,15 @@
         <form action="/admin/addAdmin" method="POST" class="mt-4">
             <div class="mb-3 row">
                 <label for="username" class="col-sm-2 col-form-label">Username</label>
-                <div class="col-sm-6">
-                    <input type="text" name="username" class="form-control">
-                </div>
+                <input type="text" name="username" class="form-control">
             </div>
             <div class="mb-3 row">
                 <label for="password" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-6">
-                    <input type="password" name="password" class="form-control">
-                </div>
+                <input type="password" name="password" class="form-control">
             </div>
             <div class="row">
                 <div class="col-sm-2"></div>
-                <div class="col-sm-6">
-                    <button type="submit" class="btn btn-warning">Login</button>
-                </div>
+                <button type="submit" class="btn btn-warning">ADD ADMIN</button>
             </div>
         </form>
     </div>

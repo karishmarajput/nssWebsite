@@ -24,6 +24,7 @@
 .user-table td {
     padding: 8px;
     text-align: left;
+    border: 1px solid black;
 }
 
 .btn {
@@ -34,7 +35,7 @@
 }
 
 .btn-primary {
-    background-color: blue;
+    background-color: darkblue;
     color: white;
 }
 

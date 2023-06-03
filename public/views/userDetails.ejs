@@ -6,6 +6,7 @@
   <script>
     $(function() {
       $("#header").load("/components/header.html");
+      $("#footer").load("/components/footer.html");
     });
   </script>
   <link rel="stylesheet" href="/style/userDetails.css">
@@ -32,7 +33,7 @@
   <% if (userDetails.eventsAttended.length > 0) { %>
     
       <h4>Fit India</h4>
-      <table border="1px">
+      <table>
         <thead>
           <tr>
             <th>Event</th>
@@ -376,5 +377,6 @@
   <% } else { %>
     <p>No events organised.</p>
   <% } %>
+  <div id="footer"></div>
 </body>
 </html>
