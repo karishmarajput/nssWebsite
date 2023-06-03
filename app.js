@@ -15,7 +15,7 @@ const cors = require("cors");
 var favicon = require("serve-favicon");
 var path = require("path");
 const Camp = require("./models/camp");
-const secretKey = "notmebutyou";
+const secretKey =process.env.SECRET_CODE; 
 connectDB();
 app.use(favicon(path.join(__dirname, "public", "/images/nss_logo.png")));
 app.set("view engine", "ejs");
@@ -38,7 +38,7 @@ const authenticateAdmin = async (req, res, next) => {
   try {
     const decoded = jwt.verify(authToken, secretKey);
     const admin = await Admin.findOne({ username: decoded.username });
-
+    console.log(admin)
     if (!admin) {
       return res.status(401).json({ error: "Unauthorized" });
     }
@@ -59,7 +59,7 @@ app.get("/", async (req, res) => {
     function newEvents() {
       NewListCount = 0;
       EventListCount = eventList.length - 1;
-      while (NewListCount <= 4 && EventListCount >= 0) {
+      while (NewListCount <= 6 && EventListCount >= 0) {
         latestEvents[NewListCount] = eventList[EventListCount];
         NewListCount++;
         EventListCount--;
@@ -400,14 +400,17 @@ app.get("/admin/eventDisplay", authenticateAdmin, async (req, res) => {
 
 app.get("/admin/eventDisplay/:eventId", authenticateAdmin, async (req, res) => {
   const eventId = req.params.eventId;
-  try{
-    const event = await Event.findOne({_id: eventId}).populate('eventLeader','name').populate('reportWrittenBy','name').populate('organisers', 'vec name').populate('participants','vec name');
-    res.render('eventDetails', { event });
-  } 
-    catch(error) {
-      res.status(500).json({ error: 'Internal server error' });
-    };
-})
+  try {
+    const event = await Event.findOne({ _id: eventId })
+      .populate("eventLeader", "name")
+      .populate("reportWrittenBy", "name")
+      .populate("organisers", "vec name")
+      .populate("participants", "vec name");
+    res.render("eventDetails", { event });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 app.get("/admin/campDetails", authenticateAdmin, async (req, res) => {
   try {
@@ -589,6 +592,15 @@ app.get("/userLogin", (req, res) => {
   res
     .status(200)
     .sendFile(path.join(__dirname, "public", "pages/userLogin.html"));
+});
+app.post('/logout', (req, res) => {
+  res.cookie('authToken', '', {
+    expires: new Date(0),
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  });
+  res.redirect('/');
 });
 
 app.listen(port, () => {

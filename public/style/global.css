@@ -1,0 +1,48 @@
+/* Navbar */
+nav {
+  background-color: #3b3477 !important;
+}
+
+.brand-img {
+  background-color: white;
+  border-radius: 50%;
+}
+
+.nav-link {
+  color: white !important;
+}
+/* FOOTER */
+footer {
+  background-color: #3b3477;
+}
+.fa {
+  margin: 1rem;
+  padding: 1rem;
+  font-size: 2rem;
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 50%;
+}
+
+.fa:hover {
+  opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3b5998;
+  color: white;
+}
+.fa-twitter {
+  background: #55acee;
+  color: white;
+}
+.fa-instagram {
+  background: linear-gradient(45deg, #e362d2, #eef5a9);
+  color: white;
+}
+.fa-linkedin {
+  background: #074ab5;
+  color: white;
+}

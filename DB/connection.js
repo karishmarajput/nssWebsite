@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const URI = "";
+require('dotenv').config(); 
+const URI =process.env.MONGODB_URL;
 
 const connectDB = async () => {
   await mongoose.connect(URI, {
@@ -8,4 +9,5 @@ const connectDB = async () => {
   });
   console.log("db connected...");
 };
+
 module.exports = connectDB;
