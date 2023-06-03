@@ -38,16 +38,22 @@
         <canvas id="pieChart"></canvas>
         <canvas id="branchPieChart"></canvas>
         <canvas id="userHoursPieChart"></canvas>
-        <canvas id="yearInNssChart"></canvas>
+        <div class="yearInNssDiv">
+          <canvas id="yearInNssChart"></canvas>
+        </div>
+        
       </div>
       <div class="downloadPdf">
-        <p class="downloadPdfHeading">Download Documents</p><hr>
-        <ul>
-          <li>Event Details CSV</li>
-          <li>Volunteer completed 120 Hours CSV</li>
-          <li>Volunteer completed 240 Hours CSV</li>
-          <li>Pdf of events</li>
-        </ul>
+        <div class="downloadPdfDiv">
+          <p class="downloadPdfHeading">Download Documents</p><hr>
+          <ul>
+            <li>Event Details CSV</li>
+            <li>Volunteer completed 120 Hours CSV</li>
+            <li>Volunteer completed 240 Hours CSV</li>
+            <li>Pdf of events</li>
+            <li>Import Volunteer using CSV</li>
+          </ul>
+        </div>
       </div>
     </div>
     
@@ -197,7 +203,7 @@
               {
                 label: "Users",
                 data: counts,
-                backgroundColor: "rgba(75, 192, 192, 0.6)", // Customize the bar color
+                backgroundColor: "#EA5E83", 
               },
             ],
           },
@@ -268,8 +274,6 @@
             responsive: false,
             maintainAspectRatio: false,
             aspectRatio: 2, 
-            width: 1200, 
-            height: 600,
             scales: {
               y: {
                 beginAtZero: true,

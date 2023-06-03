@@ -58,6 +58,7 @@
   justify-content: space-around; 
   flex-wrap: wrap;
   padding: 2rem;
+  color: black;
 }
 .eventBarDiv{
   background-color: #d1ccf7;
@@ -75,9 +76,14 @@
 }
 .downloadPdf{
   width: 30%;
+  
+}
+.downloadPdfDiv{
   background-color: #1e1855;
   box-shadow: 1px 3px #766ae2;
   color: white;
+  padding: 1rem;
+  margin: 1rem;
 }
 .downloadPdfHeading{
   font-size: 1.5rem;
@@ -88,4 +94,12 @@
 }
 .downloadPdf li{
   font-size: 1.2rem;
+}
+.yearInNssDiv{
+  background-color: #d1ccf7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 2rem;
 }
