@@ -26,18 +26,31 @@
       <div id="numberOfEvents" class="showNumber"></div>
       <div id="numberOfBenificiar" class="showNumber"></div>
     </div>
-    <h3>Users</h3>
-    <div style="display: flex; justify-content: space-around; flex-wrap: wrap">
-      <canvas id="pieChart"></canvas>
-      <canvas id="branchPieChart"></canvas>
-      <canvas id="userHoursPieChart"></canvas>
-      <canvas id="yearInNssChart"></canvas>
-    </div>
-    <h3>Events</h3>
-    <div style="display: flex; justify-content: space-around; flex-wrap: wrap">
-      <canvas id="eventBarGraph"></canvas>
+    <div class="graphdisplay">
+      <div class="eventBarDiv">
+        <canvas id="eventBarGraph"></canvas>
+      </div>
+      
       <canvas id="pieChartCategory"></canvas>
     </div>
+    <div class="graphdisplay" >
+      <div class="graphSide">
+        <canvas id="pieChart"></canvas>
+        <canvas id="branchPieChart"></canvas>
+        <canvas id="userHoursPieChart"></canvas>
+        <canvas id="yearInNssChart"></canvas>
+      </div>
+      <div class="downloadPdf">
+        <p class="downloadPdfHeading">Download Documents</p><hr>
+        <ul>
+          <li>Event Details CSV</li>
+          <li>Volunteer completed 120 Hours CSV</li>
+          <li>Volunteer completed 240 Hours CSV</li>
+          <li>Pdf of events</li>
+        </ul>
+      </div>
+    </div>
+    
     <div id="footer"></div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
@@ -238,9 +251,10 @@
               {
                 label: "Event Count",
                 data: data,
-                backgroundColor: "#36A2EB",
-                borderColor: "#36A2EB",
+                backgroundColor: "#FCEF47",
+                borderColor: "#F6A01F",
                 borderWidth: 1,
+               
               },
             ],
           },
@@ -252,15 +266,19 @@
               },
             },
             responsive: false,
-            width: 300,
-            height: 300,
+            maintainAspectRatio: false,
+            aspectRatio: 2, 
+            width: 1200, 
+            height: 600,
             scales: {
               y: {
                 beginAtZero: true,
                 stepSize: 1,
               },
             },
+            
           },
+          
         });
         const categories = {};
         events.forEach((event) => {

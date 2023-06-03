@@ -14,19 +14,78 @@
 .showNumbers{
   display: flex;
   justify-content: space-around;
-  padding: 2rem;
+  padding: 1rem;
   color: white;
   font-size: 2rem;
   text-align: center;
-  
+  flex-wrap: wrap;
 }
 .showNumber{
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border-radius: 1rem;
+  border-radius: .2rem;
+  font-weight: 600;
   width: 22rem;
-  height: 7rem;
-  background-color: blue;
+  height: 9rem;
+  box-shadow: 1px 3px #332C6F;
+  margin: 1rem;
 }
-  
+#numberOfVolunteer{
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    rgb(225, 0, 255) 0%,
+    #43e 100%
+  );
+}
+#numberOfEvents{
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    rgb(5, 243, 223) 0%,
+    #43e 100%
+  );
+}
+#numberOfBenificiar{
+  background-image: radial-gradient(
+    farthest-corner at 40px 40px,
+    rgba(252, 255, 51, 0.822) 0%,
+    rgb(255, 153, 0) 100%
+  );
+}
+
+.graphdisplay{
+  display: flex; 
+  justify-content: space-around; 
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+.eventBarDiv{
+  background-color: #d1ccf7;
+    width: 50rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    box-shadow: 1px 3px #a097f1;
+}
+.graphSide{
+  display: flex;
+  width: 70%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.downloadPdf{
+  width: 30%;
+  background-color: #1e1855;
+  box-shadow: 1px 3px #766ae2;
+  color: white;
+}
+.downloadPdfHeading{
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 2rem;
+  padding-top: 1rem;
+  color: white;
+}
+.downloadPdf li{
+  font-size: 1.2rem;
+}

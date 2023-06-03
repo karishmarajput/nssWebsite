@@ -38,7 +38,6 @@ const authenticateAdmin = async (req, res, next) => {
   try {
     const decoded = jwt.verify(authToken, secretKey);
     const admin = await Admin.findOne({ username: decoded.username });
-    console.log(admin)
     if (!admin) {
       return res.status(401).json({ error: "Unauthorized" });
     }
