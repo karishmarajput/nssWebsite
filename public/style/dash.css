@@ -34,8 +34,8 @@
 #numberOfVolunteer{
   background-image: radial-gradient(
     farthest-corner at 40px 40px,
-    rgb(225, 0, 255) 0%,
-    #43e 100%
+    #a097f1 0%,
+    #332C6F 100%
   );
 }
 #numberOfEvents{
@@ -48,8 +48,8 @@
 #numberOfBenificiar{
   background-image: radial-gradient(
     farthest-corner at 40px 40px,
-    rgba(252, 255, 51, 0.822) 0%,
-    rgb(255, 153, 0) 100%
+    rgb(247, 218, 139) 0%,
+    #f58d06 100%
   );
 }
 
@@ -62,7 +62,7 @@
 }
 .eventBarDiv{
   background-color: #d1ccf7;
-    width: 50rem;
+    padding: 3rem;
     align-items: center;
     display: flex;
     justify-content: center;
@@ -73,6 +73,12 @@
   width: 70%;
   flex-wrap: wrap;
   justify-content: space-around;
+  flex-direction: column;
+}
+.graphSideFlex{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 .downloadPdf{
   width: 30%;
@@ -101,5 +107,20 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  margin-bottom: 1rem;
   margin-top: 2rem;
+  box-shadow: 1px 3px #a097f1;
+  
+}
+
+@media only screen and (max-width: 600px) {
+  .graphdisplay{
+    flex-direction: column;
+  }
+  .graphSide, .downloadPdf{
+    width: 100%;
+  }
+  .eventBarDiv{
+    padding: 0%;
+  }
 }
