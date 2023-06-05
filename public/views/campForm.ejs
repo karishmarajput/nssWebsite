@@ -1,78 +1,92 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/style/campForm.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function() {
+          $("#header").load("/components/header.html");
+          $("#footer").load("/components/footer.html");
+      });
+    </script>
 </head>
 <body>
-
-<h1>Camp Form</h1>
-
-  <div>
+  <div id="header"></div>
+  <h1 class="form-title">Camp Form</h1>
+<div class="container">
+  <div class="form-group">
     <label for="campYear">Camp Year:</label>
     <select id="campYear" name="campYear" required>
         <option value="2022">2022</option>
         <option value="2023">2023</option>
     </select>
   </div>
-  <div>
-    <label for="fromDate">From Date:</label>
-    <input type="date" id="fromDate" name="fromDate" required>
+  <div class="form-group row">
+    <div class="col-sm-4 col-form-label">
+      <label for="fromDate">From Date:</label>
+    </div class="col-sm-4 col-form-label">
+    <div>
+      <input type="date" id="fromDate" name="fromDate" required>
+    </div>
   </div>
-  <div>
+  <div class="form-group">
     <label for="toDate">To Date:</label>
     <input type="date" id="toDate" name="toDate" required>
   </div>
-  <div>
+  <div class="form-group">
     <label for="campSite">Camp Site:</label>
     <input type="text" id="campSite" name="campSite" required>
   </div>
-  <div>
+  <div class="form-group">
     <label for="address">Address:</label>
     <input type="text" id="address" name="address" required>
   </div>
-  <div>
+  <div class="form-group">
     <label for="preCampActivities">Pre-Camp Activities:</label>
     <textarea id="preCampActivities" name="preCampActivities" required></textarea>
   </div>
-    <h3>Activity Daywise:</h3>
-  <div>
+  <h3 class="sub-title">Activity Daywise:</h3>
+  <div class="form-group">
     <label for="day1">Day 1:</label>
     <textarea id="day1" name="activityDaywise" required></textarea>
   </div>
-  <div>
+  <div class="form-group">
     <label for="day2">Day 2:</label>
     <textarea id="day2" name="activityDaywise" required></textarea>
   </div>
-  <div>
+  <div class="form-group">
     <label for="day3">Day 3:</label>
     <textarea id="day3" name="activityDaywise" required></textarea>
   </div>
-  <div>
+  <div class="form-group">
     <label for="day4">Day 4:</label>
     <textarea id="day4" name="activityDaywise" required></textarea>
   </div>
-  <div>
+  <div class="form-group">
     <label for="day5">Day 5:</label>
     <textarea id="day5" name="activityDaywise" required></textarea>
   </div>
-  <div>
+  <div class="form-group">
     <label for="day6">Day 6:</label>
     <textarea id="day6" name="activityDaywise" required></textarea>
   </div>
-  <div>
+  <div class="form-group">
     <label for="day7">Day 7:</label>
     <textarea id="day7" name="activityDaywise" required></textarea>
   </div>
 
-  <h2>Participants</h2>
+  <h2 class="form-title">Participants</h2>
 
   <div class="form-group">
     <input type="text" id="searchInput" placeholder="Search by VEC Number">
   </div>
 
-  <table id="participantTable" border="1px">
+  <table id="participantTable" class="participant-table">
     <thead>
       <tr>
         <th>Selected</th>
@@ -92,97 +106,12 @@
       <% }); %>
     </tbody>
   </table>
-  <div>
+  <div class="form-group formSubmit">
     <button type="submit" onclick="submitCampDetails()">Add Camp Details</button>
   </div>
 
-
-</body>
-<script>
-      let parti = [];
-    const searchInput = document.getElementById('searchInput');
-  const participantTable = document.getElementById('participantTable');
-  searchInput.addEventListener('input', function() {
-    const searchText = searchInput.value.trim().toLowerCase();
-    const rows = participantTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-
-    Array.from(rows).forEach(row => {
-      const userid = row.cells[1].textContent.toLowerCase();
-
-      if (userid.includes(searchText)) {
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
-      }
-    });
-  });
-  const participantCheckboxes = document.querySelectorAll('.participant-checkbox');
-    participantCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', function() {
-        const userid = checkbox.getAttribute('data-userid');
-        const isChecked = checkbox.checked;
-        if(isChecked){
-          parti.push(userid)
-        }else{
-          parti = parti.filter(item => item !== userid);
-        }
-        console.log(parti)
-      });
-    });
-function submitCampDetails(){
+</div>
   
-  campYear = document.getElementById('campYear').value;
-  fromDate = document.getElementById('fromDate').value;
-  toDate = document.getElementById('toDate').value;
-  campSite = document.getElementById('campSite').value;
-  address = document.getElementById('address').value;
-  preCampActivities = document.getElementById('preCampActivities').value;
-  day1 = document.getElementById('day1').value;
-  day2 = document.getElementById('day2').value;
-  day3 = document.getElementById('day3').value;
-  day4 = document.getElementById('day4').value;
-  day5 = document.getElementById('day5').value;
-  day6 = document.getElementById('day6').value;
-  day7 = document.getElementById('day7').value;
-  console.log(campYear)
-  activityDaywise = []
-  activityDaywise.push(day1)
-  activityDaywise.push(day1)
-  activityDaywise.push(day3)
-  activityDaywise.push(day4)
-  activityDaywise.push(day5)
-  activityDaywise.push(day6)
-  activityDaywise.push(day7)
-  const payload = {
-    campYear,
-    fromDate,
-    toDate,
-    campSite,
-    address,
-    preCampActivities,
-    activityDaywise,
-    parti
-  };
-  console.log(payload)
-  fetch('/admin/campDetails', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Response:', data);
-      alert(data.message)
-
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert(error)
-    });
-
-}
-
-</script>
+  <div id="footer"></div>
+</body>
 </html>
