@@ -1,0 +1,8 @@
+Event Details
+
+{{#each events}}
+Event Name: {{eventName}}
+Image: {{imagePath}}
+Content: {{content}}
+
+{{/each}}
