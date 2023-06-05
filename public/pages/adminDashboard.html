@@ -456,32 +456,26 @@ function create120HourCSV(userData) {
     }
   }
 
-
-  function generatePDF(events) {
-  const doc = new jsPDF();
-  let yPos = 20;
-
-  events.forEach((event) => {
-    doc.setFontSize(16);
-    doc.text(event.eventName, 20, yPos);
-    const img = new Image();
-    img.src = event.imagePath;
-    doc.addImage(img, 'JPEG', 20, yPos + 10, 80, 80);
-    doc.setFontSize(12);
-    doc.text(event.content, 110, yPos + 20);
-    yPos += 100;
-  });
-  doc.save('events.pdf');
-}
-
 async function downloadEventPdf(){
-  try {
-      const response = await fetch('/admin/events');
-      const eventData = await response.json();
-      generatePDF(eventData);
-    } catch (error) {
-      console.error('Error fetching event details:', error);
-    }
+
+  fetch('/generate-pdf')
+        .then(response => {
+          if (response.ok) {
+            return response.blob();
+          } else {
+            throw new Error('Unable to download PDF');
+          }
+        })
+        .then(blob => {
+          const downloadLink = document.createElement('a');
+          downloadLink.href = URL.createObjectURL(blob);
+          downloadLink.download = 'event-details.pdf';
+          downloadLink.click();
+          URL.revokeObjectURL(downloadLink.href);
+        })
+        .catch(error => {
+          console.error(error);
+        });
 }
   </script>
 

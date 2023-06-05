@@ -8,10 +8,10 @@ const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const app = express();
-const port = 5000;
+const port = 5001;
 const multer = require("multer");
 const cors = require("cors");
-
+const PDFDocument = require('pdfkit');
 var favicon = require("serve-favicon");
 var path = require("path");
 const Camp = require("./models/camp");
@@ -590,7 +590,25 @@ app.get("/admin/events", authenticateAdmin, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
+app.get('/generate-pdf', async (req, res) => {
+  try {
+    const eventData = await Event.find();
+    const doc = new PDFDocument();
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=event-details.pdf');
+    doc.pipe(res);
+    eventData.forEach((event, index) => {
+      doc.text(`Event Name: ${event.eventName}`, { align: 'left' });
+      doc.image(event.imagePath, { align: 'left' });
+      doc.text(`Content: ${event.content}`, { align: 'left' });
+      doc.addPage();
+    });
+    doc.end();
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    res.status(500).send('An error occurred while generating the PDF.');
+  }
+});
 app.get("/userLogin", (req, res) => {
   res
     .status(200)
