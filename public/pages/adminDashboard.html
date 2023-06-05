@@ -457,28 +457,25 @@ function create120HourCSV(userData) {
   }
 
 async function downloadEventPdf(){
-fetch('/admin/events')
-  .then(response => response.json())
-  .then(events => {
-    const doc = new window.Docxtemplater();
-    fetch('eventTemplate.docx')
-      .then(response => response.arrayBuffer())
-      .then(templateContent => {
-        doc.load(templateContent);
-        doc.setData({ events });
-        doc.render();
-        const docxBuffer = doc.getZip().generate({ type: 'nodebuffer' });
-        const blob = new Blob([docxBuffer], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-        const downloadLink = document.createElement('a');
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = 'events.docx';
-        downloadLink.click();
-      });
-  })
-  .catch(error => {
-    console.error('Error fetching event data:', error);
-  });
 
+  fetch('/generate-pdf')
+        .then(response => {
+          if (response.ok) {
+            return response.blob();
+          } else {
+            throw new Error('Unable to download PDF');
+          }
+        })
+        .then(blob => {
+          const downloadLink = document.createElement('a');
+          downloadLink.href = URL.createObjectURL(blob);
+          downloadLink.download = 'event-details.pdf';
+          downloadLink.click();
+          URL.revokeObjectURL(downloadLink.href);
+        })
+        .catch(error => {
+          console.error(error);
+        });
 }
   </script>
 
