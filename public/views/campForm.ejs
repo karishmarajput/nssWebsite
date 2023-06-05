@@ -135,4 +135,91 @@
   
   <div id="footer"></div>
 </body>
+<script>
+  let parti = [];
+const searchInput = document.getElementById('searchInput');
+const participantTable = document.getElementById('participantTable');
+searchInput.addEventListener('input', function() {
+const searchText = searchInput.value.trim().toLowerCase();
+const rows = participantTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+Array.from(rows).forEach(row => {
+  const userid = row.cells[1].textContent.toLowerCase();
+
+  if (userid.includes(searchText)) {
+    row.style.display = '';
+  } else {
+    row.style.display = 'none';
+  }
+});
+});
+const participantCheckboxes = document.querySelectorAll('.participant-checkbox');
+participantCheckboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', function() {
+    const userid = checkbox.getAttribute('data-userid');
+    const isChecked = checkbox.checked;
+    if(isChecked){
+      parti.push(userid)
+    }else{
+      parti = parti.filter(item => item !== userid);
+    }
+    console.log(parti)
+  });
+});
+function submitCampDetails(){
+
+campYear = document.getElementById('campYear').value;
+fromDate = document.getElementById('fromDate').value;
+toDate = document.getElementById('toDate').value;
+campSite = document.getElementById('campSite').value;
+address = document.getElementById('address').value;
+preCampActivities = document.getElementById('preCampActivities').value;
+day1 = document.getElementById('day1').value;
+day2 = document.getElementById('day2').value;
+day3 = document.getElementById('day3').value;
+day4 = document.getElementById('day4').value;
+day5 = document.getElementById('day5').value;
+day6 = document.getElementById('day6').value;
+day7 = document.getElementById('day7').value;
+console.log(campYear)
+activityDaywise = []
+activityDaywise.push(day1)
+activityDaywise.push(day1)
+activityDaywise.push(day3)
+activityDaywise.push(day4)
+activityDaywise.push(day5)
+activityDaywise.push(day6)
+activityDaywise.push(day7)
+const payload = {
+campYear,
+fromDate,
+toDate,
+campSite,
+address,
+preCampActivities,
+activityDaywise,
+parti
+};
+console.log(payload)
+fetch('/admin/campDetails', {
+method: 'POST',
+headers: {
+  'Content-Type': 'application/json'
+},
+body: JSON.stringify(payload)
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Response:', data);
+  alert(data.message)
+
+})
+.catch(error => {
+  console.error('Error:', error);
+  alert(error)
+});
+
+}
+
+</script>
 </html>
