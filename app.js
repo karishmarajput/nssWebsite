@@ -81,7 +81,7 @@ app.get("/adminDashboard", authenticateAdmin, (req, res) => {
     .status(200)
     .sendFile(path.join(__dirname, "public", "pages/adminDashboard.html"));
 });
-app.get("/admin/addAdmin", (req, res) => {
+app.get("/admin/addAdmin",authenticateAdmin, (req, res) => {
   res
     .status(200)
     .sendFile(path.join(__dirname, "public", "pages/addAdmin.html"));
@@ -145,7 +145,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
-  console.log(req.body);
   let {
     eventName,
     eventDate,
@@ -168,19 +167,22 @@ app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
   await User.findOne({ vec: reportBy }).then((user) => {
     reportWrittenBy = user;
   });
-  totalPart = parseInt(parti.length) + parseInt(organiser.length);
+  
+ 
+
   let participants = [],
     organisers = [],
     malePart = 0,
     femalePart = 0;
   parti = parti.split(",");
   organiser = organiser.split(",");
+
   for (let i = 0; i < parti.length; i++) {
     await User.findOne({ vec: parti[i] })
       .then((user) => {
         if (user) {
           participants.push(user);
-          if (user.gender == "M") {
+          if (user.gender == "male") {
             malePart += 1;
           } else {
             femalePart += 1;
@@ -200,7 +202,7 @@ app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
       .then((user) => {
         if (user) {
           organisers.push(user);
-          if (user.gender == "M") {
+          if (user.gender == "male") {
             malePart += 1;
           } else {
             femalePart += 1;
@@ -214,6 +216,7 @@ app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
         console.error("Error finding user:", error);
       });
   }
+  totalPart = malePart+femalePart
   try {
     const event = new Event({
       eventName,
@@ -265,6 +268,7 @@ app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
     }
     res.json({ message: "Event added successfully" });
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: "Internal server error" });
   }
 });
