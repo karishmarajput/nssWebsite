@@ -590,23 +590,42 @@ app.get("/admin/events", authenticateAdmin, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+const fs = require('fs');
+
+
 app.get('/generate-pdf', async (req, res) => {
   try {
-    const eventData = await Event.find();
+    const events = await Event.find();
     const doc = new PDFDocument();
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=event-details.pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
     doc.pipe(res);
-    eventData.forEach((event, index) => {
-      doc.text(`Event Name: ${event.eventName}`, { align: 'left' });
-      doc.image(event.imagePath, { align: 'left' });
-      doc.text(`Content: ${event.content}`, { align: 'left' });
-      doc.addPage();
+
+    let position = 100; 
+    const eventSpacing = 50;
+    doc.fontSize(32).text("Events 2023-24");
+    doc.moveDown(1);
+    events.forEach((event,index) => {
+      doc.fontSize(20).text(event.eventName);
+      doc.image(event.imagePath, { width: 400,align:"center" });
+       doc.moveDown(1);
+      doc.fontSize(14).text(event.content);
+       doc.moveDown(2);
+      const contentHeight = doc.heightOfString(event.content);
+      const availableHeight = doc.page.height - position;
+
+      if (index < events.length - 1 && contentHeight + eventSpacing > availableHeight) {
+        doc.addPage();
+        position = 50;
+      } else {
+        position += contentHeight + eventSpacing; 
+      }
     });
-    doc.end();
+doc.end();
+    console.log('PDF generated successfully.');
   } catch (error) {
     console.error('Error generating PDF:', error);
-    res.status(500).send('An error occurred while generating the PDF.');
   }
 });
 app.get("/userLogin", (req, res) => {

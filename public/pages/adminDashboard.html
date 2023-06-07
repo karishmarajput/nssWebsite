@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
+    <script type="text/javascript" src="/jquery/jquery-3.6.0.min.js"></script>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -58,12 +59,20 @@
             <li><button onClick="download120HourVoluteer()">Volunteer completed 120 Hours CSV</button></li><br>
             <li><button onclick="download240HourVoluteer()">Volunteer completed 240 Hours CSV</button></li><br>
             <li><button onclick="downloadEventPdf()">Pdf of events</button> </li><br>
-            <li>Import Volunteer using CSV</li><br>
+            <li><button id="importBtn"> Volunteer using CSV</button></li><br>
           </ul>
         </div>
       </div>
     </div>
-    
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Import Volunteers</h2>
+        <input type="file" id="csvFileInput" accept=".csv, .xlsx, .xls">
+        <button id="submitBtn" class="btn btn-warning">Submit</button>
+      </div>
+    </div>
+
     <div id="footer"></div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -477,6 +486,39 @@ async function downloadEventPdf(){
           console.error(error);
         });
 }
+
+function handleFormSubmit(event) {
+  event.preventDefault();
+  const file = $('#csvFileInput')[0].files[0];
+  const formData = new FormData();
+  formData.append('file', file);
+  $.ajax({
+    url: '/admin/addVolunteerUsingCSV',
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+      console.log('User created successfully!');
+      console.log(response);
+    },
+    error: function(error) {
+      console.error('Error creating user:', error);
+    }
+  });
+}
+function handleButtonClick() {
+  $('#modal').show();
+}
+function handleModalClose() {
+  $('#modal').hide();
+}
+$(document).ready(function() {
+  $('#submitBtn').on('click', handleFormSubmit);
+  $('#importBtn').on('click', handleButtonClick);
+  $('#modal').on('click', handleModalClose);
+});
+
   </script>
 
 
