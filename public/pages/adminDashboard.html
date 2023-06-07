@@ -35,23 +35,30 @@
     </div>
     <div class="graphdisplay" >
       <div class="graphSide">
-        <canvas id="pieChart"></canvas>
-        <canvas id="branchPieChart"></canvas>
-        <canvas id="userHoursPieChart"></canvas>
-        <div class="yearInNssDiv">
-          <canvas id="yearInNssChart"></canvas>
+        <div class="graphSideFlex">
+          <canvas id="pieChart"></canvas>
+          <canvas id="branchPieChart"></canvas>
+        </div>
+        <div class="graphSideFlex">
+          <canvas id="userHoursPieChart"></canvas>
+          <div class="yearInNssDiv">
+            <canvas id="yearInNssChart"></canvas>
+          </div>
         </div>
         
+        
       </div>
+
       <div class="downloadPdf">
+        <br><br>
         <div class="downloadPdfDiv">
           <p class="downloadPdfHeading">Download Documents</p><hr>
-          <ul>
-            <li>Event Details CSV</li>
-            <li>Volunteer completed 120 Hours CSV</li>
-            <li>Volunteer completed 240 Hours CSV</li>
-            <li>Pdf of events</li>
-            <li>Import Volunteer using CSV</li>
+          <ul><br>
+            <li><button onclick="downloadEventDetails()">Event Details CSV</button></li><br>
+            <li><button onClick="download120HourVoluteer()">Volunteer completed 120 Hours CSV</button></li><br>
+            <li><button onclick="download240HourVoluteer()">Volunteer completed 240 Hours CSV</button></li><br>
+            <li><button onclick="downloadEventPdf()">Pdf of events</button> </li><br>
+            <li>Import Volunteer using CSV</li><br>
           </ul>
         </div>
       </div>
@@ -59,8 +66,11 @@
     
     <div id="footer"></div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   </body>
   <script>
+    
     fetch("/admin/users")
       .then((response) => response.json())
       .then((users) => {
@@ -334,6 +344,141 @@
       .catch((error) => {
         console.error("Error fetching events:", error);
       });
+      function createCSV(eventData) {
+        const csvRows = [];
+        const header = ['Event Name', 'Event Date', 'Venue','Total Participants','Male Participants','Female Participants', 'Number of Beneficiaries'];
+        csvRows.push(header.join(','));
+        eventData.forEach((event) => {
+          const row = [
+            event.eventName,
+            event.eventDate,
+            event.venue,
+            event.totalPart,
+            event.malePart,
+            event.femalePart,
+            event.numberOfBenificiar
+          ];
+          csvRows.push(row.join(','));
+        });
+        const csvData = csvRows.join('\n');
+        const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'event_details.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+  async function downloadEventDetails() {
+    try {
+      const response = await fetch('/admin/events');
+      const eventData = await response.json();
+      createCSV(eventData);
+    } catch (error) {
+      console.error('Error fetching event details:', error);
+    }
+  }
+function calculateTotalHours(eventAttended) {
+  let totalHours = 0;
+  eventAttended.forEach((event) => {
+    totalHours += event.hours;
+  });
+  return totalHours;
+}
+function calculateOrganisedHour(eventsOrganised) {
+  let totalHours = 0;
+  eventsOrganised.forEach((event) => {
+    totalHours += event.organisersHr;
+  });
+  return totalHours;
+}
+function create120HourCSV(userData) {
+  const csvRows = [];
+  const header = ['VEC', 'Name'];
+  csvRows.push(header.join(','));
+  userData.forEach((user) => {
+    let totalHours = calculateTotalHours(user.eventsAttended);
+    totalHours += calculateOrganisedHour(user.eventsOrganised)
+    if (totalHours >= 120) {
+      const row = [user.vec, user.name];
+      csvRows.push(row.join(','));
+    }
+  });
+  const csvData = csvRows.join('\n');
+  const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'volunteer_120_hours.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+  async function download120HourVoluteer(){
+    try {
+      const response = await fetch('/admin/users');
+      const userData = await response.json();
+      create120HourCSV(userData);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+
+  function create240HourCSV(userData) {
+  const csvRows = [];
+  const header = ['VEC', 'Name'];
+  csvRows.push(header.join(','));
+  userData.forEach((user) => {
+    let totalHours = calculateTotalHours(user.eventsAttended);
+    totalHours += calculateOrganisedHour(user.eventsOrganised)
+    if (totalHours >= 120 && user.yearInNss == 2) {
+      const row = [user.vec, user.name];
+      csvRows.push(row.join(','));
+    }
+  });
+  const csvData = csvRows.join('\n');
+  const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'volunteer_240_hours.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+  async function download240HourVoluteer(){
+    try {
+      const response = await fetch('/admin/users');
+      const userData = await response.json();
+      create240HourCSV(userData);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+
+async function downloadEventPdf(){
+
+  fetch('/generate-pdf')
+        .then(response => {
+          if (response.ok) {
+            return response.blob();
+          } else {
+            throw new Error('Unable to download PDF');
+          }
+        })
+        .then(blob => {
+          const downloadLink = document.createElement('a');
+          downloadLink.href = URL.createObjectURL(blob);
+          downloadLink.download = 'event-details.pdf';
+          downloadLink.click();
+          URL.revokeObjectURL(downloadLink.href);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+}
   </script>
+
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </html>
