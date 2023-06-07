@@ -28,6 +28,16 @@
         $("#footer").load("/components/footer.html");
       });
     </script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+    <script src="jquery.counterup.min.js"></script>
+    <script>
+      jQuery(document).ready(function ($) {
+        $(".count-number").counterUp({
+          delay: 10,
+          time: 10000,
+        });
+      });
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg">
@@ -139,25 +149,38 @@
     </div>
     <h1 class="text-center">Not me but you.</h1>
     <h3 class="text-center sub-heading">lorem ipsum</h3>
-    <div class="container postsContainer">
-      <% posts.forEach(function(post) { %>
-      <div class="card post">
-        <div class="card__header">
-          <img
-            src="<%= post.imagePath %>"
-            alt="<%= post.eventName %>"
-            class="card__image"
-            width="600"
-          />
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-xs-12 col-md-3">
+          <div class="counter">
+            <h2 class="count-number">600</h2>
+            <div class="stats-line-black"></div>
+            <p class="stats-text">Coffee Cups</p>
+          </div>
         </div>
-        <div class="card__body">
-          <span class="tag tag-blue">#<%= post.category %></span>
-          <h4><%= post.eventName %></h4>
-          <p><%= post.content %></p>
-        </div>
-        <div class="card__footer"></div>
       </div>
-      <% }); %>
+    </div>
+    <div class="container postsContainer">
+      <ul class="cards">
+        <% posts.forEach(function(post) { %>
+        <li class="card">
+          <div class="card__header">
+            <img
+              src="<%= post.imagePath %>"
+              alt="<%= post.eventName %>"
+              class="card__image"
+              width="600"
+            />
+          </div>
+          <div class="card__body">
+            <span class="tag tag-blue">#<%= post.category %></span>
+            <h4><%= post.eventName %></h4>
+            <p><%= post.content %></p>
+          </div>
+          <div class="card__footer"></div>
+        </li>
+        <% }); %>
+      </ul>
     </div>
     <footer class="text-center">
       <div class="container p-4">
