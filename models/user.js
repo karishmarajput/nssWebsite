@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   div: {
     type: String,
-    required: true
+    default:"Nill"
   },
   sem: {
     type: String,
@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
   },
   nameOfClg: {
     type: String,
-    required: true
+    default: "Fr. Conceicao Rodrigues Institute of Technology"
   },
   dob: {
     type: Date,

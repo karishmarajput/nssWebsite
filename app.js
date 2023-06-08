@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 const app = express();
 const port = 5001;
 const multer = require("multer");
+const csvParser = require('csv-parser');
 const cors = require("cors");
 const PDFDocument = require('pdfkit');
 var favicon = require("serve-favicon");
@@ -142,7 +143,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+let upload = multer({ storage: storage });
 
 app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
   let {
@@ -601,7 +602,6 @@ app.get('/generate-pdf', async (req, res) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
     doc.pipe(res);
-
     let position = 100; 
     const eventSpacing = 50;
     doc.fontSize(32).text("Events 2023-24");
@@ -642,7 +642,46 @@ app.post('/logout', (req, res) => {
   });
   res.redirect('/');
 });
+app.post('/admin/addVolunteerUsingCSV', upload.single('file'),(req,res)=>{
+  const file = req.file;
+  if (!file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  fs.createReadStream(file.path)
+    .pipe(csvParser())
+    .on('data', async(data) => {
+      const { vec,name,branch,div,sem,contactNo,dob,bloodGroup,gender,address,yearInNss,batch,password} = data;
+      User.findOne({ vec:vec})
+          .then(async(user) => {
+            if(user){
+              console.log(vec+' already exist')
+            }else{
+              const newUser = new User({
+                vec,
+                name,
+                branch,
+                div,
+                sem,
+                contactNo,
+                dob,
+                bloodGroup,
+                gender,
+                address,
+                yearInNss,
+                batch,
+                password,
+              });
+              await newUser.save();
+              console.log(vec +' created')
+            }
+             
+          })
+    })
+    .on('end', () => {
+      res.json({ message: "Process completed check console for details" });
+    });
 
+})
 app.listen(port, () => {
   console.log(`Now listening on port ${port}`);
 });
