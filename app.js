@@ -188,7 +188,7 @@ app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
           } else {
             femalePart += 1;
           }
-          return user.save();
+          // return user.save();
         } else {
           console.log("User not found");
         }
@@ -208,7 +208,7 @@ app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
           } else {
             femalePart += 1;
           }
-          return user.save();
+          // return user.save();
         } else {
           console.log("User not found");
         }
@@ -595,7 +595,7 @@ app.get("/admin/events", authenticateAdmin, async (req, res) => {
 const fs = require('fs');
 
 
-app.get('/generate-pdf', async (req, res) => {
+app.get('/generate-pdf',authenticateAdmin, async (req, res) => {
   try {
     const events = await Event.find();
     const doc = new PDFDocument();
@@ -628,11 +628,7 @@ doc.end();
     console.error('Error generating PDF:', error);
   }
 });
-app.get("/userLogin", (req, res) => {
-  res
-    .status(200)
-    .sendFile(path.join(__dirname, "public", "pages/userLogin.html"));
-});
+
 app.post('/logout', (req, res) => {
   res.cookie('authToken', '', {
     expires: new Date(0),
@@ -682,6 +678,93 @@ app.post('/admin/addVolunteerUsingCSV', upload.single('file'),(req,res)=>{
     });
 
 })
+
+app.get("/user", (req, res) => {
+  res
+    .status(200)
+    .sendFile(path.join(__dirname, "public", "pages/userLogin.html"));
+});
+async function authenticateUserToken(req, res, next) {
+  const authToken = req.cookies.authToken;
+  if (!authToken) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  try {
+    const decoded = jwt.verify(authToken, secretKey);
+    const user = await User.findOne({ vec: decoded.vec })
+    .populate("eventsAttended")
+    .populate("eventsOrganised")
+    console.log(user)
+    if (!user) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    req.user = user;
+    next();
+  } catch (err) {
+    console.log(err)
+    res.status(401).json({ error: "Unauthorized" });
+  }
+}
+app.post("/user",async(req,res)=>{
+  const { vec, password } = req.body;
+  console.log(password)
+  try {
+    const user = await User.findOne({ vec });
+    if (!user) {
+      return res.status(401).json({ error: "User doesn't exist" });
+    }
+    console.log(user)
+    console.log(user.password)
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log(isPasswordValid)
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+    const authToken = jwt.sign({ vec: user.vec }, secretKey, {
+      expiresIn: "1h",
+    });
+    res.cookie("authToken", authToken, { httpOnly: true });
+    res
+      .status(200)
+      .redirect(`/user/${vec}`);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
+app.get('/user/:vec', authenticateUserToken, async (req, res) => {
+  const vec = req.params.vec;
+
+  try {
+    const user = req.user;
+
+    if (user) {
+      res.render('userDashboard', { user });
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+app.get('/user/:vec/profile', authenticateUserToken, async (req, res) => {
+  const vec = req.params.vec;
+
+  try {
+    const user = req.user;
+
+    if (user) {
+      res.render('userProfile', { user });
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 app.listen(port, () => {
   console.log(`Now listening on port ${port}`);
 });

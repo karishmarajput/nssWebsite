@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .user-info {
+          font-family: Arial, sans-serif;
+          font-size: 14px;
+          margin-bottom: 20px;
+        }
+      
+        .user-info strong {
+          font-weight: bold;
+        }
+      
+        .user-info .section {
+          margin-bottom: 10px;
+        }
+      
+        .user-info .section-title {
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+      </style>
+</head>
+<body>
+
+      
+      <div class="user-info">
+        <div class="section">
+          <span class="section-title">VEC:</span> <%= user.vec %>
+        </div>
+        <div class="section">
+          <span class="section-title">Name:</span> <%= user.name %>
+        </div>
+        <div class="section">
+          <span class="section-title">Branch:</span> <%= user.branch %>
+        </div>
+        <% if (user.div !== 'Nill') { %>
+          <div class="section">
+            <span class="section-title">Div:</span> <%= user.div %>
+          </div>
+        <% } %>
+        <div class="section">
+          <span class="section-title">Sem:</span> <%= user.sem %>
+        </div>
+        <div class="section">
+          <span class="section-title">Contact No:</span> <%= user.contactNo %>
+        </div>
+        <div class="section">
+          <span class="section-title">Name of College:</span> <%= user.nameOfClg %>
+        </div>
+        <div class="section">
+          <span class="section-title">DOB:</span> <%= user.dob ? user.dob.toLocaleDateString('en-GB') : ''  %>
+        </div>
+        <div class="section">
+          <span class="section-title">Blood Group:</span> <%= user.bloodGroup %>
+        </div>
+        <div class="section">
+          <span class="section-title">Gender:</span> <%= user.gender %>
+        </div>
+        <div class="section">
+          <span class="section-title">Address:</span> <%= user.address %>
+        </div>
+        <div class="section">
+          <span class="section-title">Year in NSS:</span> <%= user.yearInNss %>
+        </div>
+        <div class="section">
+          <span class="section-title">Camp Attended:</span> <%= user.campAttended %>
+        </div>
+        <div class="section">
+            <span class="section-title">Events Attended:</span> <%= user.eventsAttended.length %>
+        </div>
+        <div class="section">
+            <span class="section-title">Events Organised:</span> <%= user.eventsOrganised.length %>
+        </div>
+      </div>
+      
+</body>
+</html>
