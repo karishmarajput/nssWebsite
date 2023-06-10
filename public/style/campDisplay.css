@@ -1,0 +1,34 @@
+.container {
+    margin: 20px;
+}
+h1{
+    text-align: center;
+    padding: 1rem;
+  }
+.search-container {
+      margin-bottom: 10px;
+      padding: 1rem;
+  }
+.event-table {
+      border-collapse: collapse;
+      width: 100%;
+  }
+.event-table th,
+.event-table td {
+      border: 1px solid black;
+      padding: 8px;
+  }
+.event-details-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+  }
+        
+        

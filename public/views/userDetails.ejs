@@ -3,6 +3,8 @@
 <head>
   <title>User Display</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
     $(function() {
       $("#header").load("/components/header.html");
@@ -13,51 +15,62 @@
 </head>
 <body>
   <div id="header"></div>
-  <h1>User Details</h1>
-  <p>Vec: <%= userDetails.vec %></p>
-  <p>Name: <%= userDetails.name %></p>
-  <p>Branch: <%= userDetails.branch %></p>
-  <p>DIV: <%= userDetails.div %></p>
-  <p>SEM: <%= userDetails.sem %></p>
-  <p>Contact No: <%= userDetails.contactNo %></p>
-  <p>Name Of College: <%= userDetails.nameOfClg %></p>
-  <p>DOB: <%= userDetails.dob.toLocaleDateString("en-GB") %></p>
-  <p>bloodGroup: <%= userDetails.bloodGroup %></p>
-  <p>gender: <%= userDetails.gender %></p>
-  <p>address: <%= userDetails.address %></p>
-  <p>yearInNss: <%= userDetails.yearInNss%></p>
-  <p>Batch:<%= userDetails.batch%></p>
-  <p>campAttended: <%= userDetails.campAttended %></p>
+  <div class="container mt-5">
+    <h1>User Details</h1><br>
+    <div class="row">
+      <div class="col-md-6">
+        <p>Vec: <%= userDetails.vec %></p>
+        <p>Name: <%= userDetails.name %></p>
+        <p>Branch: <%= userDetails.branch %></p>
+        <p>DIV: <%= userDetails.div %></p>
+        <p>SEM: <%= userDetails.sem %></p>
+        <p>Contact No: <%= userDetails.contactNo %></p>
+        <p>Name Of College: <%= userDetails.nameOfClg %></p> 
+      </div>
+      <div class="col-md-6">
+        <p>DOB: <%= userDetails.dob.toLocaleDateString("en-GB") %></p>
+        <p>Blood Group: <%= userDetails.bloodGroup %></p>
+        <p>Gender: <%= userDetails.gender %></p>
+        <p>Address: <%= userDetails.address %></p>
+        <p>Year In Nss: <%= userDetails.yearInNss%></p>
+        <p>Batch:<%= userDetails.batch%></p>
+        <p>Camp Attended: <%= userDetails.campAttended %></p>
+      </div>
+    </div>
+  </div>
 
-  <h2>Events Attended</h2>
+
+  <div class="container mt-5">
+    <h2>Events Attended</h2>
   <% if (userDetails.eventsAttended.length > 0) { %>
-    
-      <h4>Fit India</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% fitIndiaHr = 0 %>
-          <% userDetails.eventsAttended.forEach(function(event) {%>
-            <% if (event.category == "fitIndia") { fitIndiaHr+=event.hour %>
-              <tr>
-                <td><%= event.eventName %></td>
-                <td><%= event.hour %></td>
-              </tr>
-            <% } %>
-          <% }); %>
-        </tbody>
+    <h4>Fit India</h4>
+    <table class="table table-bordered tableHours">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% fitIndiaHr = 0 %>
+        <% userDetails.eventsAttended.forEach(function(event) { %>
+          <% if (event.category == "fitIndia") { 
+            fitIndiaHr += event.hour; %>
+            <tr>
+              <td><%= event.eventName %></td>
+              <td><%= event.hour %></td>
+            </tr>
+          <% } %>
+        <% }); %>
         <tr>
           <th>Total</th>
-          <th><%= fitIndiaHr%></th>
+          <th><%= fitIndiaHr %></th>
         </tr>
-      </table>
-      <h4>educationForAll</h4>
-      <table border="1px">
+      </tbody>
+    </table>
+
+      <h4>Education For All</h4>
+      <table class="table table-bordered tableHours">
         <thead>
           <tr>
             <th>Event</th>
@@ -80,8 +93,9 @@
           <th><%= educationForAllHr%></th>
         </tr>
       </table>
-      <h4>animalWellfare</h4>
-      <table border="1px">
+
+      <h4>Animal Wellfare</h4>
+      <table class="table table-bordered tableHours">
         <thead>
           <tr>
             <th>Event</th>
@@ -104,8 +118,8 @@
           <th><%= animalWellfareHr%></th>
         </tr>
       </table>
-      <h4>diasterManagement</h4>
-      <table border="1px">
+      <h4>Disater Management</h4>
+      <table class="table table-bordered tableHours">
         <thead>
           <tr>
             <th>Event</th>
@@ -128,8 +142,8 @@
           <th><%= userDetails.diasterManagementHr%></th>
         </tr>
       </table>
-      <h4>greenInitiative</h4>
-      <table border="1px">
+      <h4>Green Initiative</h4>
+      <table class="table table-bordered tableHours">
         <thead>
           <tr>
             <th>Event</th>
@@ -152,8 +166,8 @@
           <th><%= greenInitiativeHr%></th>
         </tr>
       </table>
-      <h4>clHr</h4>
-      <table border="1px">
+      <h4>College Events</h4>
+      <table class="table table-bordered tableHours">
         <thead>
           <tr>
             <th>Event</th>
@@ -176,8 +190,8 @@
           <th><%= clHr%></th>
         </tr>
       </table>
-      <h4>university</h4>
-      <table border="1px">
+      <h4>University Events</h4>
+      <table class="table table-bordered tableHours">
         <thead>
           <tr>
             <th>Event</th>
@@ -207,7 +221,7 @@
   <h2>Events Organised</h2>
   <% if (userDetails.eventsOrganised.length > 0) { %>
     <h4>Fit India</h4>
-    <table border="1px">
+    <table class="table table-bordered tableHours">
       <thead>
         <tr>
           <th>Event</th>
@@ -230,8 +244,8 @@
         <th><%= fitIndiaHr%></th>
       </tr>
     </table>
-    <h4>educationForAll</h4>
-    <table border="1px">
+    <h4>Education For All</h4>
+    <table class="table table-bordered tableHours">
       <thead>
         <tr>
           <th>Event</th>
@@ -254,8 +268,8 @@
         <th><%= educationForAllHr%></th>
       </tr>
     </table>
-    <h4>animalWellfare</h4>
-    <table border="1px">
+    <h4>Animal Wellfare</h4>
+    <table class="table table-bordered tableHours">
       <thead>
         <tr>
           <th>Event</th>
@@ -278,8 +292,8 @@
         <th><%= animalWellfareHr%></th>
       </tr>
     </table>
-    <h4>diasterManagement</h4>
-    <table border="1px">
+    <h4>Disater Management</h4>
+    <table class="table table-bordered tableHours">
       <thead>
         <tr>
           <th>Event</th>
@@ -302,8 +316,8 @@
         <th><%= diasterManagementHr%></th>
       </tr>
     </table>
-    <h4>greenInitiative</h4>
-    <table border="1px">
+    <h4>Green Initiative</h4>
+    <table class="table table-bordered tableHours">
       <thead>
         <tr>
           <th>Event</th>
@@ -326,8 +340,8 @@
         <th><%= greenInitiativeHr%></th>
       </tr>
     </table>
-    <h4>clHr</h4>
-    <table border="1px">
+    <h4>college Events</h4>
+    <table class="table table-bordered tableHours">
       <thead>
         <tr>
           <th>Event</th>
@@ -350,8 +364,8 @@
         <th><%= clHr%></th>
       </tr>
     </table>
-    <h4>university</h4>
-    <table border="1px">
+    <h4>University Events</h4>
+    <table class="table table-bordered tableHours">
       <thead>
         <tr>
           <th>Event</th>
@@ -377,6 +391,9 @@
   <% } else { %>
     <p>No events organised.</p>
   <% } %>
+
+  </div>
+  
   <div id="footer"></div>
 </body>
 </html>

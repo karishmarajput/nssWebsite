@@ -1,0 +1,64 @@
+.event-container {
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .event-name {
+    margin-bottom: 20px;
+  }
+  
+  
+  .event-details p {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  
+  .detail-label {
+    font-weight: bold;
+    text-align: left;
+    padding: 1rem;
+  }
+  
+  .section-title {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  
+  .participants-list {
+    text-align: center;
+    max-height: 600px; /* Adjust the height as per your requirements */
+    overflow-y: auto;
+  }
+  
+  .participants-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    
+  }
+  
+  .participants-table th,
+  .participants-table td {
+    border: 1px solid black;
+    padding: 12px;
+    
+  }
+  
+  .btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  

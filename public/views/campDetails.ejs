@@ -7,18 +7,19 @@
     <title>Event Details</title>
     <link rel="stylesheet" href="/style/eventDetails.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/style/campDetails.css">
     <script>
         $(function() {
             $("#header").load("/components/header.html");
+            $("#footer").load("/components/footer.html");
         });
     </script>
 </head>
-
 <body>
     <div id="header"></div>
     <div class="event-container">
         <div class="event-name">
-            <h3 class="event-title"><%= camp.campYear %></h3>
+            <h1 class="event-title"><%= camp.campYear %></h1>
         </div>
         <div class="event-details">
             <p>
@@ -26,22 +27,22 @@
                 <span class="detail-label">To Date:</span> <%= camp.toDate.toLocaleDateString("en-GB")  %><br>
                 <span class="detail-label">Camp Site:</span> <%= camp.campSite %><br>
                 <span class="detail-label">Address:</span> <%= camp.address %><br>
-                <span class="detail-label">preCampActivities:</span> <%= camp.preCampActivities %><br>
                 <span class="detail-label">Total Participants:</span> <%= camp.attendedBy.length %><br>
-                <span class="detail-label">Activity Daywise:</span><br>
-                <span class="detail-label">Day 1:</span><br> <%= camp.activityDaywise[0] %><br>
-                <span class="detail-label">Day 2:</span><br> <%= camp.activityDaywise[1] %><br>
-                <span class="detail-label">Day 3:</span><br> <%= camp.activityDaywise[2] %><br>
-                <span class="detail-label">Day 4:</span><br> <%= camp.activityDaywise[3] %><br>
-                <span class="detail-label">Day 5:</span><br> <%= camp.activityDaywise[4] %><br>
-                <span class="detail-label">Day 6:</span><br> <%= camp.activityDaywise[5] %><br>
-                <span class="detail-label">Day 7:</span><br> <%= camp.activityDaywise[6] %><br>
+                <span class="detail-label"><h4>Pre Camp Activities:</h4></span> <%= camp.preCampActivities %><br>
+                <span class="detail-label"><h3>Daywise:</h3></span>
+                <span class="detail-label"><h4>Day 1:</h4></span> <%= camp.activityDaywise[0] %><br><br>
+                <span class="detail-label"><h4>Day 2:</h4></span> <%= camp.activityDaywise[1] %><br><br>
+                <span class="detail-label"><h4>Day 3:</h4></span> <%= camp.activityDaywise[2] %><br><br>
+                <span class="detail-label"><h4>Day 4:</h4></span> <%= camp.activityDaywise[3] %><br><br>
+                <span class="detail-label"><h4>Day 5:</h4></span> <%= camp.activityDaywise[4] %><br><br>
+                <span class="detail-label"><h4>Day 6:</h4></span> <%= camp.activityDaywise[5] %><br><br>
+                <span class="detail-label"><h4>Day 7:</h4></span> <%= camp.activityDaywise[6] %><br><br>
             </p>
         </div>
 
         <div class="participants-section">
+            <h4 class="section-title">Attended By:</h4>
             <div class="participants-list">
-                <h4 class="section-title">Attended By:</h4>
                 <table class="participants-table">
                     <thead>
                         <tr>
@@ -62,32 +63,30 @@
         </div>
         <br><br>
         <div>
-            <button class="btn btn-danger" onclick="deleteCamp(`<%= camp._id%>`)">Delete Camp Details</button>
+            <button class="btn btn-danger" onclick="deleteCamp('<%= camp._id %>')">Delete Camp Details</button>
         </div>
-
     </div>
+    <div id="footer"></div>
 </body>
 <script>
     function deleteCamp(campId){
-    fetch('/admin/campDisplay/deleteCamp', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ campId }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Response:', data);
-        alert(data.message)
-        window.location.href = '/admin/showCampDetails';
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert(error)
-      });
+        fetch('/admin/campDisplay/deleteCamp', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ campId }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response:', data);
+            alert(data.message);
+            window.location.href = '/admin/showCampDetails';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(error);
+        });
     }
-
-
 </script>
 </html>

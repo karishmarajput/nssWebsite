@@ -38,7 +38,9 @@
 .participants-table td {
     padding: 5px;
     border: 1px solid #ccc;
+    min-width: 220px !important;
 }
+
 .close{
     font-size: 2.5rem;
     padding: .25rem;

@@ -1,35 +1,8 @@
-  /* Styles for user details */
-  h1 {
-    color: #333;
-  }
-  
-  p {
-    color: #666;
-  }
-  
-  /* Styles for event tables */
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  th, td {
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
-  /* Styles for event categories */
-  h4 {
-    margin-top: 20px;
-  }
-  
-  /* Styles for total rows */
-  tr:last-child {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
+.tableHours{
+  width: 50% !important;
+}
+
+.tableHours th{
+  min-width: 200px !important;
+  max-width: 220px !important;
+}

@@ -43,9 +43,13 @@ textarea {
 textarea {
     resize: vertical;
   }
-  
+
+.table-container{
+  max-height: 400px; /* Adjust the height as per your requirements */
+  overflow-y: auto;
+}
 .participant-table {
-    width: 50%;
+    width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
   }
