@@ -66,7 +66,6 @@ app.get("/", async (req, res) => {
       }
     }
     newEvents();
-    console.log(latestEvents);
     res.render("index", { posts: latestEvents });
   } catch (error) {
     console.error("Error fetching user list:", error);
@@ -188,7 +187,6 @@ app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
           } else {
             femalePart += 1;
           }
-          // return user.save();
         } else {
           console.log("User not found");
         }
@@ -208,7 +206,6 @@ app.post("/admin/addevent", upload.single("eventImage"), async (req, res) => {
           } else {
             femalePart += 1;
           }
-          // return user.save();
         } else {
           console.log("User not found");
         }
@@ -708,24 +705,12 @@ async function authenticateUserToken(req, res, next) {
 }
 app.post("/user",async(req,res)=>{
   const { vec, password } = req.body;
-  console.log(password)
   try {
     const user = await User.findOne({ vec });
     if (!user) {
       return res.status(401).json({ error: "User doesn't exist" });
     }
-    console.log(user)
-    console.log(user.password)
-    // console.log(bcrypt(password))
-    bcrypt.hash(password, 10, (err, hash) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log('Hash:', hash);
-    })
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log(isPasswordValid)
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
