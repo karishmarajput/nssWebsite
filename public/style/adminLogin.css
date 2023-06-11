@@ -1,0 +1,43 @@
+.main-content{
+    width: auto;
+    border-radius: 20px;
+    box-shadow: 0 5px 5px rgba(0,0,0,.4);
+    margin: 5em auto;
+  }
+.company__info{
+    background-color: #008080;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+  }
+
+.loginDetails{
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+}
+
+h2{
+    text-align: center;
+
+}
+form{
+    padding: 0 2em;
+  }
+.btn{
+    transition: all .5s ease;
+    width: 70%;
+    border-radius: 30px;
+    color:#008080;
+    font-weight: 600;
+    background-color: #fff;
+    border: 1px solid #008080;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+  }
+.btn:hover, .btn:focus{
+    background-color: #008080;
+    color:#fff;
+  }

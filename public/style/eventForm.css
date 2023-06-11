@@ -44,6 +44,13 @@
   #participantTable {
     width: 100%;
     border-collapse: collapse;
+    
+  }
+  
+  .participantList{
+    max-height: 400px; /* Adjust the height as per your requirements */
+    overflow-y: auto;
+
   }
   
   #participantTable th,

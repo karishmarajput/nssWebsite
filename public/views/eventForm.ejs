@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Event</title>
-  <link rel="stylesheet" href="/style/event.css">
+  <link rel="stylesheet" href="/style/eventForm.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(function() {
@@ -79,27 +79,30 @@
     <div class="form-group">
       <input type="text" id="searchInput" placeholder="Search by VEC Number">
     </div>
+    <div class="participantList">
+      <table id="participantTable">
+        <thead>
+          <tr>
+            <th>Selected</th>
+            <th>VEC</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(function(user) { %>
+          <tr class="participant-row" data-userid="<%= user.vec %>">
+            <td>
+              <input type="checkbox" class="participant-checkbox" data-userid="<%= user.vec %>">
+            </td>
+            <td><%= user.vec %></td>
+            <td><%= user.name %></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
 
-    <table id="participantTable">
-      <thead>
-        <tr>
-          <th>Selected</th>
-          <th>VEC</th>
-          <th>Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% users.forEach(function(user) { %>
-        <tr class="participant-row" data-userid="<%= user.vec %>">
-          <td>
-            <input type="checkbox" class="participant-checkbox" data-userid="<%= user.vec %>">
-          </td>
-          <td><%= user.vec %></td>
-          <td><%= user.name %></td>
-        </tr>
-        <% }); %>
-      </tbody>
-    </table>
+    
 
     <div class="form-group">
       <label for="category">Category:</label>

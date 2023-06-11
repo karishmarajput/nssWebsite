@@ -19,6 +19,17 @@
   .nav-link:hover{
     cursor: pointer;
   }
+  .navbarMobile{
+    display: none;
+  }
+  @media (max-width: 380px) {
+   .navbarMob{
+    display: none;
+   }
+   .navbarMobile{
+    display: flex;
+   }
+  }
 </style>
 </head>
 <body>
@@ -33,7 +44,8 @@
               class="d-inline-block align-text-top"
             />
           </a>
-          <a class="navbar-brand" href="#">National Service Scheme</a>
+          <a class="navbar-brand navbarMob" href="#">National Service Scheme</a>
+          <a class="navbar-brand navbarMobile" href="#">NSS FCRIT</a>
           <button
             class="navbar-toggler"
             type="button"

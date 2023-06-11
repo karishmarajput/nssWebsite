@@ -4,9 +4,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link rel="stylesheet" href="style/styles.css">
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../style/adminLogin.css">
     <script>
         $(function() {
             $("#footer").load("/components/footer.html");
@@ -43,15 +44,32 @@
           >
           </div>
         </div>
-      </nav>
-    <h1>Admin Login</h1>
-    <form action="/admin" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
-        <input type="submit" class="btn btn-warning navButton" value="Login">
-    </form>
+    </nav>
+      <div class="container">
+        <h1>Admin Login</h1>
+        <div class="container main-content">
+          <div class="row">
+            
+            <div class="col-md-6 loginDetails">
+              <form action="/admin" method="POST">
+                <h4>Login Details:</h4>
+                <div class="form-group">
+                  <label for="username">Username:</label>
+                  <input type="text" class="form-control" name="username" id="username" required>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password:</label>
+                  <input type="password" class="form-control" name="password" id="password" required>
+                </div>
+                <input type="submit" class="btn btn-warning navButton" value="Login">
+              </form>
+            </div>
+            <div class="col-md-6 company__info">
+              <img src="../images/nss_logo.png" class="img-fluid" alt="Image">
+            </div>
+          </div>
+        </div>
+      </div>
     <div id="footer"></div>
 
 </body>
