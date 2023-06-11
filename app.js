@@ -716,7 +716,14 @@ app.post("/user",async(req,res)=>{
     }
     console.log(user)
     console.log(user.password)
-
+    // console.log(bcrypt(password))
+    bcrypt.hash(password, 10, (err, hash) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log('Hash:', hash);
+    })
     const isPasswordValid = await bcrypt.compare(password, user.password);
     console.log(isPasswordValid)
     if (!isPasswordValid) {
