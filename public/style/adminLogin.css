@@ -1,43 +1,49 @@
-.main-content{
-    width: auto;
-    border-radius: 20px;
-    box-shadow: 0 5px 5px rgba(0,0,0,.4);
-    margin: 5em auto;
-  }
-.company__info{
-    background-color: #008080;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: #fff;
-  }
-
-.loginDetails{
-    display: flex;
-    justify-content: center;
-    align-items: center ;
+h1{
+  text-align: center;
 }
 
-h2{
-    text-align: center;
-
+.main-content{
+  width: 50%;
+  border-radius: 20px;
+  box-shadow: 0 5px 5px rgba(0,0,0,.4);
+  margin: 5em auto;
+  display: flex;
+}
+.company__info{
+  background-color: #008080;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+}
+@media screen and (max-width: 640px) {
+  .main-content{width: 90%;}
+  .company__info{
+    display: none;
+  }
+}
+@media screen and (min-width: 642px) and (max-width:800px){
+  .main-content{width: 70%;}
+}
+.row > h2{
+  color:#008080;
 }
 form{
-    padding: 0 2em;
-  }
+  padding: 0 2em;
+}
 .btn{
-    transition: all .5s ease;
-    width: 70%;
-    border-radius: 30px;
-    color:#008080;
-    font-weight: 600;
-    background-color: #fff;
-    border: 1px solid #008080;
-    margin-top: 1.5em;
-    margin-bottom: 1em;
-  }
+  transition: all .5s ease;
+  width: 70%;
+  border-radius: 30px;
+  color:#008080;
+  font-weight: 600;
+  background-color: #fff;
+  border: 1px solid #008080;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+}
 .btn:hover, .btn:focus{
-    background-color: #008080;
-    color:#fff;
-  }
+  background-color: #008080;
+  color:#fff;
+}
