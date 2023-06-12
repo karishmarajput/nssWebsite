@@ -327,10 +327,10 @@ app.post("/admin/adduser", authenticateAdmin, async (req, res) => {
       password,
     });
     await newUser.save();
-    res.status(201).json({ message: "User created successfully" });
+    res.status(201).json({ success:true,message: "User created successfully" });
   } catch (error) {
     console.error("Error adding user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({  success:false,error: "Internal server error" });
   }
 });
 app.get("/admin/userDisplay/:vec", authenticateAdmin, (req, res) => {
