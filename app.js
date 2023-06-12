@@ -88,7 +88,7 @@ app.get("/admin/addAdmin",authenticateAdmin, (req, res) => {
 });
 app.post("/admin/addAdmin", authenticateAdmin, async (req, res) => {
   const { username, password } = req.body;
-
+console.log(req.body)
   try {
     const existingAdmin = await Admin.findOne({ username });
     if (existingAdmin) {
@@ -98,6 +98,7 @@ app.post("/admin/addAdmin", authenticateAdmin, async (req, res) => {
     await admin.save();
     res.json({ message: "Admin created successfully" });
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: "Internal server error" });
   }
 });
