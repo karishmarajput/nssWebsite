@@ -13,13 +13,15 @@ h2{
 }
 
 .company__info{
-  border-radius: 20px;
-  size: 400px 500px;
-  /* background-image: url(../images/admin.jpeg) */
+border-top-right-radius: 20px ;
+border-bottom-right-radius: 20px;
+  width: 50%;
+  background-image: url("../images/admin.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
-.company__info img{
-  size: 400px 500px !important;
+.loginDetails{
+  width: 50%;
 }
 
 @media screen and (max-width: 640px) {
