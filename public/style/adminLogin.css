@@ -1,22 +1,27 @@
-h1{
+h2{
   text-align: center;
+  padding-top: 10px;
 }
 
 .main-content{
-  width: 50%;
+  width: 80%;
+  height: 70vh;
   border-radius: 20px;
   box-shadow: 0 5px 5px rgba(0,0,0,.4);
-  margin: 5em auto;
+  margin: 3rem auto;
   display: flex;
 }
+
 .company__info{
-  background-color: #008080;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #fff;
+  size: 400px 500px;
+  /* background-image: url(../images/admin.jpeg) */
 }
+
+.company__info img{
+  size: 400px 500px !important;
+}
+
 @media screen and (max-width: 640px) {
   .main-content{width: 90%;}
   .company__info{
@@ -45,5 +50,6 @@ form{
 }
 .btn:hover, .btn:focus{
   background-color: #008080;
+  border: 1px solid #051465;
   color:#fff;
 }

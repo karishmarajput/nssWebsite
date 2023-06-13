@@ -47,12 +47,12 @@
                 </tr>
             </thead>
             <tbody>
-                <% users.forEach(user => { %>
-                <tr>
+                <% users.sort((a, b) => totalHours(b) - totalHours(a)).forEach(user => { %>
+                  <tr>
                     <td><%= user.vec %></td>
                     <td><%= user.name %></td>
                     <td><%= user.branch %></td>
-                    <td><%= user.sem %></td> 
+                    <td><%= user.sem %></td>
                     <td><%= user.batch %></td>
                     <td><%= getTotalHours(user, 'fitIndia') %></td>
                     <td><%= getTotalHours(user, 'educationForAll') %></td>
@@ -63,9 +63,10 @@
                     <td><%= getTotalHours(user, 'university') %></td>
                     <td><%= totalHours(user) %></td>
                     <td><button onclick="showDetails('<%= user.vec %>')" class="btn btn-primary">Show Details</button></td>
-                </tr>
+                  </tr>
                 <% }); %>
-            </tbody>
+              </tbody>
+              
         </table>
     </div>
     <div id="footer"></div>
