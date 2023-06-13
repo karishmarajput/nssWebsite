@@ -4,24 +4,36 @@ h2{
 }
 
 .main-content{
-  width: 80%;
-  height: 70vh;
+  width: 77%;
+  min-height: 27rem;
   border-radius: 20px;
+  border: .21px solid #261B48;
   box-shadow: 0 5px 5px rgba(0,0,0,.4);
   margin: 3rem auto;
   display: flex;
+}
+.heading{
+  color: #261B48;
+  font-weight: 500;
+  font-size: 3rem;
 }
 
 .company__info{
 border-top-right-radius: 20px ;
 border-bottom-right-radius: 20px;
   width: 50%;
+  background-color: #261B48;
   background-image: url("../images/admin.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
 }
 .loginDetails{
   width: 50%;
+  color: #261B48;
+}
+.loginDetails h2{
+  padding: 1rem;
+  padding-bottom: 2rem;
 }
 
 @media screen and (max-width: 640px) {
@@ -33,9 +45,7 @@ border-bottom-right-radius: 20px;
 @media screen and (min-width: 642px) and (max-width:800px){
   .main-content{width: 70%;}
 }
-.row > h2{
-  color:#008080;
-}
+
 form{
   padding: 0 2em;
 }
@@ -43,15 +53,15 @@ form{
   transition: all .5s ease;
   width: 70%;
   border-radius: 30px;
-  color:#008080;
+  color:#261B48;
   font-weight: 600;
   background-color: #fff;
-  border: 1px solid #008080;
+  border: 1px solid #261B48;
   margin-top: 1.5em;
   margin-bottom: 1em;
 }
 .btn:hover, .btn:focus{
-  background-color: #008080;
+  background-color: #55599A;
   border: 1px solid #051465;
   color:#fff;
 }
