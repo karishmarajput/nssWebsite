@@ -23,7 +23,9 @@
     <div>
         <navbar>
             hello <%= user.name %>
-            <a >Download work Diary </a>
+            <button onclick="handleDownloadWorkDiary('<%=user.vec%>')">Download Work Diary</button>
+
+
             <a href="/user/<%= user.vec%>/profile">View Profile</a>
         </navbar>
         <div>
@@ -84,4 +86,41 @@
         </div>
     </div>
 </body>
+<script>
+function handleDownloadWorkDiary(vec) {
+        console.log(userString);
+        var user = JSON.parse(userString);
+        console.log(user);
+        console.log('User Name:', user.name);
+}
+function handleDownloadWorkDiary(vec) {
+    fetch('/user/downloadWorkDiary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ vec: vec })
+    })
+      .then(response => {
+        if (response.ok) {
+          const contentDisposition = response.headers.get('Content-Disposition');
+          const fileName = contentDisposition.split('filename=')[1];
+
+          // Trigger the file download by creating a temporary link
+          response.blob().then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            link.click();
+          });
+        } else {
+          console.log('Error occurred while sending the download request.');
+        }
+      })
+      .catch(error => {
+        console.log('An error occurred:', error);
+      });
+  }
+</script>
 </html>

@@ -758,6 +758,118 @@ app.get('/user/:vec/profile', authenticateUserToken, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+const pdf = require('html-pdf');
+app.post('/user/downloadWorkDiary', authenticateUserToken, (req, res) => {
+  const { vec } = req.body;
+  const user = req.user;
+
+  if (!user) {
+    res.status(404).send('User not found');
+  }
+
+  const htmlContent = `
+  <h5 align="center"><b><u>WORK DIARY OF NSS VOLUNTEER- 2023-2024 – Page 1</u></b></h5>
+  <div style="display: flex;justify-content: center;width: 100%;">
+      <div style="width: 50%;border: 1px solid black;">
+          <div style="border: 1px solid black; height: 85px; width: 85px; font-size: 8px;" align="center">
+              Photograph of the volunteer with the College seal and Signature of the Principal
+          </div>
+          <div align="left" style="margin-top: 10px">
+              <b>Name of the Volunteer <u>&nbsp;</u></b> <br />
+              <b>Residential Address <u>&nbsp;</u></b> <br />
+              <b>Contact details No. <u>&nbsp;</u></b> <br />
+              <b>Name of the College <u>&nbsp;</u></b> <br />
+              <b style="margin-left: 2px">Class :<u>&nbsp;</u></b>
+              <b style="margin-left: 105px">Div.:<u>&nbsp;</u></b> <br />
+              <b style="margin-left: 2px">Date of Birth<u>&nbsp;</u></b>
+              <b style="margin-left:60px">Blood Group<u>&nbsp;</u></b> <br />
+              <b>Year in NSS<u>&nbsp;</u></b> <br/>
+              <b style="margin-left: 20px">Volunteer Enrolment Code - (as per Enrolment List)</b> <br />
+              <b style="margin-left:120px">MH 09 <u>&nbsp;</u></b>
+              <table cellpadding="50px">
+                  <tr>
+                      <th>Signature of the<br />NSS Volunteer</th>
+                      <th>Signature of the<br />NSS Programme Officer</th>
+                  </tr>
+              </table>
+          </div>
+      </div>
+      <div style="width: 50%;border: 1px solid black;">
+              <p align="center"><b><u>YEAR – 2023-2024<br />UNIVERSITY NSS CELL USE ONLY</u></b></p>
+          <div align="left"><b> Diary Checked by: <u>&nbsp;</u></b></div>
+          <p align="left"> <b>Date: </b></p>
+          <p align="left"> <b>Total hours completed by Volunteers: </b></p>
+          <p align="left"> <b>Comment if any: </b></p>
+          <table cellpadding="50px">
+              <tr>
+                  <th>Seal</th>
+                  <th>Signature Dist/Area Co-ordinator</th>
+              </tr>
+          </table>
+      </div>
+  </div>
+  <div style="display: flex;justify-content: center;width: 100%;">
+      <div style="width: 50%;border: 1px solid black;">
+          <h3 align="center">RESIDENTIAL SPECIAL CAMP (SEVEN DAYS)</h3>
+          <b style="text-align:center;margin-left: 20px">(The Camp must start by 12.00 noon. on 1st Day and it
+              will conclude at 3.00 p.m. on 7th Day)
+          </b>
+          <div style="margin-left: 2px;text-align: left;margin-top: 20px"><b>Duration <u>&nbsp;</u>Days, From
+                  <u>&nbsp;</u> To <u>&nbsp;</u></b></div> <br />
+          <div style="text-align: left;"><b> Camp Site</b> <u>&nbsp;</u></div>
+          <div style="text-align: left"><b>(Address) </b><u>&nbsp;</u></div>
+          <div style="text-align: left"><b>PRE CAMP ACTIVITIES (If any) :-</b> <u>&nbsp</u></div> <br />
+          <b style="align-self: center"><u>DAILY ACTIVITIES OF THE CAMP</u></b> <br />
+          <div style="text-align: left; margin-top: 20px">1st Day <u>&nbsp;</u></div> <br />
+          <div style="text-align: left;">2nd Day <u> &nbsp;</u></div>
+          <div style="margin-top: 10px">3rd Day <u>&nbsp;</u></div> <br />
+          <div>4th Day <u>&nbsp;</u></div> <br />
+          <div>5th Day <u>&nbsp;</u></div> <br />
+          <div>6th Day <u>&nbsp;</u></div> <br />
+          <div>7th Day <u>&nbsp;</u></div> <br />
+          <div>Date: </div> <br />
+          <table style="margin-top: 20px;" cellspacing="50px">
+              <tr>
+                  <th>Name of the Volunteer</th>
+                  <th>Signature of Volunteer</th>
+              </tr>
+          </table>
+      </div>
+      <div style="width: 50%;border: 1px solid black;">
+          <div style="margin-top: 10px">3rd Day <u>&nbsp</u></div> <br />
+          <div>4th Day <u>&nbsp</u></div> <br />
+          <div>5th Day <u>&nbsp</u></div> <br />
+          <div>6th Day <u>&nbsp</u></div> <br />
+          <div>7th Day <u>&nbsp</u></div> <br />
+          <div>Date: </div> <br />
+          <table style="margin-top: 20px;" cellspacing="50px">
+              <tr>
+                  <th>Name of the Volunteer </th>
+                  <th>Signature of Volunteer </th>
+              </tr>
+          </table>
+      </div>
+  </div>
+  `;
+
+  const pdfOptions = {
+    format: 'A4',
+    scale: 0.2, // Adjust the scale value as per your requirements
+  };
+
+  pdf.create(htmlContent, pdfOptions).toStream((err, stream) => {
+    if (err) {
+      console.log('Error generating PDF:', err);
+      res.status(500).send('Error generating PDF');
+    } else {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename="work_diary.pdf"');
+      stream.pipe(res);
+    }
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Now listening on port ${port}`);
 });
