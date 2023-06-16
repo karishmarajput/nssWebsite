@@ -104,7 +104,7 @@ function handleDownloadWorkDiary(vec) {
       .then(response => {
         if (response.ok) {
           const contentDisposition = response.headers.get('Content-Disposition');
-          const fileName = contentDisposition.split('filename=')[1];
+          const fileName = contentDisposition.split('filename=')[1].replace(/"/g, '');
 
           // Trigger the file download by creating a temporary link
           response.blob().then(blob => {
