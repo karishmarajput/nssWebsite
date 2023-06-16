@@ -87,8 +87,6 @@
   object-fit: cover;
   min-height: 300px;
   max-height: 300px;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
 }
 
 .card__body {
