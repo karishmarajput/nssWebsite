@@ -767,7 +767,7 @@ app.post('/user/downloadWorkDiary', authenticateUserToken, (req, res) => {
     res.status(404).send('User not found');
   }
 
-  const htmlContent = `
+  const htmlContentPartA = `
   <style>
   *{
       font-size: 8px;
@@ -836,49 +836,44 @@ app.post('/user/downloadWorkDiary', authenticateUserToken, (req, res) => {
 
   </div>
 </div>
-<div style="display: flex;display: -webkit-box; -webkit-box-pack: center;justify-content: center;width: 100%;">
-  <div style="width: 50%;border: 1px solid black;">
-      <h3 align="center">RESIDENTIAL SPECIAL CAMP (SEVEN DAYS)</h3>
-      <b style="text-align:center;margin-left: 20px">(The Camp must start by 12.00 noon. on 1st Day and it
-          will conclude at 3.00 p.m. on 7th Day)
-      </b>
-      <div style="margin-left: 2px;text-align: left;margin-top: 20px"><b>Duration <u>&nbsp;</u>Days, From
-              <u>&nbsp;</u> To <u>&nbsp;</u></b></div> <br />
-      <div style="text-align: left;"><b> Camp Site</b> <u>&nbsp;</u></div>
-      <div style="text-align: left"><b>(Address) </b><u>&nbsp;</u></div>
-      <div style="text-align: left"><b>PRE CAMP ACTIVITIES (If any) :-</b> <u>&nbsp</u></div> <br />
-      <b style="align-self: center"><u>DAILY ACTIVITIES OF THE CAMP</u></b> <br />
-      <div style="text-align: left; margin-top: 20px">1st Day <u>&nbsp;</u></div> <br />
-      <div style="text-align: left;">2nd Day <u> &nbsp;</u></div>
-      <div style="margin-top: 10px">3rd Day <u>&nbsp;</u></div> <br />
-      <div>4th Day <u>&nbsp;</u></div> <br />
-      <div>5th Day <u>&nbsp;</u></div> <br />
-      <div>6th Day <u>&nbsp;</u></div> <br />
-      <div>7th Day <u>&nbsp;</u></div> <br />
-      <div>Date: </div> <br />
-      <table style="margin-top: 20px;" cellspacing="50px">
-          <tr>
-              <th>Name of the Volunteer</th>
-              <th>Signature of Volunteer</th>
-          </tr>
-      </table>
-  </div>
-  <div style="width: 50%;border: 1px solid black">
-      <div style="margin-top: 10px">3rd Day <u>&nbsp</u></div> <br />
-      <div>4th Day <u>&nbsp</u></div> <br />
-      <div>5th Day <u>&nbsp</u></div> <br />
-      <div>6th Day <u>&nbsp</u></div> <br />
-      <div>7th Day <u>&nbsp</u></div> <br />
-      <div>Date: </div> <br />
-      <table style="margin-top: 20px;" cellspacing="50px">
-          <tr>
-              <th>Name of the Volunteer </th>
-              <th>Signature of Volunteer </th>
-          </tr>
-      </table>
-  </div>
-</div>
+
   `;
+let htmlContentPartB= ''
+if (user.campAttended == "Nill"){
+    htmlContentPartB =`
+    <div style="display: flex;display: -webkit-box; -webkit-box-pack: center;justify-content: center;width: 100%;">
+    <div style="width: 48.2%;padding:.5rem;border: 1px solid black;">
+        <h3 align="center">RESIDENTIAL SPECIAL CAMP (SEVEN DAYS)</h3><p style="text-align:center"><b> Year - 2023-2024</b></p>
+        <p style="text-align:center;margin-left: 20px"><b>(The Camp must start by 12.00 noon. on 1st Day and it
+            will conclude at 3.00 p.m. on 7th Day)
+        </b></p>
+        <div style="margin-left: 2px;text-align: left;margin-top: 20px"><b>Duration <u>_______</u>Days, From 
+                <u>&nbsp;_________</u> To <u>&nbsp;_________</u></b></div> <br />
+        <div style="text-align: left;line-height:1rem"><b> Camp Site</b> <u>&nbsp;_________________________</u></div><br>
+        <div style="text-align: left; display: flex;flex-wrap:wrap;line-height:3remrem"><b>(Address) </b><u>&nbsp;_________________________________________________<br> _____________________________________________________________</u></div><br><br>
+        <div style="text-align: left"><b>PRE CAMP ACTIVITIES (If any) :-</b> <u>&nbsp______________________ <br> _____________________________________________________________ <br> _____________________________________________________________ <br> _____________________________________________________________ <br> _____________________________________________________________ <br> ______________________________________________________________</u></div> <br />
+        <p style="text-align: center"><b><u>DAILY ACTIVITIES OF THE CAMP</u></b><p> <br />
+        <div style="text-align: left;"><b>1st Day <u>&nbsp;___________________________________________________ <br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________</u></b></div> <br />
+        <div style="text-align: left;"><b>2nd Day <u> &nbsp;___________________________________________________ <br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________</u></b></div>
+        
+        
+    </div>
+    <div style="width: 49.05%;padding:.25rem;border: 1px solid black;padding:.5rem"><b>
+    <div style="margin-top: 10px">3rd Day <u>&nbsp;___________________________________________________ <br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________</u></div> <br />
+        <div>4th Day <u>&nbsp;___________________________________________________ <br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________</u></div> <br />
+        <div>5th Day <u>&nbsp;___________________________________________________ <br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________</u></div> <br />
+        <div>6th Day <u>&nbsp;___________________________________________________ <br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________</u></div> <br />
+        <div>7th Day <u>&nbsp;___________________________________________________ <br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________<br> _____________________________________________________________</u></div> <br />
+        <div>Date: </div> <br /></b><br><br>
+        <div style="display: flex;justify-content: space-around;display: -webkit-box; -webkit-box-pack: justify; padding:1rem;">
+          <div style="border-top: 1px solid black;"><b>Name of the Volunteer</b></div>
+          <div style="border-top: 1px solid black;"><b>Signature of Volunteer</b></div>
+      </div>
+    </div>
+  </div>
+    `
+  }
+
 
   const pdfOptions = {
     format: 'A4',border: {
@@ -888,6 +883,7 @@ app.post('/user/downloadWorkDiary', authenticateUserToken, (req, res) => {
     left: '40px'
   },
   };
+  htmlContent = htmlContentPartA+ htmlContentPartB
 
   pdf.create(htmlContent, pdfOptions).toStream((err, stream) => {
     if (err) {
