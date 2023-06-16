@@ -1,16 +1,9 @@
 /* Navbar */
-nav {
-  background-color: #3b3477 !important;
-}
-
 .brand-img {
   background-color: white;
   border-radius: 50%;
 }
 
-.nav-link {
-  color: white !important;
-}
 /* FOOTER */
 footer {
   background-color: #3b3477;
