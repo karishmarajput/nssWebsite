@@ -6,8 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volunteer's List</title>
     <link rel="stylesheet" href="/style/userDisplay.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('#userTable').DataTable({
+                "paging": true,      // Enable pagination
+                "pageLength": 10,   // Number of rows per page
+                "lengthMenu": [5,10,15,25],
+                "searching": false  // Disable search functionality
+            });
+        });
       $(function() {
           $("#header").load("/components/header.html");
           $("#footer").load("/components/footer.html");
@@ -47,12 +57,12 @@
                 </tr>
             </thead>
             <tbody>
-                <% users.forEach(user => { %>
-                <tr>
+                <% users.sort((a, b) => totalHours(b) - totalHours(a)).forEach(user => { %>
+                  <tr>
                     <td><%= user.vec %></td>
                     <td><%= user.name %></td>
                     <td><%= user.branch %></td>
-                    <td><%= user.sem %></td> 
+                    <td><%= user.sem %></td>
                     <td><%= user.batch %></td>
                     <td><%= getTotalHours(user, 'fitIndia') %></td>
                     <td><%= getTotalHours(user, 'educationForAll') %></td>
@@ -63,9 +73,10 @@
                     <td><%= getTotalHours(user, 'university') %></td>
                     <td><%= totalHours(user) %></td>
                     <td><button onclick="showDetails('<%= user.vec %>')" class="btn btn-primary">Show Details</button></td>
-                </tr>
+                  </tr>
                 <% }); %>
-            </tbody>
+              </tbody>
+              
         </table>
     </div>
     <div id="footer"></div>

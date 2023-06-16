@@ -88,7 +88,7 @@ app.get("/admin/addAdmin",authenticateAdmin, (req, res) => {
 });
 app.post("/admin/addAdmin", authenticateAdmin, async (req, res) => {
   const { username, password } = req.body;
-
+console.log(req.body)
   try {
     const existingAdmin = await Admin.findOne({ username });
     if (existingAdmin) {
@@ -98,6 +98,7 @@ app.post("/admin/addAdmin", authenticateAdmin, async (req, res) => {
     await admin.save();
     res.json({ message: "Admin created successfully" });
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -326,10 +327,10 @@ app.post("/admin/adduser", authenticateAdmin, async (req, res) => {
       password,
     });
     await newUser.save();
-    res.status(201).json({ message: "User created successfully" });
+    res.status(201).json({ success:true,message: "User created successfully" });
   } catch (error) {
     console.error("Error adding user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({  success:false,error: "Internal server error" });
   }
 });
 app.get("/admin/userDisplay/:vec", authenticateAdmin, (req, res) => {
@@ -757,6 +758,150 @@ app.get('/user/:vec/profile', authenticateUserToken, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+const pdf = require('html-pdf');
+app.post('/user/downloadWorkDiary', authenticateUserToken, (req, res) => {
+  const { vec } = req.body;
+  const user = req.user;
+
+  if (!user) {
+    res.status(404).send('User not found');
+  }
+
+  const htmlContent = `
+  <style>
+  *{
+      font-size: 8px;
+  }
+  b{
+      font-size: 8px;
+  }
+  h5{
+      font-size: 12px;
+  }
+</style>
+<u><h5 align="center" style="font-size:13px">WORK DIARY OF NSS VOLUNTEER- 2023-2024 – Page 1</h5></u><br>
+<div style="display: flex;display: -webkit-box; -webkit-box-pack: center;justify-content: center;width: 100%">
+  <div style="width: 49%;border: 1px solid black;;padding-left:.5rem"><br>
+      <div style="display: flex;display: -webkit-box; -webkit-box-pack: center;justify-content: center;width: 100%;">
+          
+          <div style="border: 1px solid black; height: 85px; width: 85px;" align="center">
+             <b> Photograph of the volunteer with the College seal and Signature of the Principal</b>
+          </div>
+      </div>
+      
+      <div align="left" style="margin-top: 6px">
+          <b>Name of the Volunteer</b>  &nbsp;<u>${user.name}</u><br/><br/>
+          <b>Residential Address</b>  &nbsp;<u>${user.address}</u><br />
+          <b>Contact details No.</b>  &nbsp;<u>${user.contactNo}</u><br />
+          <b>Name of the College</b>  &nbsp;<u>${user.nameOfClg}</u> <br />
+          
+          <div style="display: -webkit-box; -webkit-box-pack: justify;width: 100%;">
+          <b>Class :</b> &nbsp;<u>${user.branch}</u>
+          <b>Div.:</b> &nbsp;<u>${user.div}</u> <br />
+          </div><br>
+          <div style="display: -webkit-box; -webkit-box-pack: justify;width: 100%;">
+          <b>Date of Birth </b> &nbsp;<u>${user.dob.toLocaleString("en-GB")}</u>
+          <b>Blood Group </b>  &nbsp;<u>${user.bloodGroup}</u></b> <br />
+          </div>
+
+          <b>Year in NSS </b> &nbsp;<u>${user.yearInNss}</u></b> <br/>
+          <b style="margin-left: 20px">Volunteer Enrolment Code - (as per Enrolment List)</b> <br />
+          <b style="margin-left:120px">&nbsp;<u>${user.vec}</u></b>
+          <div style="display: flex;justify-content: space-around;display: -webkit-box; -webkit-box-pack: justify; padding:3rem;padding-top: 5rem ;padding-bottom:1rem;">
+              <div style="border-top: 1px solid black;">Signature of the<br />NSS Volunteer</div>
+              <div style="border-top: 1px solid black;">Signature of the<br />NSS Programme Officer</div>
+          </div>
+      </div>
+  </div>
+  <div style="width: 49%;border: 1px solid black;padding:.5rem">
+          <p align="center"><b><u>YEAR – 2023-2024</u><br/><br/>UNIVERSITY NSS CELL USE ONLY</b></p>
+      <div align="left"><b> Diary Checked by:&nbsp; _______________________________________</b></div>
+      <p align="left"> <b>Date: __________________________________ </b></p>
+      <p align="left"> <b>Total hours completed by Volunteers: __________________</b></p>
+      <p align="left"> <b>Comment if any: _________________________________________ 
+          _____________________________________________________________ 
+          _____________________________________________________________ 
+          _____________________________________________________________
+          _____________________________________________________________ 
+          _____________________________________________________________ 
+          _____________________________________________________________
+          _____________________________________________________________ 
+          _____________________________________________________________ 
+          _____________________________________________________________</b>
+      </p>
+      <div style="display: flex;justify-content: space-around;display: -webkit-box; -webkit-box-pack: justify; padding:3rem;padding-top: 5rem ;padding-bottom:1rem;">
+          <div>Seal</div>
+          <div>Signature <br/>Dist/Area Co-ordinator</div>
+      </div>
+
+  </div>
+</div>
+<div style="display: flex;display: -webkit-box; -webkit-box-pack: center;justify-content: center;width: 100%;">
+  <div style="width: 50%;border: 1px solid black;">
+      <h3 align="center">RESIDENTIAL SPECIAL CAMP (SEVEN DAYS)</h3>
+      <b style="text-align:center;margin-left: 20px">(The Camp must start by 12.00 noon. on 1st Day and it
+          will conclude at 3.00 p.m. on 7th Day)
+      </b>
+      <div style="margin-left: 2px;text-align: left;margin-top: 20px"><b>Duration <u>&nbsp;</u>Days, From
+              <u>&nbsp;</u> To <u>&nbsp;</u></b></div> <br />
+      <div style="text-align: left;"><b> Camp Site</b> <u>&nbsp;</u></div>
+      <div style="text-align: left"><b>(Address) </b><u>&nbsp;</u></div>
+      <div style="text-align: left"><b>PRE CAMP ACTIVITIES (If any) :-</b> <u>&nbsp</u></div> <br />
+      <b style="align-self: center"><u>DAILY ACTIVITIES OF THE CAMP</u></b> <br />
+      <div style="text-align: left; margin-top: 20px">1st Day <u>&nbsp;</u></div> <br />
+      <div style="text-align: left;">2nd Day <u> &nbsp;</u></div>
+      <div style="margin-top: 10px">3rd Day <u>&nbsp;</u></div> <br />
+      <div>4th Day <u>&nbsp;</u></div> <br />
+      <div>5th Day <u>&nbsp;</u></div> <br />
+      <div>6th Day <u>&nbsp;</u></div> <br />
+      <div>7th Day <u>&nbsp;</u></div> <br />
+      <div>Date: </div> <br />
+      <table style="margin-top: 20px;" cellspacing="50px">
+          <tr>
+              <th>Name of the Volunteer</th>
+              <th>Signature of Volunteer</th>
+          </tr>
+      </table>
+  </div>
+  <div style="width: 50%;border: 1px solid black">
+      <div style="margin-top: 10px">3rd Day <u>&nbsp</u></div> <br />
+      <div>4th Day <u>&nbsp</u></div> <br />
+      <div>5th Day <u>&nbsp</u></div> <br />
+      <div>6th Day <u>&nbsp</u></div> <br />
+      <div>7th Day <u>&nbsp</u></div> <br />
+      <div>Date: </div> <br />
+      <table style="margin-top: 20px;" cellspacing="50px">
+          <tr>
+              <th>Name of the Volunteer </th>
+              <th>Signature of Volunteer </th>
+          </tr>
+      </table>
+  </div>
+</div>
+  `;
+
+  const pdfOptions = {
+    format: 'A4',border: {
+    top: '20px',
+    right: '20px',
+    bottom: '20px',
+    left: '40px'
+  },
+  };
+
+  pdf.create(htmlContent, pdfOptions).toStream((err, stream) => {
+    if (err) {
+      console.log('Error generating PDF:', err);
+      res.status(500).send('Error generating PDF');
+    } else {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename="work_diary.pdf"');
+      stream.pipe(res);
+    }
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Now listening on port ${port}`);
 });
