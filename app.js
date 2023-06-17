@@ -759,7 +759,7 @@ app.get('/user/:vec/profile', authenticateUserToken, async (req, res) => {
   }
 });
 const pdf = require('html-pdf');
-app.post('/user/downloadWorkDiary', authenticateUserToken, (req, res) => {
+app.post('/user/downloadWorkDiary', authenticateUserToken, async (req, res) => {
   const { vec } = req.body;
   const user = req.user;
 
@@ -800,7 +800,7 @@ app.post('/user/downloadWorkDiary', authenticateUserToken, (req, res) => {
           <b>Div.:</b> &nbsp;<u>${user.div}</u> <br />
           </div><br>
           <div style="display: -webkit-box; -webkit-box-pack: justify;width: 100%;">
-          <b>Date of Birth </b> &nbsp;<u>${user.dob.toLocaleString("en-GB")}</u>
+          <b>Date of Birth </b> &nbsp;<u>${user.dob.toLocaleDateString("en-GB")}</u>
           <b>Blood Group </b>  &nbsp;<u>${user.bloodGroup}</u></b> <br />
           </div>
 
@@ -839,7 +839,46 @@ app.post('/user/downloadWorkDiary', authenticateUserToken, (req, res) => {
 
   `;
 let htmlContentPartB= ''
-if (user.campAttended == "Nill"){
+if (user.campAttended == 2022){
+  const camp = await Camp.findOne({ campYear: user.campAttended })
+  htmlContentPartB =`
+  <style>
+  .dayDetail{
+    min-height: 5rem;
+  }
+  </style>
+  <div style="display: flex;display: -webkit-box; -webkit-box-pack: center;justify-content: center;width: 100%;">
+  <div style="width: 48.2%;padding:.5rem;border: 1px solid black;">
+      <h3 align="center">RESIDENTIAL SPECIAL CAMP (SEVEN DAYS)</h3><p style="text-align:center"><b> Year - 2023-2024</b></p>
+      <p style="text-align:center;margin-left: 20px"><b>(The Camp must start by 12.00 noon. on 1st Day and it
+          will conclude at 3.00 p.m. on 7th Day)
+      </b></p>
+      <div style="margin-left: 2px;text-align: left;margin-top: 20px"><b>Duration <u>__7__</u>Days, From 
+              <u>&nbsp;${camp.fromDate.toLocaleDateString("en-GB")}</u> To <u>&nbsp;${camp.toDate.toLocaleDateString("en-GB")}</u></b></div> <br />
+      <div style="text-align: left;line-height:1rem"><b> Camp Site</b> <u>&nbsp;${camp.campSite}</u></div><br>
+      <div style="text-align: left; display: flex;flex-wrap:wrap;line-height:3remrem"><b>(Address) </b><u>&nbsp;${camp.address}</u></div><br><br>
+      <div style="text-align: left"><b>PRE CAMP ACTIVITIES (If any) :-</b> <u>&nbsp ${camp.preCampActivities}</u></div> <br />
+      <p style="text-align: center"><b><u>DAILY ACTIVITIES OF THE CAMP</u></b><p> <br />
+      <div class="dayDetail" style="text-align: left;"><b>1st Day </b><u>&nbsp;${camp.activityDaywise[0]}</u></div> <br />
+      <div class="dayDetail" style="text-align: left;"><b>2nd Day </b><u> &nbsp;${camp.activityDaywise[1]}</u></div>
+      
+      
+  </div>
+  <div style="width: 49.05%;padding:.25rem;border: 1px solid black;padding:.5rem">
+  <div style="margin-top: 10px"><b>3rd Day</b> <u>&nbsp;${camp.activityDaywise[2]}</u></div> <br />
+      <div class="dayDetail"><b>4th Day </b><u>&nbsp;${camp.activityDaywise[3]}</u></div> <br />
+      <div class="dayDetail"><b>5th Day </b><u>&nbsp;${camp.activityDaywise[4]}</u></div> <br />
+      <div class="dayDetail"><b>6th Day </b><u>&nbsp;${camp.activityDaywise[5]}</u></div> <br />
+      <div class="dayDetail"><b>7th Day </b><u>&nbsp;${camp.activityDaywise[6]}</u></div> <br />
+      <div ><b>Date: </b></div> <br /><br><br>
+      <div style="display: flex;justify-content: space-around;display: -webkit-box; -webkit-box-pack: justify; padding:1rem;">
+        <div>${user.name}<br><div style="border-top: 1px solid black;"><b>Name of the Volunteer</b></div></div>
+        <div><br><div style="border-top: 1px solid black;"><b>Signature of Volunteer</b></div></div>
+    </div>
+  </div>
+</div>
+  `
+}else{
     htmlContentPartB =`
     <div style="display: flex;display: -webkit-box; -webkit-box-pack: center;justify-content: center;width: 100%;">
     <div style="width: 48.2%;padding:.5rem;border: 1px solid black;">
