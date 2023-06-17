@@ -425,7 +425,6 @@ app.get("/admin/campDetails", authenticateAdmin, async (req, res) => {
 });
 
 app.post("/admin/campDetails", authenticateAdmin, async (req, res) => {
-  console.log(req.body);
   let {
     campYear,
     fromDate,
@@ -441,7 +440,7 @@ app.post("/admin/campDetails", authenticateAdmin, async (req, res) => {
     return res
       .status(409)
       .json({ error: `Camp Details for ${campYear} already exists` });
-  }
+  }else{
   attendedBy = [];
   for (let i = 0; i < parti.length; i++) {
     await User.findOne({ vec: parti[i] })
@@ -488,7 +487,7 @@ app.post("/admin/campDetails", authenticateAdmin, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
   res.status(200).json({ message: "Camp Deatils successfully added" });
-});
+}});
 app.get("/admin/showCampDetails", authenticateAdmin, async (req, res) => {
   try {
     await Camp.find()
@@ -546,8 +545,27 @@ app.delete(
       const deletedEvent = await Event.findByIdAndDelete(eventId);
       if (!deletedEvent) {
         return res.status(404).json({ error: "Event not found" });
+      }else{
+        const users = await User.find({ eventsAttended: eventId });
+        const organiser = await User.find({ eventsOrganised: eventId });
+        users.forEach(async (user) => {
+          const eventIndex = user.eventsAttended.findIndex((eventId) => eventId.toString() === deletedEvent._id.toString());
+          if (eventIndex !== -1) {
+            user.eventsAttended.splice(eventIndex, 1);
+            await user.save();
+          }
+        });
+        organiser.forEach(async (user) => {
+          const eventIndex = user.eventsOrganised.findIndex((eventId) => eventId.toString() === deletedEvent._id.toString());
+          if (eventIndex !== -1) {
+            user.eventsOrganised.splice(eventIndex, 1);
+            await user.save();
+          }
+        });
+
+        return res.status(200).json({ message: "Event deleted successfully" });
       }
-      return res.status(200).json({ message: "Event deleted successfully" });
+      
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal server error" });
