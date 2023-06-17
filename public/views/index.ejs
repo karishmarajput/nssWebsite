@@ -68,6 +68,7 @@
         </div>
       </div>
     </nav>
+    <!-- CAROUSEL -->
     <div
       id="carouselExampleAutoplaying"
       class="carousel slide"
@@ -107,9 +108,51 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-    <h1 class="text-center">Not me but you.</h1>
-    <h3 class="text-center sub-heading">lorem ipsum</h3>
-    <div class="container postsContainer">
+    <!-- ABOUT -->
+    <div class="about">
+      <h1 class="text-center">Not me but you.</h1>
+      <h3 class="text-center sub-heading">lorem ipsum</h3>
+    </div>
+    <!-- STATS -->
+    <section id="statistic" class="statistic-section one-page-section">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-xs-12 col-md-4">
+            <div class="counter">
+              <i class="fa fa-user fa-3x stats-icon"></i>
+              <h2 class="timer count-title count-number">100</h2>
+              <div class="stats-line-black"></div>
+              <p class="stats-text">Volunteers</p>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <div class="counter">
+              <i class="fa fa-leaf fa-3x stats-icon"></i>
+              <h2 class="timer count-title count-number">200+</h2>
+              <div class="stats-line-black"></div>
+              <p class="stats-text">Events organised</p>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-4">
+            <div class="counter">
+              <i class="fa fa-heart fa-3x stats-icon"></i>
+              <h2 class="timer count-title count-number">50+</h2>
+              <div class="stats-line-black"></div>
+              <p class="stats-text">Benefactors</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- CARD -->
+    <div class="post-header">
+      <h1 class="text-center">Recent posts</h1>
+      <h5 class="sub-heading text-center">
+        NSS FCRIT is very active in conducting activites in various <br />
+        category, some of them include
+      </h5>
+    </div>
+    <div class="postsContainer">
       <ul class="cards">
         <% posts.forEach(function(post) { %>
         <li class="card">
@@ -131,6 +174,7 @@
         <% }); %>
       </ul>
     </div>
+    <!-- FOOTER -->
     <footer class="text-center">
       <div class="container p-4">
         <section class="mb-4 footer-links">

@@ -1,3 +1,4 @@
+/* CAROUSEL */
 .carousel {
   margin-bottom: 7rem;
 }
@@ -12,13 +13,75 @@
   min-height: 500px;
 }
 
+/* CAPTION */
+.about {
+  height: 100vh;
+}
+
 .sub-heading {
   font-weight: 400;
   color: darkgrey;
-  margin-bottom: 7rem;
 }
 
-.container {
+/* STATS */
+
+.statistic-section {
+  padding-top: 50px;
+  padding-bottom: 70px;
+  background: #00c6ff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #0072ff, #00c6ff);
+  background: linear-gradient(to right, #0072ff, #00c6ff);
+}
+
+.count {
+  justify-content: center;
+  align-items: center;
+}
+
+.count-title {
+  font-size: 50px;
+  font-weight: normal;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+.stats-text {
+  font-size: 15px;
+  font-weight: normal;
+  margin-top: 10px;
+  margin-bottom: 0;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.stats-line-black {
+  margin: 12px auto 0;
+  width: 100px;
+  height: 2px;
+  background-color: #fff;
+}
+.stats-icon {
+  margin-bottom: 15px;
+  float: none;
+  color: #fff;
+}
+
+@media (max-width: 992px) {
+  .counter {
+    margin-bottom: 40px;
+  }
+}
+
+/* CARD */
+
+.post-header {
+  margin: 5rem 0 3rem 0;
+}
+
+.postsContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

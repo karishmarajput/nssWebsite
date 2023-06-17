@@ -8,7 +8,7 @@
 footer {
   background-color: #3b3477;
 }
-.fa {
+footer .fa {
   margin: 1rem;
   padding: 1rem;
   font-size: 2rem;
@@ -19,7 +19,7 @@ footer {
   border-radius: 50%;
 }
 
-.fa:hover {
+footer .fa:hover {
   opacity: 0.7;
 }
 
