@@ -13,12 +13,40 @@
           $("#header").load("/components/header.html");
       });
     </script>
+    <style>
+              #loadingOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        #loadingOverlay .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .alert-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 9999;
+        }
+    </style>
 </head>
 
 <body>
   <div id="header"></div>
   <div class="container">
     <h1>Add Event</h1>
+    <div class="alert-container"></div>
 
     <div class="form-group">
       <label for="eventName">Event Name:</label>
@@ -138,7 +166,11 @@
 
     <button type="submit" onclick="submitEvent()">Add Event</button>
   </div>
-
+  <div id="loadingOverlay" style="display: none;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
 
 <script>
 
@@ -176,7 +208,6 @@
         }else{
           parti = parti.filter(item => item !== userid);
         }
-        console.log(parti)
       });
     });
 
@@ -186,7 +217,7 @@
     organisers = document.getElementById('organisers')
     let selected = organisers.value
     if(selected == ''){
-      alert('select the organiser first');
+      showErrorAlert('select the organiser first');
     }
     organiser.push(selected)
     selectedDiv = document.getElementById('selectedOrganiser');
@@ -213,7 +244,14 @@
     numberOfBenificiar = document.getElementById('numberOfBenificiar').value;
     reportBy = document.getElementById('reportWrittenBy').value;
     imageFile = document.getElementById('fileImage').files[0];
-
+    if(!imageFile){
+      showErrorAlert("enter image")
+      return
+    }
+    if(eventName=='' || eventDate == ''||venue ==''||content == ''|| eventLead ==''||organisersHr==''||hours==''||category==''||numberOfBenificiar==''||reportBy==''){
+      showErrorAlert("Enter valid information")
+      return
+    }
       var formData = new FormData();
       formData.append('eventName', eventName);
       formData.append('eventDate', eventDate);
@@ -228,23 +266,65 @@
       formData.append('eventImage', imageFile);
       formData.append('parti',parti)
       formData.append('organiser',organiser)
-
+      showLoadingOverlay();
+      let allInputs = document.querySelectorAll('input');
+      allInputs.forEach(singleInput => singleInput.value = '');
     fetch('/admin/addevent', {
       method: 'POST',
       body: formData
     })
       .then(response => response.json())
       .then(data => {
+        hideLoadingOverlay();
         console.log('Response:', data);
-        alert(data.message)
+        showSuccessAlert(data.message)
 
       })
       .catch(error => {
+        hideLoadingOverlay();
         console.error('Error:', error);
-        alert(error)
+        showErrorAlert(error)
       });
 
   }
+
+  function showLoadingOverlay() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoadingOverlay() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        function showSuccessAlert(message) {
+            const alertContainer = document.querySelector('.alert-container');
+            const alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-success', 'alert-dismissible', 'fade', 'show');
+            alert.innerHTML = `
+                <strong>Success!</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+
+            setTimeout(() => {
+                alertContainer.removeChild(alert);
+            }, 5000);
+        }
+
+        function showErrorAlert(message) {
+            const alertContainer = document.querySelector('.alert-container');
+            const alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-danger', 'alert-dismissible', 'fade', 'show');
+            alert.innerHTML = `
+                <strong>Error!</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+
+            setTimeout(() => {
+                alertContainer.removeChild(alert);
+            }, 2000);
+        }
 
 </script>
 </html>
