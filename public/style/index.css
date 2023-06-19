@@ -11,15 +11,19 @@
   top: 0;
   left: 0;
   min-height: 500px;
+  object-fit: fill;
 }
 
 /* CAPTION */
 .about {
   height: 100vh;
+  text-align: center;
+  justify-content: center;
 }
 
 .sub-heading {
   font-weight: 400;
+  padding: 1rem 8rem;
   color: darkgrey;
 }
 
