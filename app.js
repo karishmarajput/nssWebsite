@@ -66,6 +66,7 @@ app.get("/", async (req, res) => {
       }
     }
     newEvents();
+    console.log(latestEvents)
     res.render("index", { posts: latestEvents });
   } catch (error) {
     console.error("Error fetching user list:", error);

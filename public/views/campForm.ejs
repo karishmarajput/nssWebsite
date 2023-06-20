@@ -253,6 +253,7 @@ body: JSON.stringify(payload)
   hideLoadingOverlay();
   console.log('Response:', data);
   showSuccessAlert(data.message)
+  window.location.href = '/admin/campDetails';
 
 })
 .catch(error => {

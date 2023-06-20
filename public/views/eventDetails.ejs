@@ -14,10 +14,40 @@
             $("#header").load("/components/header.html");
         });
     </script>
+        <style>
+
+
+            #loadingOverlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+            }
+    
+            #loadingOverlay .spinner-border {
+                width: 3rem;
+                height: 3rem;
+            }
+    
+            .alert-container {
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 9999;
+            }
+        </style>
 </head>
 
 <body>
     <div id="header"></div>
+    <div class="alert-container"></div>
     <div class="event-container">
         <div class="event-name">
             <h2 class="event-title"><%= event.eventName %></h2><br>
@@ -137,12 +167,12 @@
       .then(response => response.json())
       .then(data => {
         console.log('Response:', data);
-        alert(data.message)
+        showSuccessAlert(data.message)
         window.location.href = '/admin/eventDisplay';
       })
       .catch(error => {
         console.error('Error:', error);
-        alert(error)
+        showErrorAlert(error)
       });
     }
 
@@ -188,12 +218,50 @@ console.log(requestBody)
       console.log(data);
       modal.style.display = 'none';
       location.reload();
+      showSuccessAlert('Event updated successfully')
     })
     .catch(error => {
       console.error('Error:', error);
+      showErrorAlert(error)
     });
 });
+function showLoadingOverlay() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
 
+        function hideLoadingOverlay() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        function showSuccessAlert(message) {
+            const alertContainer = document.querySelector('.alert-container');
+            const alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-success', 'alert-dismissible', 'fade', 'show');
+            alert.innerHTML = `
+                <strong>Success!</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+
+            setTimeout(() => {
+                alertContainer.removeChild(alert);
+            }, 2000);
+        }
+
+        function showErrorAlert(message) {
+            const alertContainer = document.querySelector('.alert-container');
+            const alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-danger', 'alert-dismissible', 'fade', 'show');
+            alert.innerHTML = `
+                <strong>Error!</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+
+            setTimeout(() => {
+                alertContainer.removeChild(alert);
+            }, 2000);
+        }
 
 
 

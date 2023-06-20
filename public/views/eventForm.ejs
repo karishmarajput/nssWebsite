@@ -278,6 +278,7 @@
         hideLoadingOverlay();
         console.log('Response:', data);
         showSuccessAlert(data.message)
+        window.location.href = '/admin/eventDisplay';
 
       })
       .catch(error => {
