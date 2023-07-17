@@ -468,7 +468,7 @@ function create120HourCSV(userData) {
 
 async function downloadEventPdf(){
 
-  fetch('/generate-pdf')
+  fetch('/admin/generate-pdf')
         .then(response => {
           if (response.ok) {
             return response.blob();

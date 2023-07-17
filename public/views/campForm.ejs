@@ -241,7 +241,7 @@ activityDaywise,
 parti
 };
 showLoadingOverlay();
-fetch('/admin/campDetails', {
+fetch('/admin/camp/campDetails', {
 method: 'POST',
 headers: {
   'Content-Type': 'application/json'
@@ -253,7 +253,7 @@ body: JSON.stringify(payload)
   hideLoadingOverlay();
   console.log('Response:', data);
   showSuccessAlert(data.message)
-  window.location.href = '/admin/campDetails';
+  window.location.href = '/admin/camp/showCampDetails';
 
 })
 .catch(error => {

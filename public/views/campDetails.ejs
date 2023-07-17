@@ -70,7 +70,7 @@
 </body>
 <script>
     function deleteCamp(campId){
-        fetch('/admin/campDisplay/deleteCamp', {
+        fetch('/admin/camp/campDisplay/deleteCamp', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +81,7 @@
         .then(data => {
             console.log('Response:', data);
             alert(data.message);
-            window.location.href = '/admin/showCampDetails';
+            window.location.href = '/admin/camp/showCampDetails';
         })
         .catch(error => {
             console.error('Error:', error);
