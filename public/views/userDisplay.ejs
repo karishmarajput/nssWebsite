@@ -14,7 +14,7 @@
             $('#userTable').DataTable({
                 "paging": true,      // Enable pagination
                 "pageLength": 10,   // Number of rows per page
-                "lengthMenu": [5,10,15,25],
+                "lengthMenu": [5,10,15,25,100],
                 "searching": false  // Disable search functionality
             });
         });
@@ -48,7 +48,6 @@
                     <th>Name</th>
                     <th>Branch</th>
                     <th>Sem</th>
-                    <th>Batch</th>
                     <th>Fit India Hr</th>
                     <th>Education For All Hours</th>
                     <th>Animal Welfare Hours</th>
@@ -67,11 +66,10 @@
                     <td><%= user.name %></td>
                     <td><%= user.branch %></td>
                     <td><%= user.sem %></td>
-                    <td><%= user.batch %></td>
                     <td><%= getTotalHours(user, 'fitIndia') %></td>
                     <td><%= getTotalHours(user, 'educationForAll') %></td>
                     <td><%= getTotalHours(user, 'animalWellfare') %></td>
-                    <td><%= getTotalHours(user, 'diasterManagement') %></td>
+                    <td><%= getTotalHours(user, 'disasterManagement') %></td>
                     <td><%= getTotalHours(user, 'greenInitiative') %></td>
                     <td><%= getTotalHours(user, 'college') %></td>
                     <td><%= getTotalHours(user, 'university') %></td>
