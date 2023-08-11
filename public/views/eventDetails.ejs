@@ -329,7 +329,7 @@ function openFunc(parti){
   populateParticipantDropdown(participant)
 };
 closeButton.addEventListener('click', function() {
-  modal.style.h = 'hnone';
+  modal.style.display = 'none';
 });
 window.addEventListener('click', function(event) {
   if (event.target == modal) {
