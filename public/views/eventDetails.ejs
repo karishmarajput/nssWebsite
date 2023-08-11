@@ -118,7 +118,7 @@
         <br><br>
         <div>
             <button class="btn btn-danger" onclick="deleteEvent(`<%= event._id%>`)">Delete Event</button>
-            <button id="openModalButton" class="btn btn-warning">Edit Event</button>
+            <button id="openModalButton" onclick="openFunc(`<%= JSON.stringify(event.participants.map(participant => participant.vec))%>`)" class="btn btn-warning">Edit Event</button>
         </div>
 
 <div id="myModal" class="modal modalModule">
@@ -141,6 +141,36 @@
           <input type="number" id="hours" required class="form-control">
       </div>
   </div>
+  <div class="participants-section">
+    <div class="participants-list">
+        <h4 class="section-title">Participants:</h4>
+        <table class="participants-table newTable">
+            <thead>
+                <tr>
+                    <th>VEC</th>
+                    <th>Name</th>
+                    <!-- <th>Delete</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <% event.participants.forEach(function(participant) { %>
+                    <tr>
+                        <td><%= participant.vec %></td>
+                        <td><%= participant.name %></td>
+                        <!-- <td ><button onclick="partiDelete(`<%= participant.vec%>`)">Delete</button></td> -->
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="add-participant-section">
+    <h4 class="section-title">Add Participant:</h4>
+    <select id="participantDropdown" class="form-select">
+    </select>
+    <button class="btn btn-success" onclick="addParticipant()">Add Participant</button>
+</div>
+
   <div class="row">
     <div class="col-sm-6">
         <input type="submit" class="btn btn-warning" value="Update Event">
@@ -155,6 +185,8 @@
     </div>
 </body>
 <script>
+
+    
     function deleteEvent(eventId){
         console.log(eventId)
     fetch('/admin/eventDisplay/deleteEvent', {
@@ -175,18 +207,129 @@
         showErrorAlert(error)
       });
     }
+    function partiDelete(vec){
+        index = participant.indexOf(vec)
+        console.log(index)
+        if(index > -1){
+            x = participant.splice(index,1)
+        }
+        console.log(participant)
+        populateParticipantDropdown(participant)
+        
+    }
 
-const modal = document.getElementById('myModal');
+// function rerenderParticipantsTable(newParticipants) {
+//     const participantsTable = document.querySelector('.newTable tbody');
+//     const existingRows = participantsTable.querySelectorAll('tr');
+//     participantsTable.innerHTML = '';
+//     const existingVecs = new Set();
+//     participants = {}
+//     existingRows.forEach(row => {
+//         const vecCell = row.querySelector('td:first-child');
+//         const nameCell = row.querySelector('td:nth-child(2)');
+//         if (vecCell) {
+//             existingVecs.add(vecCell.textContent);
+//             participants.add({'vec':vecCell,'name':nameCell})
+//         }
+//     });
+//     participants.forEach(participant => {
+//         if (!existingVecs.has(newParticipants)) {
+//             const row = document.createElement('tr');
+//             row.innerHTML = `
+//                 <td>${participant.vec}</td>
+//                 <td>${participant.name}</td>
+//             `;
+//             participantsTable.appendChild(row);
+//             existingVecs.add(participant.vec);
+//         }
+//     });
+// }
+
+
+    function populateParticipantDropdown(participant) {
+            const dropdown = document.getElementById('participantDropdown');
+            dropdown.innerHTML = ''
+    
+            fetch('/admin/users')
+            .then(response => response.json())
+                .then((userData) => {
+                    
+                   
+                        userData.forEach(user => {
+                            let present = false
+                            for (const parti of participant) {
+                                if (user.vec === parti) {
+                                    present = true
+                                }
+                            }
+                            if (!present){
+                                const option = document.createElement('option');
+                                option.value = user.vec;
+                                option.textContent = user.name;
+                                dropdown.appendChild(option);
+                            }
+                    });
+                  
+                   
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                });
+        }
+
+
+function addParticipant() {
+    event.preventDefault(); 
+    const selectedVec = document.getElementById('participantDropdown').value;
+    const selectedName = document.querySelector(`#participantDropdown option[value='${selectedVec}']`).textContent;
+    
+    const participantsTable = document.querySelector('.newTable tbody');
+    const existingVecs = new Set();
+
+    participantsTable.querySelectorAll('tr').forEach(row => {
+        const vecCell = row.querySelector('td:first-child');
+        if (vecCell) {
+            existingVecs.add(vecCell.textContent);
+        }
+    });
+
+    if (!existingVecs.has(selectedVec)) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${selectedVec}</td>
+            <td>${selectedName}</td>
+        `;
+        participantsTable.appendChild(row);
+        
+        // Update the participant array
+        participant.push(selectedVec);
+        newParti.push(selectedVec)
+        // Remove the added option from the dropdown
+        const dropdownOption = document.querySelector(`#participantDropdown option[value='${selectedVec}']`);
+        if (dropdownOption) {
+            dropdownOption.remove();
+        }
+    }
+}
+
+    const modal = document.getElementById('myModal');
+let participant = []
+let newParti = []
 const openModalButton = document.getElementById('openModalButton');
 const closeButton = document.getElementsByClassName('close')[0];
-openModalButton.addEventListener('click', function() {
+function openFunc(parti){
+   
+    participant = JSON.parse(parti)
+    console.log(typeof(participant))
+    console.log(participant)
   modal.style.display = 'inline-block';
-  modal.style.top = "15%";
+  modal.style.top = "2.5%";
   modal.style.left = '25%';
   modal.style.width = '50%';
-});
+  populateParticipantDropdown(participant)
+};
 closeButton.addEventListener('click', function() {
-  modal.style.display = 'none';
+  modal.style.h = 'hnone';
 });
 window.addEventListener('click', function(event) {
   if (event.target == modal) {
@@ -197,15 +340,19 @@ const form = document.getElementById('modalForm');
 
 form.addEventListener('submit', function(event) {
   event.preventDefault(); 
+  console.log(newParti)
+  console.log('hello')
   const eventId = document.getElementById('eventId').value;
   const organisersHr = document.getElementById('organisersHour').value;
   const hours = document.getElementById('hours').value;
   const requestBody = {
     eventId: eventId,
     organisersHr: organisersHr,
-    hours: hours
+    hours: hours,
+    parti:newParti
   };
-console.log(requestBody)
+  console.log(requestBody)
+
   fetch('/admin/eventDisplay/updateEvent', {
     method: 'POST',
     headers: {

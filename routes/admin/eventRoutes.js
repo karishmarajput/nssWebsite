@@ -91,18 +91,73 @@ app.delete(
   );
   
   app.post("/updateEvent", async (req, res) => {
-    const { eventId, organisersHr, hours } = req.body;
+    console.log(req.body);
+    const { eventId, organisersHr, hours, parti } = req.body;
+    console.log(parti);
+    let participants = [];
+    let maleParti = 0;
+    let femaleParti = 0;
+  
+    for (let i = 0; i < parti.length; i++) {
+      try {
+        const user = await User.findOne({ vec: parti[i] });
+  
+        if (user) {
+          participants.push(user);
+          if (user.gender === "male") {
+            maleParti += 1;
+          } else {
+            femaleParti += 1;
+          }
+        } else {
+          console.log("User not found");
+        }
+      } catch (error) {
+        console.error("Error finding user:", error);
+      }
+    }
+  
+    console.log(participants);
+  
+    let totalParti = maleParti + femaleParti;
+  
     try {
       const updatedEvent = await Event.findByIdAndUpdate(
         eventId,
         { organisersHr, hours },
         { new: true }
       );
-      res.json(updatedEvent);
+  
+      const eventParticipants = updatedEvent.participants.concat(participants);
+      updatedEvent.participants = eventParticipants;
+      updatedEvent.totalPart =
+        parseInt(updatedEvent.totalPart) + parseInt(totalParti);
+      updatedEvent.malePart =
+        parseInt(updatedEvent.malePart) + parseInt(maleParti);
+      updatedEvent.femalePart =
+        parseInt(updatedEvent.femalePart) + parseInt(femaleParti);
+  
+      await updatedEvent.save(); // Save the updated event
+      for (let i = 0; i < parti.length; i++) {
+        await User.findOne({ vec: parti[i] })
+          .then((user) => {
+            if (user) {
+              user.eventsAttended.push(updatedEvent);
+              return user.save();
+            } else {
+              console.log("User not found");
+            }
+          })
+          .catch((error) => {
+            console.error("Error finding user:", error);
+          });
+      }
+      res.json({ message: "Event updated successfully" });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Error updating event" });
     }
   });
+  
   module.exports = app;
   
