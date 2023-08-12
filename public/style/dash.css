@@ -169,7 +169,7 @@
 
 @media only screen and (max-width: 600px) {
   .graphdisplay{
-    flex-direction: column;
+    padding: .5rem;
   }
   .graphSide, .downloadPdf{
     width: 100%;
@@ -177,4 +177,24 @@
   .eventBarDiv{
     padding: 0%;
   }
+  .eventBarDiv{
+    width: 100%;
+  }
+  canvas{
+    transform: scale(.65);
+  }
+  .yearInNssDiv{
+    width: 100%;
+    display: none;
+  }
+  .graphSideFlex{
+    width: 100%;
+  }
+  #branchPieChart{
+    display: none;
+  }
+  .downloadPdfDiv{
+    margin: 0px;
+  }
+
 }

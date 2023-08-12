@@ -190,6 +190,11 @@
   background: linear-gradient(to bottom, #ef473a, #cb2d3e);
   color: #fafafa;
 }
+.tag-green {
+  background: #32cb2d;
+  background: linear-gradient(to bottom, #75e288, #9ed4ac);
+  color: #fafafa;
+}
 
 .card__body h4 {
   font-size: 1.5rem;
@@ -204,7 +209,7 @@
 
 .footer {
   height: 10rem;
-  background-color: #2f80ed;
+
 }
 .animate-charcter {
   text-transform: uppercase;
