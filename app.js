@@ -28,13 +28,11 @@ app.use(cookieParser());
 
 // routes
 const userRoutes = require("./routes/userRoute");
-
-const adminRoutes = require("./routes/admin/admin")
+const adminRoutes = require("./routes/admin/admin");
+const eventRoutes = require("./routes/eventRoutes")
 app.use("/admin",adminRoutes)
-
 app.use("/user", userRoutes);
-
-
+app.use("/events",eventRoutes)
 
 app.get("/", async (req, res) => {
   try {
