@@ -36,10 +36,8 @@ app.get("/", (req, res) => {
   }
   app.post("/",async(req,res)=>{
     const { vec, password } = req.body;
-    console.log(req.body)
     try {
       const user = await User.findOne({ vec });
-      console.log(user)
       if (!user) {
         return res.status(401).json({ error: "User doesn't exist" });
       }
