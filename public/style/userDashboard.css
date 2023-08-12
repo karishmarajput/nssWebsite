@@ -1,0 +1,13 @@
+.work-button {
+  border: 0;
+  background-color: rgb(0, 0, 0, 0);
+}
+
+.profile-link {
+  text-decoration: none;
+}
+
+.event-title {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
