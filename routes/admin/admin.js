@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");;
 var path = require("path");
 const multer = require("multer");
 const PDFDocument = require('pdfkit');
+const csv = require('csv-parser');
 const secretKey =process.env.SECRET_CODE; 
 
 
@@ -153,7 +154,7 @@ const authenticateAdmin = async (req, res, next) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
     fs.createReadStream(file.path)
-      .pipe(csvParser())
+      .pipe(csv())
       .on('data', async(data) => {
         const { vec,name,branch,div,sem,contactNo,dob,bloodGroup,gender,address,yearInNss,batch,password} = data;
         User.findOne({ vec:vec})
