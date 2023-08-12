@@ -37,9 +37,9 @@
 .statistic-section {
   padding-top: 50px;
   padding-bottom: 70px;
-  background: #00c6ff; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #0072ff, #00c6ff);
-  background: linear-gradient(to right, #0072ff, #00c6ff);
+  background: #a4a5dd; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2F295F, #3B3477);
+  background: linear-gradient(to right, #826eccc4, #6f3de4);
 }
 
 .count {
@@ -54,7 +54,9 @@
   font-weight: bold;
   color: #fff;
 }
-
+.post-header{
+  padding: 1rem;
+}
 .stats-text {
   font-size: 15px;
   font-weight: normal;
@@ -86,23 +88,21 @@
 
 /* CARD */
 
-.post-header {
-  margin: 5rem 0 3rem 0;
-}
+
 
 .postsContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   max-width: 1400px;
-  margin-block: 2rem;
-  gap: 2rem;
-  margin-bottom: 5rem;
+  padding: 1rem;
 }
 
 .cards {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+
+  justify-content: space-around;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
 }
@@ -114,6 +114,7 @@
   box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
   border-radius: 1r em;
   overflow: hidden;
+  margin: .5rem;
 }
 
 .cards::-webkit-scrollbar {
@@ -133,24 +134,16 @@
   .card {
     flex-basis: calc(50% - 10px);
   }
-  .card:not(:last-child) {
-    margin-right: 20px;
-  }
+
 }
 @media (min-width: 700px) {
   .card {
     flex-basis: calc(calc(100% / 3) - 20px);
   }
-  .card:not(:last-child) {
-    margin-right: 30px;
-  }
 }
 @media (min-width: 1100px) {
   .card {
     flex-basis: calc(25% - 30px);
-  }
-  .card:not(:last-child) {
-    margin-right: 40px;
   }
 }
 
@@ -238,4 +231,34 @@
   to {
     background-position: 200% center;
   }
+}
+.navbarMobile{
+  display: none;
+}
+@media only screen and (max-width: 600px) {
+  .about{
+    padding: 10px;
+  }
+
+.animate-charcter{
+  font-size: 1.6rem;
+}
+.sub-heading{
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: justify;
+}
+.carousel .carousel-item {
+  height: 50vh;
+}
+.navbarMob{
+  display: none;
+ }
+ .navbarMobile{
+  display: flex;
+ }
+ .p-4{
+  padding: 0px !important;
+ }
+
 }

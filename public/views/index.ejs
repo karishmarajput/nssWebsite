@@ -40,7 +40,8 @@
             class="d-inline-block align-text-top brand-img"
           />
         </a>
-        <a class="navbar-brand" href="">National Service Scheme</a>
+        <a class="navbar-brand navbarMob" href="#">National Service Scheme</a>
+        <a class="navbar-brand navbarMobile" href="#">NSS FCRIT</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -131,16 +132,7 @@
         of Letraset sheets containing Lorem Ipsum passages, and more recently
         with desktop publishing software like Aldus PageMaker including versions
         of Lorem Ipsum.
-        <br /><br />
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
+ 
       </div>
     </div>
     <!-- STATS -->
@@ -183,9 +175,9 @@
       </h5>
     </div>
     <div class="postsContainer">
-      <ul class="cards">
+      <div class="cards">
         <% posts.forEach(function(post) { %>
-        <li class="card">
+        <div class="card">
           <div class="card__header">
             <img
               src="<%= post.imagePath %>"
@@ -200,21 +192,21 @@
             <p><%= post.content %></p>
           </div>
           <div class="card__footer"></div>
-        </li>
+        </div>
         <% }); %>
-      </ul>
+      </div>
     </div>
     <!-- FOOTER -->
     <footer class="text-center">
       <div class="container p-4">
-        <section class="mb-4 footer-links">
+        <div class="mb-4 footer-links">
           <a href="#" class="fa fa-twitter"></a>
           <a
             href="https://www.instagram.com/nss_fcrit/"
             class="fa fa-instagram"
           ></a>
           <a href="#" class="fa fa-linkedin"></a>
-        </section>
+        </div>
         <section class="mb-4">
           <p style="color: white">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
