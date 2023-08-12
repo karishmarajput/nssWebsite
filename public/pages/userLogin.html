@@ -14,6 +14,14 @@
     </script>
         <link rel="stylesheet" href="/style/index.css" />
     <link rel="stylesheet" type="text/css" href="../style/adminLogin.css">
+    <style>
+      .alert-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 9999;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -47,6 +55,7 @@
           </div>
         </div>
       </nav>
+      <div class="alert-container"></div>
       <div class="container">
         <div class="main-content">
           <div style="display: flex;width: 100%;">
@@ -74,4 +83,33 @@
     <div id="footer"></div>
 
 </body>
+<script>
+  const queryParams = new URLSearchParams(window.location.search);
+    const errorStatus = queryParams.get('error');
+    
+    if (errorStatus === '502') {
+      showErrorAlert('Invalid Credentials');
+    }else if(errorStatus==='501'){
+      showErrorAlert('User doesn\'t exist')
+    }else if(errorStatus==='500'){
+      showErrorAlert('An error occurred. Please try again later.')
+    }
+
+
+        function showErrorAlert(message) {
+            const alertContainer = document.querySelector('.alert-container');
+            const alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-danger', 'alert-dismissible', 'fade', 'show');
+            alert.innerHTML = `
+                <strong>Error!</strong> ${message}
+                
+            `;
+            alertContainer.appendChild(alert);
+
+            setTimeout(() => {
+                alertContainer.removeChild(alert);
+            }, 2000);
+        }
+
+</script>
 </html>

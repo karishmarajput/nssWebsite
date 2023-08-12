@@ -36,14 +36,15 @@ app.get("/", (req, res) => {
   }
   app.post("/",async(req,res)=>{
     const { vec, password } = req.body;
+    console.log('hello')
     try {
       const user = await User.findOne({ vec });
       if (!user) {
-        return res.status(401).json({ error: "User doesn't exist" });
+        return res.status(500).redirect('/user?error=501');
       }
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        return res.status(401).json({ error: "Invalid credentials" });
+        return res.status(500).redirect('/user?error=502');
       }
       const authToken = jwt.sign({ vec: user.vec }, secretKey, {
         expiresIn: "1h",
@@ -54,7 +55,7 @@ app.get("/", (req, res) => {
         .redirect(`/user/${vec}`);
     } catch (err) {
         console.log(err)
-      res.status(500).json({ error: "Internal server error" });
+        res.status(500).redirect('/user?error=500');
     }
   })
   app.get('/:vec', authenticateUserToken, async (req, res) => {
