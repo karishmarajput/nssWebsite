@@ -44,6 +44,7 @@ border-bottom-right-radius: 20px;
 }
 @media screen and (min-width: 642px) and (max-width:800px){
   .main-content{width: 70%;}
+
 }
 
 form{
@@ -64,4 +65,20 @@ form{
   background-color: #55599A;
   border: 1px solid #051465;
   color:#fff;
+}
+
+@media only screen and (max-width: 600px){
+  .loginDetails{
+    width: 100%;
+  }
+  .heading{
+    font-size: 2rem;
+   
+  }
+  .loginDetails h2{
+    padding: 0rem;
+  }
+  form{
+    padding: .5rem .5rem;
+  }
 }
