@@ -59,14 +59,21 @@
     padding: 20px;
     overflow-x: auto;
 }
-
+.mobile{
+    display: none;
+}
 
 @media screen and (max-width: 480px) {
     .user-table {
         width: 100%;
         white-space: nowrap; 
     }
-    
+    .mobile{
+        display: block;
+    }
+    .laptop{
+        display: none;
+    }
     .user-table th,
     .user-table td {
         min-width: 100px;

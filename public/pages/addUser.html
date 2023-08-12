@@ -55,6 +55,20 @@
             right: 1rem;
             z-index: 9999;
         }
+        .submitBtn{
+            background-color: #46397D !important;
+            color: white !important;
+          
+        }
+        @media screen and (max-width: 480px){
+            .submitRow{
+                display: flex;
+                justify-content: center;
+            }
+            .submitRow input{
+                width: 80%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -185,8 +199,8 @@
                 </div>
             </div>
 
-            <div class="row">
-                <input type="submit" class="btn btn-warning" value="Create New User">
+            <div class="row submitRow">
+                <input type="submit" class="btn submitBtn btn-warning" value="Create New User">
             </div>
         </form>
     </div>
