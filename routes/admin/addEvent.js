@@ -84,7 +84,7 @@ const authenticateAdmin = async (req, res, next) => {
         .then((user) => {
           if (user) {
             participants.push(user);
-            if (user.gender == "male") {
+            if (user.gender == "Male") {
               malePart += 1;
             } else {
               femalePart += 1;
@@ -103,7 +103,7 @@ const authenticateAdmin = async (req, res, next) => {
         .then((user) => {
           if (user) {
             organisers.push(user);
-            if (user.gender == "male") {
+            if (user.gender == "Male") {
               malePart += 1;
             } else {
               femalePart += 1;

@@ -104,7 +104,7 @@ app.delete(
   
         if (user) {
           participants.push(user);
-          if (user.gender === "male") {
+          if (user.gender === "Male") {
             maleParti += 1;
           } else {
             femaleParti += 1;

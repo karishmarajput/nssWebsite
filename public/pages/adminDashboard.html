@@ -87,9 +87,9 @@
         document.getElementById(
           "numberOfVolunteer"
         ).innerHTML = `${users.length} Volunteer`;
-        const maleCount = users.filter((user) => user.gender === "male").length;
+        const maleCount = users.filter((user) => user.gender === "Male").length;
         const femaleCount = users.filter(
-          (user) => user.gender === "female"
+          (user) => user.gender === "Female"
         ).length;
         const pieChartCanvas = document
           .getElementById("pieChart")
