@@ -30,7 +30,7 @@
     <div>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/admin/adminDashboard">
+          <a class="navbar-brand" href="">
             <img
               src="/images/nss_logo.png"
               alt="Logo"
@@ -73,7 +73,7 @@
                 >
               </li>
               <li class="nav-item">
-                <a onclick="handleLogout()" class="nav-link">LogOut</a>
+                <a style="cursor: pointer;" onclick="handleLogout()" class="nav-link">LogOut</a>
               </li>
             </ul>
           </div>
@@ -83,9 +83,9 @@
         <div>
           <h3 class="text-center event-title">Event Attended</h3>
           <div class="container postsContainer">
-            <ul class="cards">
+            <div class="cards">
               <% user.eventsAttended.forEach(function(post) { %>
-              <li class="card" style="width: 4000">
+              <div class="card">
                 <div class="card__header">
                   <% image = "/"+post.imagePath %>
                   <img
@@ -96,14 +96,22 @@
                   />
                 </div>
                 <div class="card__body">
-                  <span class="tag tag-blue">#<%= post.category %></span>
+                  <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span class="tag tag-brown">#<%= post.totalPart%>participants</span>
+                    <span class="tag tag-blue">#<%= post.category %></span>
+                    <span class="tag tag-green">#<%= post.venue %></span>
+                </div>
+                <div>
+                    <span class="tag "><%= extractFormattedDate(post.eventDate) %></span>
+                    <span class="tag "><%= post.numberOfBenificiar %> Beneficiaries</span>
+                </div>
                   <h4><%= post.eventName %></h4>
                   <p><%= post.content %></p>
                 </div>
                 <div class="card__footer"></div>
-              </li>
+              </div>
               <% }); %>
-            </ul>
+            </divs>
           </div>
         </div>
         <div>
@@ -122,13 +130,27 @@
                   />
                 </div>
                 <div class="card__body">
-                  <span class="tag tag-blue">#<%= post.category %></span>
+                  <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span class="tag tag-brown">#<%= post.totalPart%>participants</span>
+                    <span class="tag tag-blue">#<%= post.category %></span>
+                    <span class="tag tag-green">#<%= post.venue %></span>
+                </div>
+                <div>
+                    <span class="tag "><%= extractFormattedDate(post.eventDate) %></span>
+                    <span class="tag "><%= post.numberOfBenificiar %> Beneficiaries</span>
+                </div>
                   <h4><%= post.eventName %></h4>
                   <p><%= post.content %></p>
                 </div>
                 <div class="card__footer"></div>
               </li>
               <% }); %>
+              <%
+              function extractFormattedDate(date) {
+                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                return new Date(date).toLocaleDateString('en-GB', options);
+            }
+              %>
             </ul>
           </div>
         </div>

@@ -1,82 +1,210 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Profile</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .nav-link:hover{
+    cursor: pointer;
+  }
+  .navbarMobile{
+    display: none;
+  }
+  @media only screen and (max-width: 600px)  {
+   .navbarMob{
+    display: none;
+   }
+   .navbarMobile{
+    display: flex;
+   }
+  }
+        .container {
+            max-width: 550px;
+            margin: 20px auto;
+            padding: 20px;
+            margin-top: 5rem;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .section-title {
+            font-weight: bold;
+        }
+
         .user-info {
-          font-family: Arial, sans-serif;
-          font-size: 14px;
-          margin-bottom: 20px;
+            margin-bottom: 20px;
+            margin-top: 5rem;
         }
-      
-        .user-info strong {
-          font-weight: bold;
+
+        .section {
+            margin-bottom: 10px;
         }
-      
-        .user-info .section {
-          margin-bottom: 10px;
-        }
-      
-        .user-info .section-title {
-          font-weight: bold;
-          margin-bottom: 5px;
-        }
-      </style>
+
+  .avatar-container {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  #avatarImage{
+    border-radius: 50%;
+  }
+  .avatar {
+    width: 160px;
+    height: 160px;
+    background-color: #ccc;
+    border-radius: 50%;
+    position: absolute;
+    top: -90px;
+    left: calc(50% - 80px); 
+  }
+
+    </style>
 </head>
 <body>
-
-      
-      <div class="user-info">
-        <div class="section">
-          <span class="section-title">VEC:</span> <%= user.vec %>
-        </div>
-        <div class="section">
-          <span class="section-title">Name:</span> <%= user.name %>
-        </div>
-        <div class="section">
-          <span class="section-title">Branch:</span> <%= user.branch %>
-        </div>
-        <% if (user.div !== 'Nill') { %>
-          <div class="section">
-            <span class="section-title">Div:</span> <%= user.div %>
-          </div>
-        <% } %>
-        <div class="section">
-          <span class="section-title">Sem:</span> <%= user.sem %>
-        </div>
-        <div class="section">
-          <span class="section-title">Contact No:</span> <%= user.contactNo %>
-        </div>
-        <div class="section">
-          <span class="section-title">Name of College:</span> <%= user.nameOfClg %>
-        </div>
-        <div class="section">
-          <span class="section-title">DOB:</span> <%= user.dob ? user.dob.toLocaleDateString('en-GB') : ''  %>
-        </div>
-        <div class="section">
-          <span class="section-title">Blood Group:</span> <%= user.bloodGroup %>
-        </div>
-        <div class="section">
-          <span class="section-title">Gender:</span> <%= user.gender %>
-        </div>
-        <div class="section">
-          <span class="section-title">Address:</span> <%= user.address %>
-        </div>
-        <div class="section">
-          <span class="section-title">Year in NSS:</span> <%= user.yearInNss %>
-        </div>
-        <div class="section">
-          <span class="section-title">Camp Attended:</span> <%= user.campAttended %>
-        </div>
-        <div class="section">
-            <span class="section-title">Events Attended:</span> <%= user.eventsAttended.length %>
-        </div>
-        <div class="section">
-            <span class="section-title">Events Organised:</span> <%= user.eventsOrganised.length %>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" id="logoLink" href="/">
+        <img
+          src="/images/nss_logo.png"
+          alt="Logo"
+          width="50"
+          height="50"
+          class="d-inline-block align-text-top"
+        />
+      </a>
+      <a class="navbar-brand navbarMob" href="#">National Service Scheme</a>
+      <a class="navbar-brand navbarMobile" href="#">NSS FCRIT</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarNavAltMarkup"
+      >
+        <ul class="navbar-nav">
+     
+          
+      <li class="nav-item">
+        <a onclick="handleLogout()" class="nav-link">LogOut</a>
+    </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <br>
+    <div class="container">
+      <div class="avatar-container">
+        <div class="avatar">
+          <img id="avatarImage" src="" alt="Avatar" width="160" height="160">
         </div>
       </div>
-      
+        <div class="user-info">
+            <div style="display: flex;justify-content: center; font-size: 1.3rem; font-weight: 800;">
+              <%= user.name %>
+            </div>
+            <div class="section" style="display: flex;justify-content: center">
+               <%= user.nameOfClg %>
+            </div><br>
+            <div class="section">
+                <span class="section-title">VEC:</span> <strong><%= user.vec %></strong>
+            </div>
+            
+            <div class="section">
+                <span class="section-title">Branch:</span> <%= user.branch %>
+            </div>
+            <% if (user.div !== 'Nill') { %>
+                <div class="section">
+                    <span class="section-title">Div:</span> <%= user.div %>
+                </div>
+            <% } %>
+            <div class="section">
+                <span class="section-title">Sem:</span> <%= user.sem %>
+            </div>
+            <div class="section">
+                <span class="section-title">Contact No:</span> <%= user.contactNo %>
+            </div>
+            <div class="section">
+                <span class="section-title">DOB:</span> <%= user.dob ? user.dob.toLocaleDateString('en-GB') : '' %>
+            </div>
+            <div class="section">
+                <span class="section-title">Blood Group:</span> <%= user.bloodGroup %>
+            </div>
+            <div class="section">
+                <span class="section-title">Gender:</span> <%= user.gender %>
+            </div>
+            <div class="section">
+                <span class="section-title">Address:</span> <%= user.address %>
+            </div>
+            <div class="section">
+                <span class="section-title">Year in NSS:</span> <%= user.yearInNss %>
+            </div>
+            <div class="section">
+                <span class="section-title">Camp Attended:</span> <%= user.campAttended %>
+            </div>
+            <div class="section">
+                <span class="section-title">Events Attended:</span> <%= user.eventsAttended.length %>
+            </div>
+            <div class="section">
+                <span class="section-title">Events Organised:</span> <%= user.eventsOrganised.length %>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+  function handleLogout(){
+      fetch('/logout', {
+      method: 'POST',
+    })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = '/';
+        } else {
+          console.log('Logout request failed.');
+        }
+      })
+      .catch(error => {
+        console.error('Error occurred while logging out:', error);
+      });
+  }
+  const currentUrl = window.location.href;
+  const vecNumber = currentUrl.match(/\/user\/(\d+)/)[1];
+  const logoLink = document.getElementById('logoLink');
+  logoLink.href = `/user/${vecNumber}`
+  const userGender = '<%= user.gender %>'; // Replace with actual variable
+  const avatarImage = document.getElementById('avatarImage');
+  console.log(userGender)
+  if (userGender === 'Male') {
+    avatarImage.src = '/images/male.png'; // Replace with the correct image path
+  } else if (userGender === 'Female') {
+    avatarImage.src = '/images/female.jpg'; // Replace with the correct image path
+  }
+  </script>
 </html>
