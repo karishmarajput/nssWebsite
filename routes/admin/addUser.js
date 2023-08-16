@@ -75,6 +75,32 @@ const authenticateAdmin = async (req, res, next) => {
       res.status(500).json({  success:false,error: "Internal server error" });
     }
   });
+  const fs = require('fs');
+  const csv = require('csv-parser');
+  app.post("/updateVec",authenticateAdmin,async(req,res)=>{
+    const csvFilePath = 'user_data.csv';
+    const updatedUserMap = new Map();
+    fs.createReadStream(csvFilePath)
+      .pipe(csv())
+      .on('data', (row) => {
+        updatedUserMap.set(row.vec, row.newVec);
+      })
+    .on('end',async () => {
+      console.log(updatedUserMap)
+    for (const [vec, newVec] of updatedUserMap.entries()) {
+      const filter = { vec: vec };
+      const update = { $set: { vec: newVec } };
+      
+      const result = await User.updateOne(filter, update);
+
+      if (result.modifiedCount > 0) {
+        console.log(`Updated userId ${vec} to ${newVec}`);
+      } else {
+        console.log(`User ${vec} not found in the collection.`);
+      }
+    }
+  } )
+  })
   
   module.exports = app;
   
