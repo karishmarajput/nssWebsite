@@ -107,6 +107,10 @@
     <div class="form-group">
       <input type="text" id="searchInput" placeholder="Search by VEC Number">
     </div>
+    <div class="form-group">
+      <input type="text" id="searchNameInput" placeholder="Search by Name">
+    </div>
+    
     <div class="participantList">
       <table id="participantTable">
         <thead>
@@ -197,6 +201,22 @@
 
 
 
+  const searchNameInput = document.getElementById('searchNameInput');
+
+searchNameInput.addEventListener('input', function() {
+  const searchNameText = searchNameInput.value.trim().toLowerCase();
+  const rows = participantTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+  Array.from(rows).forEach(row => {
+    const name = row.cells[2].textContent.toLowerCase();
+
+    if (name.includes(searchNameText)) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+});
 
   const participantCheckboxes = document.querySelectorAll('.participant-checkbox');
     participantCheckboxes.forEach(checkbox => {
