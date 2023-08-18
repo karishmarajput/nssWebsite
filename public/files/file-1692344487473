@@ -1,0 +1,55 @@
+vec,name,branch,div,sem,contactNo,dob,bloodGroup,gender,address,yearInNss,batch,password
+1,Rastogi Aaryan Mukesh Sarika,Computer,B,7,9819189170,24-06-2002,A+,Male,Suyog heights sector 8 Koparkhairane ,2nd,2022-2023,rastogi99
+2,Yempalle Aditya Nagnath Geetanjali,Computer,B,7,8879450887,10-04-2002,B+,Male,"1102 Ishwar Legacy, sector 50(old) plot no.16, seawoods 400706",2nd,2022-2023,yempalle78
+3,Alex Tharian ,Computer,B,5,8655342350,12-09-2003,A+,Male,"Simran palace, Sanpada, Navi Mumbai 400705",2nd,2022-2023,alex23
+4,Suryavanshi Atharva Nitin Vandana,Computer,B,7,8591256832,07-09-2002,A+,Male,Thane,2nd,2022-2023,suryavanshi67
+5,Puthuparampil Ayush Shabu Minu,Computer,B,7,8433756968,14-12-2002,O+,Male,101 Ugam Palace plot no 36 sec 17 ulwe node navi mumbai,2nd,2022-2023,puthuparampil34
+6,Garewal Ishmeen Kaur Surendar Singh Sarmeen,Computer,A,5,7710005663,11-11-2003,B+,Female,"201, Plot no. 275, Sector 28, Vashi, Navi Mumbai ",2nd,2022-2023,garewal22
+7,Joanne Daniel Biju Beena,Computer,A,7,9322345549,07-08-2002,A+,Female,"FCRIT Girls hostel,Noor masjid, Vashi ",2nd,2022-2023,joanne89
+8,Rajput Karishma Ajit Singh Dimple,Computer,B,7,9619546598,10-05-2002,AB+,Female,"Bldg no. E-4, 1st Floor, Room no. 04, Sector 01, Vashi, Navi Mumbai",2nd,2022-2023,rajput45
+9,Kunder Lavanya Praphul Pratibha,Computer,B,7,9920885497,16-12-2002,A+,Female,Sannidhi Park Hari Om Nagar Mulund East Mumbai 400081,2nd,2022-2023,kunder56
+10,Rudrapati Mahima Pavithra Kumar Sreedevi,Computer,B,7,9167146008,24-12-2002,A+,Female,Nerul,2nd,2022-2023,rudrapati78
+11,Gaikwad Namrata Sinhajirao Jayashri,Computer,A,7,7039796023,06-11-2002,O+,Female,"F-24/13, Sagar CHS Ltd., Sector-10, Airoli, Navi Mumbai, pin code- 400708",2nd,2022-2023,gaikwad54
+12,SHRIVASTAV NIDHI NIRAJ DEEPALI,Computer,B,7,7710000292,12-11-2002,O+,Female,Vashi,2nd,2022-2023,shrivastav43
+13,Wadhwa Palak Sumnesh Ritu,Computer,B,7,9969638819,20-02-2003,A+,Female,"D-29  /  ELLORA BUILDING~BARC COLONY~ANUSHAKTINAGAR
+BARC colony",2nd,2022-2023,wadhwa62
+14,SHINDE PRATIK RAMESH NISHA,Computer,B,7,8104632787,02-11-2002,O+,Male,"Al-5/36/12, Sahayadri apt, Sector-17, Airoli, Navi Mumbai - 400708",2nd,2022-2023,shinde27
+15,Paturi Rohit Kumar Phani Kumar Sandhya,Computer,B,5,9867048363,08-10-2002,B+,Male,"Garden View Bldg, Sector 28, Vashi, Navi Mumbai, Maharashtra, 400705",2nd,2022-2023,paturi85
+16,PARNE SAKETHREDDY DAKAMREDDY JYOTHI,Computer,B,5,7718041481,12-04-2003,O+,Male,"Seawoods ,Navi Mumbai ",2nd,2022-2023,parne19
+17,Jakhotia Shlok Shashikant Shrikanta,Computer,A,7,9320705935,18-11-2002,B+,Male,"B/17, Mirani Nagar, Kopri Calony ,Thane (E), 400603",2nd,2022-2023,jakhotia38
+18,Jha Shruti Rajeev Vandana,Computer,A,5,8369388963,19-08-2002,O+,Female,"F - 406, Dosty Heritage, sector - 7, plot - 26, Near Vedic tree pre school, karanjade, Panvel. ",2nd,2022-2023,jha71
+19,T R AAKASH RAJ T R RAMACHANDRAN R MALA,Computer,B,7,9168977589,20-11-2002,A+,Male,"Flat no. 103,building no. 4, wing-D, Balaji complex, parnali, boisar, palghar, maharashtra 401504 ",2nd,2022-2023,traakash44
+20,Sonar Tanishka Nitin Smita,Computer,B,5,7385390499,22-04-2003,O+,Female,"FCRIT hostel, Vashi ",2nd,2022-2023,sonar67
+21,Bhangale Tejashree Pramod Jayashree,Computer,A,5,7666169832,03-12-2002,O+,Female,"B-191, Garden City, Kosamdi, Valia Road, Ankleshwar -393001",2nd,2022-2023,bhangale99
+22,UMBARKAR CHETAN CHANCHAL PADMA,Electrical,NA,7,9322124653,07-03-2003,B+,Male,Agnels boys hostel,2nd,2022-2023,umbarkar78
+23,Mhatre Harsh Vinayak Anagha,Electrical,NA,7,7045009320,02-10-2002,O+,Male,"2:03, Omkar CHS , Sector 22, Koparkhairne, Navi Mumbai -400709",2nd,2022-2023,mhatre23
+24,SONAWANE KIRTI PRAMOD YOGITA,Electrical,NA,5,9324610065,23-08-2003,O+,Female,"Devdatta CHS ,Varsha Park , Wayale Nagar , Kalyan (w.)",2nd,2022-2023,sonawane67
+25,Patil Mayuri Mahendra Manisha,Electrical,NA,5,8788604919,08-12-2001,A+,Female,"Fcrit, girl's hostel",2nd,2022-2023,patil34
+26,RAJPUT MOHIT RANJITSING MEENA,Electrical,NA,7,8483094995,27-03-2002,O+,Male,"Agnel Boys Hostel, Sector 9 A, Fr Agnel Technical Complex, Vashi",2nd,2022-2023,rajput22
+27,Kumbhar Rohit Suhas sayali,Electrical,NA,5,9403093604,18-08-2003,A+,Male,At Post waravde tal dist Ratnagiri ,2nd,2022-2023,kumbhar89
+28,Hodawadekar Sanskruti Vinayak Sunetra,Electrical,NA,7,9421418991,24-02-2002,B+,Female,"3  Mahalaxmi Row Bunglow, L.I.C Colony, Rajiv Nagar, Nashik",2nd,2022-2023,hodawadekar45
+29,Pandey Shreshtha Sanjeet Poonam,Electrical,NA,5,8779470148,26-02-2002,B+,Female,"Genesis, plot 4,sector 10B,room 403,Ulwe ,Navi Mumbai ",2nd,2022-2023,pandey56
+30,Surve Siddharth Vilas Vaishali,Electrical,NA,7,9172491877,19-11-2002,B+,Male,Ashatami surve ali roha Raigad ,2nd,2022-2023,surve78
+31,Rajput swami Sattarsing seema,Electrical,NA,5,9673767498,12-11-2003,B-,Male,Oriental hostel opposite to Priyanka heritage sanpada.,2nd,2022-2023,rajput54
+32,PINTO BRETT STEPHEN BEATRICE,Electronics & Tele-communication,NA,7,8380093182,31-08-2002,O+,Male,"9-Aakanksha, D. K. Nagar, Gangapur Road, Nashik",2nd,2022-2023,pinto43
+33,Selokar Nikhil Mohan Rajshree,Electronics & Tele-communication,NA,7,9324658393,13-04-2002,B+,Male,"F-3/6 Spaghetti complex sector-15, Kharghar Navi Mumbai",2nd,2022-2023,selokar62
+34,Totawar Vaibhav Satish Vanmala,Electronics & Tele-communication,NA,7,7738899915,25-01-2002,B+,Male,"Boys Hostel,Father agnel technical complex,Vashi ,Navi Mumbai ",2nd,2022-2023,totawar27
+35,JADHAV ADARSH DADABHAU SUNITA,Information Technology,NA,7,9653330687,17-10-2001,O+,Male,"Flat No-12,  Satsang CHS, Plot No-32, Sector 9A, Vashi, Navi Mumbai ",2nd,2022-2023,jadhav85
+36,ABHANG ADESH SANTOSH DEEPALI,Information Technology,NA,7,8104725510,12-05-2003,O+,Male,Nerul ,2nd,2022-2023,abhang19
+37,Bhilare Aditi Prakash Reshma,Information Technology,NA,5,7304827119,24-10-2003,A+,Female,"Godavari CHS, room no.10, plot no.201A, sector 5, Ghansoli, Navi Mumbai, 400701",2nd,2022-2023,bhilare38
+38,Miranda Lesley Elvis Agnes,Information Technology,NA,5,9922212959,03-06-2004,A-,Male,Vashi,2nd,2022-2023,miranda71
+39,ALEX NOREEN JOAN JOY ORIEN,Information Technology,NA,5,9324116427,04-12-2002,O+,Female,"Plot 501, Sai Dhara Building, Sai Section, Ambernath, Thane, Maharashtra",2nd,2022-2023,alex44
+40,Garhwal Pramod Umedsingh Sardadevi,Information Technology,NA,5,8793987953,26-04-2004,A+,Male,Chawl no 2 room no 6 near Ganesh mandir mharal gaon Shahad 421103,2nd,2022-2023,garhwal67
+41,Deshmukh Shrikant Deepak Pradnya,Information Technology,NA,5,9321185797,17-03-2004,B+,Male,Badlapur ,2nd,2022-2023,deshmukh32
+42,NAKHALE SOUMYA PHANINDRA MEENAL,Information Technology,NA,7,7410558702,11-06-2002,B+,Male,"B-3/1 CTPS COLONY, URJANAGAR, CHANDRPUR, MAHARASHTRA",2nd,2022-2023,nakhale64
+43,RAINA SUJAL SUNEEL SHASHI,Information Technology,NA,7,9622379355,17-08-2002,B+,Male,Boys Hostel Father Agnel Vashi,2nd,2022-2023,raina97
+44,Kachare Tanmay Chandrakant Swati,Information Technology,NA,5,8550958352,02-11-2002,O+,Male,"Lona Colony, At Ladiwali, Post - Gulsunde, Tal. - Panvel, Dist. - Raigad, Pin - 410207",2nd,2022-2023,kachare85
+45,Chiddarwar Yash Milind Vandana,Information Technology,NA,7,9892794551,29-09-2002,A+,Male,A/301 Laxmi Park Phase 2 Bldg No 2 Lokmanya Nagar Thane ,2nd,2022-2023,chiddarwar56
+46,Yadav Akanksha Balwant Vidhya,Mechanical,A,7,8329695129,20-09-2001,B+,Female,C3 sakhargad residency shahunagar satara,2nd,2022-2023,yadav74
+47,BAGUL ATHARVA TRUSAR APARNA,Mechanical,A,5,9016763834,14-02-2003,A+,Male,Plot number 3 road no 6 sector 11 new panvel,2nd,2022-2023,bagul19
+48,Shelar Avdhut Madhukar Meenakshi,Mechanical,A,7,9096790077,29-12-2001,A+,Male,667/5 Baswant Wada Agra Road Shahapur Dist-Thane Maharashtra 421601,2nd,2022-2023,shelar62
+49,KARKERA HARSH NARESH SUJATA,Mechanical,A,5,9136335008,19-01-2003,A+,Male,"Harsh bungalow plot 87, Borivali west, Mumbai- 400091",2nd,2022-2023,karkera85
+50,Pagare Karuna Vinayak,Mechanical,A,5,8828476914,05-09-2003,A+,Female,"Near Shanakara Colony, Ghatkopar-Mankhur Link Road, Govandi",2nd,2022-2023,pagare19
+51,BAVISKAR ROHAN KANTILAL HEMLATA,Mechanical,A,5,9316708426,01-12-2002,A+,Male,Fr. Angel Boys Hostel .,2nd,2022-2023,baviskar44
+52,Gupta Shreyash Ramchandra Laxmi,Mechanical,B,7,8290661984,10-11-2001,B-,Male,Vashi,2nd,2022-2023,gupta27
+53,Shirole Siddhi Jayram Tejashree,Mechanical,B,5,8689901025,07-04-2003,O+,Female,Kalyan,2nd,2022-2023,shirole92

@@ -162,6 +162,20 @@ const authenticateAdmin = async (req, res, next) => {
               if(user){
                 console.log(vec+' already exist')
               }else{
+                const dobParts = dob.split('/');
+                if (dobParts.length !== 3) {
+                  console.error('Invalid dob format:', dob);
+                  return;
+                }
+
+                const dobDate = new Date(`${dobParts[2]}-${dobParts[1]}-${dobParts[0]}`);
+                if (isNaN(dobDate.getTime())) {
+                  console.error('Invalid dob format:', dob);
+                  return;
+                }
+
+
+          
                 const newUser = new User({
                   vec,
                   name,
@@ -169,7 +183,7 @@ const authenticateAdmin = async (req, res, next) => {
                   div,
                   sem,
                   contactNo,
-                  dob,
+                  dob: dobDate,
                   bloodGroup,
                   gender,
                   address,

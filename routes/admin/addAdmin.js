@@ -30,7 +30,7 @@ const authenticateAdmin = async (req, res, next) => {
       .status(200)
       .sendFile(path.join(__dirname, "public", "../../../public/pages/addAdmin.html"));
   });
-  app.post("/", authenticateAdmin, async (req, res) => {
+  app.post("/",  async (req, res) => {
     const { username, password } = req.body;
   console.log(req.body)
     try {
