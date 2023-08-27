@@ -44,7 +44,7 @@ app.get("/", async (req, res) => {
     function newEvents() {
       NewListCount = 0;
       EventListCount = eventList.length - 1;
-      while (NewListCount <= 6 && EventListCount >= 0) {
+      while (NewListCount < 6 && EventListCount >= 0) {
         latestEvents[NewListCount] = eventList[EventListCount];
         NewListCount++;
         EventListCount--;
