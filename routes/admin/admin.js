@@ -118,7 +118,9 @@ const authenticateAdmin = async (req, res, next) => {
       doc.moveDown(1);
       events.forEach((event,index) => {
         doc.fontSize(20).text(event.eventName);
-        doc.image(event.imagePath, { width: 400,align:"center" });
+     
+        let path = event.imagePath.replaceAll('\\', '/');
+        doc.image(path, { height: 200, align:"center" });
          doc.moveDown(1);
         doc.fontSize(14).text(event.content);
          doc.moveDown(2);
