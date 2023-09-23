@@ -29,8 +29,10 @@
     <div class="container heading">
         <h1>Volunteer's List</h1>
         <div><a href="/admin/adduser" class="laptop" >Add Volunteer</a><a class="mobile" href="/admin/adduser" >Add</a></div>
-  
+        
       </div>
+      <div class="container heading"><button id="downloadCSV" class="btn btn-primary">Download All Data</button></div>
+    
     <div class="container">
         <div class="search-container">
             <input type="text" id="searchInput" class="form-control search-input" placeholder="Search by VEC Number">
@@ -40,6 +42,7 @@
                 <option value="2022-2024">2022-2024</option>
                 <option value="2023-2025">2023-2025</option>
             </select>
+            
         </div>
         <table class="table user-table" id="userTable">
             <thead>
@@ -157,6 +160,43 @@
                 }
             });
         }
+
+
+        function convertToCSV(dataArray) {
+        const csvRows = [];
+        for (const row of dataArray) {
+            const csvColumns = [];
+            for (const cell of row) {
+                csvColumns.push(`"${cell}"`);
+            }
+            csvRows.push(csvColumns.join(','));
+        }
+        return csvRows.join('\n');
+    }
+
+    function downloadCSV() {
+        const table = document.getElementById('userTable');
+        const rows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'));
+
+        const dataArray = rows.map(row => {
+            return Array.from(row.cells).map(cell => cell.textContent);
+        });
+        const headerRow = Array.from(table.getElementsByTagName('thead')[0].getElementsByTagName('th'));
+        const headers = headerRow.map(th => th.textContent);
+        dataArray.unshift(headers);
+        const csvContent = convertToCSV(dataArray);
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'user_data.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('downloadCSV').addEventListener('click', downloadCSV);
     </script>
 </body>
 </html>
