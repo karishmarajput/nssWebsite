@@ -1,0 +1,38 @@
+vec,name,branch,div,sem,contactNo,dob,bloodGroup,gender,address,password
+55,Nehete Aayush Jagdish Tina,Computer,B,3,9137556461,20/07/2004,B +VE,Male,Father agnel boys hostel,NehAyu@123
+56,Ambike Atharva Sagar Pallavi ,IT,A,5,9834319632,07/06/2004,B +VE,Male,Type C 7/14 BARC Staff Colony near Chitralaya road Tarapur Boisar,AmbSag@456
+57,MONTEIRO XAVIER PETER AVELINE,IT,A,3,9322472263,04/07/2004,A +VE,Male,Ravalnath Colony Ajara,MonXav@2023
+58,Bijwe Samiksha Pradip Kalpana,Computer,B,3,8767172018,24/01/2004,O +VE,Female,Currently a hostelite. Permanent address: Palvi 41 Gilani Nagar near Datey College Chowk postal colony Yavatmal 445001.,BijSam@456
+59,JADHAV YASH AJAY KIRTI,IT,A,5,9321083619,23/12/2003,O +VE,Male,601 Dharti Icon plot no 58 sector 21 Kamothe Navi Mumbai opposite to jeevan jyoth hospital,JadYas@789
+60,TRIMBAKKAR SAHIL PRABHAKAR PRANALI,ELEC,A,5,9324326880,14/11/2002,A +VE,Male,782 At post Trimbak- Bagadwadi Tal- Malvan Dist- Sindhudurg- 416614,TriSah@2023
+61,SATHE KHUSHAL DARSHAN SUVIDNYA,EXTC,A,5,9403219297,04/07/2004,A +VE,Male,Type E 30/1 Barc colony Tarapur Chitralaya Boisar Palghar 401504,SatDar@987
+62,Kabra Anuj Abhay Priti ,MECH,A,5,9969276747,27/02/2003,O +VE,Male,Jn/4 10/15 sector 9 Vashi Navi Mumbai 400703,KabAbh@2023
+63,MAGAR ATHARVA DIPAK SUMATI,Computer,B,3,9762441244,08/02/2005,O +VE,Male,FCRIT collage hostel,MagDip@123
+64,NARKHEDE POORVA MANOJ NAYANA,Computer,B,3,9152512606,26/06/2004,A +VE,Female,703 Amber Sai Sunil Nagar Behind DNC School Dombivli East 421201 Mumbai Maharashtra.,NarMan@456
+65,Patil Ishita Gorakhanath Swati,Computer,B,3,7041058676,14/02/2005,A +VE,Female,D11/1 Birla Copper Township Dahej Gujarat,PatGor@789
+66,ANSARI SAJID AZAM SHABANA,MECH,A,5,7388553219,11/03/2002,B +VE,Male,706 Noori Garden Mumbra Thane - 400612,AnsAza@123
+67,CHAVAN  ABHISHEK GANPATI SHAILAJA,ELEC,A,5,9372193171,04/11/2003,AB +VE,Male,D/8/15 Shree sai krupa CHS Sector - 23 juinagar Navi Mumbai,ChaGan@456
+68,Wynona Toby Elizabeth,Computer,B,3,7738533751,07/06/2004,O +VE,Female,A5 703 Nandini 1 Apts Vesu Surat Gujarat 395007,WynTob@2023
+69,Sojith Sunny Swapna,Computer,B,3,9420614075,06/05/2004,A +VE,Male,A21 Runwal Prestige Yerwada Nagar Road Pune - 411006,SojSun@789
+70,Pardeshi Aryan Dinesh Anita,EXTC,A,3,8433956846,15/02/2003,B +VE,Male,5/84 Sector 08 Artist Village CBD Belapur 400614,ParDin@123
+71,MISAL ANJELICA BHASKAR SULOCHANA,Computer,B,3,9096549905,23/07/2004,O +VE,Female,5/1 TRIMURTHI COLONY KAMLAKARNAGAR KOHOJGAON AMBARNATH (WEST) MUMBAI-421501,MisBha@456
+72,KULKARNI SHARVARI PRAVIN MANSI ,Computer,A,3,7058242800,22/02/2004,A +VE,Female,Ramkuti Fule colony Netaji chauk chalisgaon dist- jalgaon pin-424101,KulPra@789
+73,CHAUGULA KARUNA VEERBHADRAPPA SHAILAJA,MECH,A,3,9324888568,23/02/2004,O +VE,Female,F-304 Panchavati Plaza Sector-5 Ghansoli Navi Mumbai 400708,ChaVee@2023
+74,Anu Sophiya Lingadurai Malathi,IT,A,3,6382319181,13/01/03,A -VE,Female,507- A wing Shastrinagar Co operative housing society Dharavi Mumbai - 17,AnuLin@456
+75,Joseph Sania Shaji Subi,Computer,B,3,9373554211,27/08/2004,O +VE,Female,QR no.189 RBII Indrayani (Nurses) Colony Bhusawal Jalgaon,JosSha@789
+76,BHONSLE ASHUTOSH MONISH VIJAYA,Computer,A,3,9152793290,26/09/2004,A +VE,Male,D-403 Golden Park LBS Marg Muktai Nagar Thane (West).,BhoMon@123
+77,Kadam Paras Pravin Pooja,Computer,A,3,9930211631,06/02/2005,O -VE,Male,B 706 Ashar Maple Vaishali Nagar Mulund,KadPoo@456
+78,BOHTA HARSHVARDHAN NEERAJ SHASHI ,Computer,A,3,9637869821,08/01/2004,O +VE,Male,Type-D(spec.) 34/14 BARC COLONY Tarapur PO-TAPP 401504 Boisar Dist. Palghar Maharashtra,BohNee@789
+79,Jadhav Atharv Suresh Sunita,Computer,A,3,9322185527,20/09/2004,A +VE,Male,Suyash Sankul Apt B-14 Sevadal Ali Roha-Raigad,JadSur@2023
+80,Loni Radhika Vivekanand Nisha,EXTC,A,5,7021193182,03/07/2001,O +VE,Female,JN-3/20/01 Ashirwad apts. Sec09 Vashi Navi Mumbai 400703.,LonViv@456
+81,Kamble Rutuja Dilip Nirmala ,EXTC,A,5,8879724052,04/05/2002,AB +VE,Female,01- Golconda Anushaktinagar BARC colony Mumbai 400094,KamDil@789
+82,Patil Shreyas Sandeep Vidya,EXTC,A,5,9372539620,15/12/2002,A +VE,Male,FLAT NO 102 PLOT NO 527 GULMOHAR BLD SEC-22 BANK OF INDIA ROAD TURBHE NAVIMUMBAI 400703,PatSan@123
+83,Chauke Anushka Dayaram Ujwala ,EXTC,A,3,7020609984,23/02/2005,A +VE,Female,Type C 52/7 BARC colony tarapur,ChaDay@456
+84,Khairnar Harsh Gorakh Damini,Computer,A,3,8104782543,25/05/2004,B +VE,Male,Flat-302 Chintamani CHS LTD Plot-44 Sector-08 New Panvel (E) PIN-410206,KhGor@789
+85,Bachhav Siddhi Deepak Sonali ,Computer,A,3,7709720669,14/08/2004,O +VE,Female,Radha nagar makhmalabad rd panchavati nashik,BacDee@123
+86,JAWALE DEVASHISH NARENDRAKUMAR MANISHA ,Computer,A,5,9067374010,04/12/2003,O +VE,Male,B3- 18 Ashtabhuja apartments Sector 15 Vashi Navi Mumbai 400703 Native place- Gurumauli Plot No.9 Gat No.106 Jeevan Nagar ramanand Ramanand nagar Jalgaon 425001,JawNar@456
+87,Chaudhari Pradnya Sandesh Vanita,ELEC,A,5,9404494361,08/08/2003,B +VE,Female,Fcrit hostel,ChaSan@789
+88,NANDGAONKAR ARYAN SANTOSH MANISHA,MECH,B,5,9307992316,13/06/2004,O +VE,Male,Shree baug no. 2 mhada colony plot no.187 alibag - raigad,NanHem@123
+89,KARALE PRATHAMESH HEMANT HEMLATA,MECH,A,3,7385529588,26/06/2004,A +VE,Male,Wada dist- Palghar Maharashtra pin-421302,KarVen@456
+90,VARIER VAISHAKH VENUGOPAL SHOBHA,EXTC,A,3,9833653836,11/03/2004,A +VE,Male,A-704 Sai Sharan CHS Plot no 15 Sector-8 Khanda Colony New Panvel (West) 410206,VarSho@789
+91,ANN ALYSA JACOB JENY,IT,A,3,8928965556,26/11/2003,AB +VE,Female,A-12 ARMY COLONY DARA ENCLAVE CHS SECTOR-9 NERUL NAVI MUMBAI 400706,AnnJac@123
