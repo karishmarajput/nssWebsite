@@ -86,5 +86,22 @@ app.get("/", authenticateAdmin, async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
       });
   });
+  app.post("/deleteVol",authenticateAdmin,async(req,res)=>{
+    vec = req.body.vec;
+    try {
+      const deletedUser = await User.findOneAndDelete({ vec: vec });
+  
+      if (deletedUser) {
+        // The user with the specified vec value was found and deleted
+        return res.status(200).json({ message: 'User deleted successfully.' });
+      } else {
+        // No user with the specified vec value was found
+        return res.status(404).json({ error: 'User not found.' });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'An error occurred while deleting the user.' });
+    }
+  })
   module.exports = app;
   

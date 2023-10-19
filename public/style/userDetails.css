@@ -1,8 +1,15 @@
 .tableHours{
-  width: 50% !important;
+  width: 100% !important;
 }
 
 .tableHours th{
   min-width: 200px !important;
   max-width: 220px !important;
 }
+.fitIndia { background-color: #fae6e6 !important; }
+.educationForAll { background-color: #e4f8e4 !important; }
+.animalWellfare { background-color: #d3d3ff !important; }
+.greenInitiative { background-color: #f3ecd0 !important; }
+.college { background-color: #c1dfe9 !important; }
+.university { background-color: #f5e0ee !important; }
+.total {background-color: rgb(250, 223, 187) !important;}
