@@ -62,12 +62,12 @@
                   <span class="detail-label">Date:</span> <%= event.eventDate.toLocaleDateString("en-GB")  %><br>
                   <span class="detail-label">Category:</span> <%= event.category %><br>
                   <span class="detail-label">Content:</span> <%= event.content %><br>
-                  <span class="detail-label">Event Leader:</span> <%= event.eventLeader.name %><br>
+                  <span class="detail-label">Event Leader:</span> <%= event.eventLeader? event.eventLeader.name:'-' %><br>
                   <span class="detail-label">Total Participants:</span> <%= event.totalPart %><br>
                   <span class="detail-label">No. of Beneficiaries:</span> <%= event.numberOfBenificiar %><br>
-                  <span class="detail-label">Report by:</span> <%= event.reportWrittenBy.name %><br>
+                  <span class="detail-label">Report by:</span> <%= event.reportWrittenBy?event.reportWrittenByname:'-' %><br>
                   <span class="detail-label">Organiser Hours:</span><%= event.organisersHr %><br>
-                  <span class="detail-label">Participation Hours:</span> <%= event.hours %><br>
+                  <span class="detail-label">Participation Hours:</span> <%= event.hours %>  <br>
               </p>
           </div>
         </div>
@@ -114,6 +114,10 @@
                     </tbody>
                 </table>
             </div>
+            <% if (event.participants.length + event.organisers.length !== event.totalPart) { %>
+                <%= event.totalPart - (event.participants.length + event.organisers.length) %> participants left.
+            <% } %>
+            
         </div>
         <br><br>
         <div>

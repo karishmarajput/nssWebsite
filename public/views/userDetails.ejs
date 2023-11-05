@@ -11,12 +11,15 @@
       $("#footer").load("/components/footer.html");
     });
   </script>
+
   <link rel="stylesheet" href="/style/userDetails.css">
+  
 </head>
 <body>
   <div id="header"></div>
   <div class="container mt-5">
     <h1>User Details</h1><br>
+
     <div class="row">
       <div class="col-md-6">
         <p>Vec: <%= userDetails.vec %></p>
@@ -36,364 +39,109 @@
         <p>Batch:<%= userDetails.batch%></p>
         <p>Camp Attended: <%= userDetails.campAttended %></p>
       </div>
+      
     </div>
+    <button onclick="confirmDelete(`<%= userDetails.vec %>`)" class="btn btn-danger">Delete Volunteer</button>
   </div>
 
 
+  
   <div class="container mt-5">
-    <h2>Events Attended</h2>
+   
   <% if (userDetails.eventsAttended.length > 0) { %>
-    <h4>Fit India</h4>
+    <h2>Events Attended</h2>
     <table class="table table-bordered tableHours">
       <thead>
         <tr>
+          <th>Category</th>
+          <th>Role</th>
           <th>Event</th>
           <th>Hours</th>
         </tr>
       </thead>
       <tbody>
-        <% fitIndiaHr = 0 %>
+      <% function displayCategoryTable(categoryName) { %>
+        <% var totalHours = 0,totalEvent=1; %>
         <% userDetails.eventsAttended.forEach(function(event) { %>
-          <% if (event.category == "fitIndia") { 
-            fitIndiaHr += event.hour; %>
-            <tr>
-              <td><%= event.eventName %></td>
-              <td><%= event.hour %></td>
-            </tr>
-          <% } %>
-        <% }); %>
-        <tr>
-          <th>Total</th>
-          <th><%= fitIndiaHr %></th>
-        </tr>
-      </tbody>
-    </table>
+          <% if (event.category === categoryName) { 
 
-      <h4>Education For All</h4>
-      <table class="table table-bordered tableHours">
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% educationForAllHr = 0 %>
-          <% userDetails.eventsAttended.forEach(function(event) {  %>
-            <% if (event.category == "educationForAll") { educationForAllHr+= event.hour %>
-              <tr>
-                <td><%= event.eventName %></td>
-                <td><%= event.hour %></td>
-              </tr>
-            <% } %>
-          <% }); %>
-        </tbody>
-        <tr>
-          <th>Total</th>
-          <th><%= educationForAllHr%></th>
-        </tr>
-      </table>
+            totalHours += event.hour;
+            totalEvent+=1;
+          } %>
+        <% }); %>
+        <% userDetails.eventsOrganised.forEach(function(event) { %>
+          <% if (event.category === categoryName) { 
 
-      <h4>Animal Wellfare</h4>
-      <table class="table table-bordered tableHours">
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% animalWellfareHr = 0 %>
-          <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "animalWellfare") { animalWellfareHr += event.hour %>
-              <tr>
-                <td><%= event.eventName %></td>
-                <td><%= event.hour %></td>
-              </tr>
-            <% } %>
-          <% }); %>
-        </tbody>
-        <tr>
-          <th>Total</th>
-          <th><%= animalWellfareHr%></th>
-        </tr>
-      </table>
-      <h4>Disater Management</h4>
-      <table class="table table-bordered tableHours">
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% diasterManagementHr = 0 %>
-          <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "diasterManagement") { diasterManagementHr+= event.hour %>
-              <tr>
-                <td><%= event.eventName %></td>
-                <td><%= event.hour %></td>
-              </tr>
-            <% } %>
-          <% }); %>
-        </tbody>
-        <tr>
-          <th>Total</th>
-          <th><%= userDetails.diasterManagementHr%></th>
-        </tr>
-      </table>
-      <h4>Green Initiative</h4>
-      <table class="table table-bordered tableHours">
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% greenInitiativeHr = 0 %>
-          <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "greenInitiative") { greenInitiativeHr += event.hour%>
-              <tr>
-                <td><%= event.eventName %></td>
-                <td><%= event.hour %></td>
-              </tr>
-            <% } %>
-          <% }); %>
-        </tbody>
-        <tr>
-          <th>Total</th>
-          <th><%= greenInitiativeHr%></th>
-        </tr>
-      </table>
-      <h4>College Events</h4>
-      <table class="table table-bordered tableHours">
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% clHr = 0 %>
-          <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "college") { clHr += event.hour %>
-              <tr>
-                <td><%= event.eventName %></td>
-                <td><%= event.hour %></td>
-              </tr>
-            <% } %>
-          <% }); %>
-        </tbody>
-        <tr>
-          <th>Total</th>
-          <th><%= clHr%></th>
-        </tr>
-      </table>
-      <h4>University Events</h4>
-      <table class="table table-bordered tableHours">
-        <thead>
-          <tr>
-            <th>Event</th>
-            <th>Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% universityHr = 0%>
-          <% userDetails.eventsAttended.forEach(function(event) { %>
-            <% if (event.category == "university") { universityHr += event.hour %>
-              <tr>
-                <td><%= event.eventName %></td>
-                <td><%= event.hour %></td>
-              </tr>
-            <% } %>
-          <% }); %>
-        </tbody>
-        <tr>
-          <th>Total</th>
-          <th><%= universityHr%></th>
-        </tr>
-      </table>
-  <% } else { %>
-    <p>No events attended.</p>
-  <% } %>
+            totalHours += event.organisersHr;
+            totalEvent+=1;
+          } %>
+        <% }); %>
+      
+      
+        <% if (totalHours > 0) { %>
+              <td class='<%= categoryName%>' rowspan='<%= totalEvent%>'><%= categoryName %></td>
+              <% userDetails.eventsAttended.forEach(function(event) { %>
+                <% if (event.category === categoryName) { %>
+                  <tr class='<%= categoryName%>'>
+                    <td>Attended</td>
+                    <td><%= event.eventName %></td>
+                    <td><%= event.hour %></td>
+                  </tr>
+                <% } %>
+              <% }); %>
+              <% userDetails.eventsOrganised.forEach(function(event) { %>
+                <% if (event.category === categoryName) { %>
+                  <tr class='<%= categoryName%>'>
+                    <td>Organised</td>
+                    <td><%= event.eventName %></td>
+                    <td><%= event.organisersHr %></td>
+                  </tr>
+                <% } %>
+              <% }); %>
 
-  <h2>Events Organised</h2>
-  <% if (userDetails.eventsOrganised.length > 0) { %>
-    <h4>Fit India</h4>
-    <table class="table table-bordered tableHours">
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Hours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% fitIndiaHr = 0 %>
-        <% userDetails.eventsOrganised.forEach(function(event) { %>
-          <% if (event.category == "fitIndia") { fitIndiaHr += event.organisersHr %>
-            <tr>
-              <td><%= event.eventName %></td>
-              <td><%= event.organisersHr %></td>
-            </tr>
-          <% } %>
-        <% }); %>
-      </tbody>
-      <tr>
-        <th>Total</th>
-        <th><%= fitIndiaHr%></th>
-      </tr>
-    </table>
-    <h4>Education For All</h4>
-    <table class="table table-bordered tableHours">
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Hours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% educationForAllHr = 0 %>
-        <% userDetails.eventsOrganised.forEach(function(event) { %>
-          <% if (event.category == "educationForAll") { educationForAllHr +=  event.organisersHr %>
-            <tr>
-              <td><%= event.eventName %></td>
-              <td><%= event.organisersHr %></td>
-            </tr>
-          <% } %>
-        <% }); %>
-      </tbody>
-      <tr>
-        <th>Total</th>
-        <th><%= educationForAllHr%></th>
-      </tr>
-    </table>
-    <h4>Animal Wellfare</h4>
-    <table class="table table-bordered tableHours">
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Hours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% animalWellfareHr = 0 %>
-        <% userDetails.eventsOrganised.forEach(function(event) { %>
-          <% if (event.category == "animalWellfare") { animalWellfareHr += event.organisersHr %>
-            <tr>
-              <td><%= event.eventName %></td>
-              <td><%= event.organisersHr %></td>
-            </tr>
-          <% } %>
-        <% }); %>
-      </tbody>
-      <tr>
-        <th>Total</th>
-        <th><%= animalWellfareHr%></th>
-      </tr>
-    </table>
-    <h4>Disater Management</h4>
-    <table class="table table-bordered tableHours">
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Hours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% diasterManagementHr = 0 %>
-        <% userDetails.eventsOrganised.forEach(function(event) { %>
-          <% if (event.category == "diasterManagement") { diasterManagementHr+= event.organisersHr %>
-            <tr>
-              <td><%= event.eventName %></td>
-              <td><%= event.organisersHr %></td>
-            </tr>
-          <% } %>
-        <% }); %>
-      </tbody>
-      <tr>
-        <th>Total</th>
-        <th><%= diasterManagementHr%></th>
-      </tr>
-    </table>
-    <h4>Green Initiative</h4>
-    <table class="table table-bordered tableHours">
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Hours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% greenInitiativeHr = 0 %>
-        <% userDetails.eventsOrganised.forEach(function(event) { %>
-          <% if (event.category == "greenInitiative") { greenInitiativeHr += event.organisersHr%>
-            <tr>
-              <td><%= event.eventName %></td>
-              <td><%= event.organisersHr %></td>
-            </tr>
-          <% } %>
-        <% }); %>
-      </tbody>
-      <tr>
-        <th>Total</th>
-        <th><%= greenInitiativeHr%></th>
-      </tr>
-    </table>
-    <h4>college Events</h4>
-    <table class="table table-bordered tableHours">
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Hours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% clHr = 0 %>
-        <% userDetails.eventsOrganised.forEach(function(event) { %>
-          <% if (event.category == "college") { clHr += event.organisersHr %>
-            <tr>
-              <td><%= event.eventName %></td>
-              <td><%= event.organisersHr %></td>
-            </tr>
-          <% } %>
-        <% }); %>
-      </tbody>
-      <tr>
-        <th>Total</th>
-        <th><%= clHr%></th>
-      </tr>
-    </table>
-    <h4>University Events</h4>
-    <table class="table table-bordered tableHours">
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Hours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% uniHr = 0 %>
-        <% userDetails.eventsOrganised.forEach(function(event) { %>
-          <% if (event.category == "university") { uniHr += event.organisersHr %>
-            <tr>
-              <td><%= event.eventName %></td>
-              <td><%= event.organisersHr %></td>
-            </tr>
-          <% } %>
-        <% }); %>
-      </tbody>
-      <tr>
-        <th>Total</th>
-        <th><%= uniHr %></th>
-      </tr>
-    </table>
-  <% } else { %>
-    <p>No events organised.</p>
-  <% } %>
+              
+              <tr class="total">
+                <th colspan="3" >Total</th>
+                <th><%= totalHours %></th>
+              </tr>
+           
+        <% } %>
+      <% } %>
+
+      <% displayCategoryTable("fitIndia") %>
+      <% displayCategoryTable("educationForAll") %>
+      <% displayCategoryTable("animalWellfare") %>
+      <% displayCategoryTable("greenInitiative") %>
+      <% displayCategoryTable("college") %>
+      <% displayCategoryTable("university") %>
+    </tbody>
+  </table>
+      <% } %>
+
 
   </div>
   
   <div id="footer"></div>
+  <script>
+    function confirmDelete(vec) {
+    if (confirm("Are you sure you want to delete this volunteer?")) {
+      deleteVol(vec);
+    }
+  }
+    function deleteVol(vec){
+      let data = {
+        vec:vec
+      }
+      $.post("/admin/userDisplay/deleteVol", data, function (response) {
+      if (response.success) {
+        alert("Volunteer deleted successfully");
+        window.location.href = "/userDisplay"; 
+      } else {
+    
+        alert("Volunteer deletion failed: " + response.message);
+      }
+    });
+    }
+  </script>
 </body>
 </html>

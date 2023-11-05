@@ -80,13 +80,13 @@
                             <td><%= event.eventName %></td>
                             <td><%= event.eventDate.toLocaleDateString("en-GB") %></td>
                             <td><%= event.venue %></td>
-                            <td><%= event.eventLeader.name %></td>
+                            <td><%= event.eventLeader ? event.eventLeader.name: '-' %></td>
                             <td><%= event.organisersHr %></td>
                             <td><%= event.hours %></td>
                             <td><%= event.malePart %></td>
                             <td><%= event.femalePart %></td>
                             <td><%= event.totalPart %></td>
-                            <td><%= event.reportWrittenBy.name %></td>
+                            <td><%= event.reportWrittenBy ? event.reportWrittenBy.name : '-' %></td>
                             <td><%= event.category %></td>
                             <td><button onclick="showDetails('<%= event._id %>')" class="btn btn-primary">Details</button></td>
                         </tr>
