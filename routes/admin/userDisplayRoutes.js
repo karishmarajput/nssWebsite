@@ -34,6 +34,41 @@ app.get("/", authenticateAdmin, async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
+  const PDFDocument = require('pdfkit');
+  app.post("/generate", async (req, res) => {
+    console.log('hi')
+    try {
+        const users = await User.find();
+
+        const doc = new PDFDocument();
+        const pdfFilePath = 'volunteers.pdf';
+        doc.pipe(fs.createWriteStream(pdfFilePath));
+
+        doc.fontSize(20).text('Volunteers Information', { align: 'center' }).moveDown();
+
+        users.forEach(user => {
+            doc.fontSize(14).text(`Name: ${user.name}`);
+            doc.text(`VEC: ${user.vec}`);
+            // Add more fields as needed
+
+            doc.moveDown();
+        });
+
+        doc.end();
+
+        res.status(200).download(pdfFilePath, (err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: "Failed to generate PDF" });
+            }
+            // Delete the temporary PDF file after download
+            // fs.unlinkSync(pdfFilePath);
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
   app.get("/:vec", authenticateAdmin, (req, res) => {
     const vec = req.params.vec;
